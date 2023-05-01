@@ -16,9 +16,6 @@
 %token  DLESS  DGREAT LESS GREAT
 (*      '<<'   '>>'   '<'   '>'  *)
 
-%token NEWLINE
-(*     '\n'   *)
-
 %token PIPE
 (*     '|'   *)
 
@@ -39,20 +36,17 @@
 %%
 
 (* Basic components *)
-linebreak        ::= [newlines];
-newlines         ::= [newlines] NEWLINE;
 word             ::=   QUOTE  WORD QUOTE
                  |     DQUOTE WORD DQUOTE
                  |            WORD       
                  ;
 (* Structural syntax *)
-complete_command ::= and_or [newlines];
-and_or           ::= and_or AND_IF linebreak pipeline
-                 |   and_or OR_IF  linebreak pipeline
+complete_command ::= complete_command AND_IF pipeline
+                 |   complete_command OR_IF  pipeline
                  |                           pipeline
                  ;
-pipe_line        ::= pipe_line PIPE linebreak command
-                 |                            command
+pipe_line        ::= pipe_line PIPE command
+                 |                  command
                  ;
 command          ::= subshell [subshell_redirects]
                  |   simple_command
@@ -75,9 +69,7 @@ cmd_parameter    ::= word
                  ;
 
 (* Subshell syntax *)
-subshell           ::= LBRACKET subshell_body RBRACKET
-                 ;
-subshell_body      ::= [newlines] complete_command [newlines]
+subshell           ::= LBRACKET complete_command RBRACKET
                  ;
 subshell_redirects ::= [subshell_redirects] io_redirect
                  ;
