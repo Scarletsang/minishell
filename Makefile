@@ -38,6 +38,7 @@ SRC:= $(MAIN_SRC)
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
+LDFLAGS += -lreadline
 
 ###########################################
 ######     Object name reformat     #######
@@ -82,6 +83,35 @@ $(OBJ): $(OBJ_DIR)
 
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
+
+#########################################################
+######     install brew (for 42 evaluation)     #########
+#########################################################
+
+ifeq ($(shell uname), Darwin)
+install_brew:
+	@brew --version &>/dev/null && echo "brew already installed" || \
+	( \
+		( \
+			mv $(HOME)/.brew $(HOME)/goinfre/.brew &>/dev/null || \
+			rm -rf $(HOME)/.brew && rm -rf $(HOME)/goinfre/.brew \
+		) && \
+		git clone --depth=1 https://github.com/Homebrew/brew $(HOME)/goinfre/.brew && \
+		brew --version &>/dev/null || \
+		( \
+			echo "export PATH=$HOME/goinfre/.brew/bin:$PATH" >> $(HOME)/.zshrc && \
+			source $(HOME)/.zshrc \
+		) && \
+		echo "brew installed" \
+	)
+
+install_readline:
+	@brew list readline &>/dev/null && echo "readline already installed" || \
+	( \
+		brew install readline && \
+		echo "readline installed" \
+	)
+endif
 
 ###############################
 ######     Cleaning     #######
