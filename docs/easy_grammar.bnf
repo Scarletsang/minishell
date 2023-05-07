@@ -31,22 +31,22 @@ word             ::=   QUOTE  WORD QUOTE
                  |            WORD       
                  ;
 (* Structural syntax *)
-complete_command ::= pipe_line PIPE command
-                 |                  command
+complete_command ::= command PIPE complete_command
+                 |   command
                  ;
 
 (* Command syntax *)
 command          ::= cmd_prefix cmd_word [cmd_suffix]
                  |   cmd_prefix
-                 |   cmd_name [cmd_suffix]
+                 |              cmd_name [cmd_suffix]
                  ;
 cmd_name         ::= word
                  ;(* Apply rule 7a *)
 cmd_word         ::= word
                  ; (* Apply rule 7b *)
-cmd_prefix       ::= [cmd_prefix] (io_redirect | ASSIGNMENT_WORD)
+cmd_prefix       ::= (io_redirect | ASSIGNMENT_WORD) [cmd_prefix]
                  ;
-cmd_suffix       ::= [cmd_suffix] (io_redirect | cmd_parameter)
+cmd_suffix       ::= (io_redirect | cmd_parameter) [cmd_suffix] 
                  ;
 cmd_parameter    ::= word
                  ;
