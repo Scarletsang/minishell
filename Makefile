@@ -5,7 +5,7 @@
 NAME:=minishell
 
 CC:=cc
-CFLAGS= -Wall -Wextra -Werror
+CFLAGS:= -Wall -Wextra -Werror
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
@@ -33,12 +33,12 @@ SRC:= $(MAIN_SRC)
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
 
 # To add a library, add the library header file like this:
-# INCLUDE_DIR+= lib/LIBRARY_NAME/include
+LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS += -lreadline
+LDFLAGS:= -lreadline -L $(shell brew --prefix readline)/lib/
 
 ###########################################
 ######     Object name reformat     #######
@@ -48,7 +48,7 @@ LDFLAGS += -lreadline
 
 SRC_DIR:=src
 OBJ_DIR:=obj
-OBJ:=$(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
+OBJ:= $(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
 
 #################################
 ######     Main rules     #######
@@ -57,8 +57,8 @@ OBJ:=$(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
 all:
 	@$(MAKE) $(NAME) -j
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME) $(LDFLAGS) && echo "Compilation of $(NAME) successful"
+$(NAME): $(OBJ)
+	@$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) && echo "Compilation of $(NAME) successful"
 
 bonus: re
 
@@ -77,7 +77,7 @@ bonus: re
 
 .SECONDEXPANSION:
 $(OBJ_DIR)/%.o: $(SRC_DIR)/$$(subst @,/,$$*).c
-	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) -c $< -o $@
+	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) -c $< -o $@
 
 $(OBJ): $(OBJ_DIR)
 
@@ -118,7 +118,7 @@ endif
 ###############################
 
 clean: 
-	@rm -f $(OBJS)
+	@rm -f $(OBJ)
 
 fclean: clean
 	@rm -rf $(OBJ_DIR)
