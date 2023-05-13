@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 01:44:25 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 04:35:26 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,38 @@ t_ht_index	hash(char *key, t_ht_index capacity)
 	return (hash % capacity);
 }
 
+static int	is_coprime(t_ht_index a, t_ht_index b)
+{
+	t_ht_index	tmp;
+
+	while (b != 0)
+	{
+		tmp = b;
+		b = a % b;
+		a = tmp;
+	}
+	return (a == 1);
+}
+
 t_ht_index	hash_for_interval(char *key, t_ht_index capacity)
 {
 	unsigned long	hash;
-	t_ht_index		i;
+	t_ht_index		interval;
+	t_ht_index		max_interval;
 
 	hash = 0;
-	i = 0;
-	while (key[i])
+	while (*key)
 	{
-		hash += key[i];
-		i++;
+		hash += *key;
+		key++;
 	}
-	return (7 - (hash % 7) % capacity);
+	max_interval = capacity * 7 / 10;
+	interval = max_interval - (hash % max_interval);
+	while (!is_coprime(capacity, interval))
+	{
+		interval = (interval + 1) % max_interval;
+	}
+	return (interval);
 }
 
 static void	ht_clone(struct s_ht *dest, struct s_ht *src)
@@ -64,11 +83,10 @@ int	ht_rehash(struct s_ht *ht)
 	i = 0;
 	while (i < old_ht.capacity)
 	{
-		item = &old_ht.items[i];
+		item = &old_ht.items[i++];
 		if (!item->key)
 			continue ;
 		ht_add(ht, item->key, item->value);
-		i++;
 	}
 	free(old_ht.items);
 	return (EXIT_SUCCESS);

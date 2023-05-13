@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:30:47 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 01:44:00 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 03:34:33 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	ht_destroy(struct s_ht *ht)
 		i++;
 	}
 	free(ht->items);
-	free(ht);
 }
 
 /**

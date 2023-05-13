@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:38:36 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 01:43:49 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 04:37:22 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ht_print(struct s_ht *ht)
 	while (i < ht->capacity)
 	{
 		if (ht->items[i].key)
-			printf("%15s: %s\n", ht->items[i].key, \
+			printf("%s: %s\n", ht->items[i].key, \
 				(char *) ht->items[i].value);
 		else
 			printf("EMPTY\n");
