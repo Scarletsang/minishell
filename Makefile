@@ -44,7 +44,7 @@ LIB_INCLUDE_DIR+= lib/libft
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS:= -lreadline -L $(shell brew --prefix readline)/lib/
+LDFLAGS+= -lreadline -L $(shell brew --prefix readline)/lib/
 LDFLAGS+= $(LIBFT)
 
 ###########################################

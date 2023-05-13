@@ -6,11 +6,12 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 04:35:48 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 07:34:56 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/expander/hashtable.h"
+#include <stdio.h>
 
 static int	ht_add_item(struct s_ht *ht, struct s_ht_item *item, char *key,
 	void *value)
@@ -19,6 +20,7 @@ static int	ht_add_item(struct s_ht *ht, struct s_ht_item *item, char *key,
 		return (EXIT_FAILURE);
 	item->key = key;
 	item->value = value;
+	item->deleted = false;
 	ht->occupied++;
 	if (ht->occupied * 100 / ht->capacity > 70)
 		return (ht_rehash(ht));
@@ -60,6 +62,7 @@ void	ht_del_item(struct s_ht *ht, struct s_ht_item *item)
 		free(item->value);
 	item->key = NULL;
 	item->value = NULL;
+	item->deleted = true;
 	ht->occupied--;
 }
 
