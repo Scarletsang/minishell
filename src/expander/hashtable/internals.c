@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   internals.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 04:35:26 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 12:15:11 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_ht_index	hash(char *key, t_ht_index capacity)
 	return (hash % capacity);
 }
 
-static int	is_coprime(t_ht_index a, t_ht_index b)
+static bool	is_coprime(t_ht_index a, t_ht_index b)
 {
 	t_ht_index	tmp;
 

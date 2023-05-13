@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:30:47 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 06:44:38 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 11:17:38 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ void	*ht_get(struct s_ht *ht, char *key)
 
 	index = hash(key, ht->capacity);
 	item = &ht->items[index];
-	if (!item->key)
+	if (!item->key && !item->deleted)
 		return (NULL);
-	if (ft_strcmp(item->key, key) == 0)
+	if (item->key && (ft_strcmp(item->key, key) == 0))
 		return (item->value);
 	interval = hash_for_interval(key, ht->capacity);
 	index = (index + interval) % ht->capacity;
 	item = &ht->items[index];
-	while (item->key)
+	while (item->key || item->deleted)
 	{
-		if (!item->deleted && (ft_strcmp(item->key, key) == 0))
+		if (item->key && (ft_strcmp(item->key, key) == 0))
 			return (item->value);
 		index = (index + interval) % ht->capacity;
 		item = &ht->items[index];

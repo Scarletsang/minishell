@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:08:04 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 01:39:10 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 14:33:34 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include "libft.h"
+# include <stdbool.h>
 
 typedef unsigned int	t_ht_index;
 
@@ -22,6 +23,7 @@ struct s_ht_item
 {
 	char	*key;
 	void	*value;
+	bool	deleted;
 };
 
 /**
@@ -45,6 +47,8 @@ struct s_ht
 int			ht_create(struct s_ht *ht, const t_ht_index capacity);
 
 int			ht_add(struct s_ht *ht, char *key, void *value);
+
+int			ht_update(struct s_ht *ht, char *key, void *value);
 
 void		*ht_get(struct s_ht *ht, char *key);
 

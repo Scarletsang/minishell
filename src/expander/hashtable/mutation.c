@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mutation.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 07:34:56 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 12:52:39 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ int	ht_add(struct s_ht *ht, char *key, void *value)
 
 	index = hash(key, ht->capacity);
 	item = &ht->items[index];
+	if (item->key && (ft_strcmp(item->key, key) == 0))
+		return (EXIT_FAILURE);
 	if (ht_add_item(ht, item, key, value) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
 	interval = hash_for_interval(key, ht->capacity);
 	while (item->key)
 	{
+		if (ft_strcmp(item->key, key) == 0)
+			return (EXIT_FAILURE);
 		index = (index + interval) % ht->capacity;
 		item = &ht->items[index];
 	}
@@ -79,22 +83,51 @@ void	ht_del(struct s_ht *ht, char *key)
 
 	index = hash(key, ht->capacity);
 	item = &ht->items[index];
-	if (!item->key)
+	if (!item->key && !item->deleted)
 		return ;
-	if (ft_strcmp(item->key, key) == 0)
+	if (item->key && (ft_strcmp(item->key, key) == 0))
 	{
 		ht_del_item(ht, item);
 		return ;
 	}
 	interval = hash_for_interval(key, ht->capacity);
-	while (item->key)
+	while (item->key || item->deleted)
 	{
 		index = (index + interval) % ht->capacity;
 		item = &ht->items[index];
-		if (ft_strcmp(item->key, key) == 0)
+		if (item->key && (ft_strcmp(item->key, key) == 0))
 		{
 			ht_del_item(ht, item);
 			return ;
 		}
 	}
+}
+
+int	ht_update(struct s_ht *ht, char *key, void *value)
+{
+	t_ht_index			index;
+	t_ht_index			interval;
+	struct s_ht_item	*item;
+
+	index = hash(key, ht->capacity);
+	item = &ht->items[index];
+	if (!item->key && !item->deleted)
+		return (EXIT_FAILURE);
+	if (item->key && (ft_strcmp(item->key, key) == 0))
+	{
+		item->value = value;
+		return (EXIT_SUCCESS);
+	}
+	interval = hash_for_interval(key, ht->capacity);
+	while (item->key || item->deleted)
+	{
+		index = (index + interval) % ht->capacity;
+		item = &ht->items[index];
+		if (item->key && (ft_strcmp(item->key, key) == 0))
+		{
+			item->value = value;
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
 }
