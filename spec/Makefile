@@ -14,8 +14,7 @@ ifdef FSANITIZE
 endif
 INCLUDE_DIR= \
 	include \
-	../include \
-	../lib/libft
+	../include
 
 ###################################
 ######     Source files     #######
@@ -24,8 +23,7 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-TEST_SRC:= \
-	expander.c
+TEST_SRC:=
 MAIN_SRC:= \
 	main.c
 SRC:= $(TEST_SRC) $(MAIN_SRC)
@@ -38,7 +36,6 @@ SRC:= $(TEST_SRC) $(MAIN_SRC)
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
 TARGET= $(TARGET_DIR)/lib$(TARGET_NAME).so
-LIBFT=../lib/libft/libft.a
 
 # To add a library, add the library header file like this:
 # LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
@@ -47,7 +44,6 @@ LIBFT=../lib/libft/libft.a
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
 LDFLAGS:= -l$(TARGET_NAME) -L $(TARGET_DIR)
-LDFLAGS+= $(LIBFT)
 
 ###########################################
 ######     Object name reformat     #######

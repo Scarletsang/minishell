@@ -20,14 +20,9 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-EXPANDER_HASHTABLE_SRC:= \
-	expander/hashtable/hashtable.c \
-	expander/hashtable/mutation.c \
-	expander/hashtable/printer.c \
-	expander/hashtable/internals.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(EXPANDER_HASHTABLE_SRC) $(MAIN_SRC)
+SRC:= $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -39,13 +34,11 @@ LIBFT=lib/libft/libft.a
 
 # To add a library, add the library header file like this:
 LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
-LIB_INCLUDE_DIR+= lib/libft
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
 LDFLAGS:= -lreadline -L $(shell brew --prefix readline)/lib/
-LDFLAGS+= $(LIBFT)
 
 ###########################################
 ######     Object name reformat     #######
@@ -77,8 +70,6 @@ bonus: re
 
 # $(LIBRARY_NAME):
 # 	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/LIBRARY_NAME
-$(LIBFT):
-	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/libft
 
 #########################################
 ######     Object compilation     #######
