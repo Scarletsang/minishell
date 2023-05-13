@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:45:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 08:06:41 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 14:45:24 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/expander/hashtable.h"
-#include <stdio.h>
+#include "tests.h"
+
+// hashtable can add
+
+// hashtable can delete
+
+// hashtable can get
+
+// hashtable can update
 
 void	expander_hashtable_test1()
 {
 	struct s_ht	ht;
 
 	ht_create(&ht, 10);
+	ht_print(&ht);
 	ht_add(&ht, ft_strdup("key1"), ft_strdup("value1"));
 	ht_add(&ht, ft_strdup("key2"), ft_strdup("value2"));
 	ht_add(&ht, ft_strdup("key3"), ft_strdup("value3"));
@@ -43,6 +51,8 @@ void	expander_hashtable_test1()
 	ht_del(&ht, "2key");
 	ht_del(&ht, "3key");
 	ht_del(&ht, "4key");
+	ht_add(&ht, ft_strdup("3key"), ft_strdup("im newwwwwwwwwww"));
+	ht_add(&ht, ft_strdup("3key"), ft_strdup("im newwww222wwwwwww"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key1"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key2"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key3"));

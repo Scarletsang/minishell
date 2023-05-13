@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/13 08:06:48 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 14:34:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	main(void)
 {
-	expander_hashtable_test1();
+	// expander_hashtable_test1();
+	// expander_hashtable_test3();
+	interact(\
+		(t_init_func) hashtable_shell_init, \
+		(t_program_func) hashtable_shell, \
+		(t_free_func) ht_destroy);
 	return (0);
 }
