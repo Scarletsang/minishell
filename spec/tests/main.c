@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2022/11/12 20:00:04 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/13 03:14:46 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests/tests.h"
+#include "tests.h"
 
 int	main(void)
 {
-
+	expander_hashtable_test1();
 	return (0);
 }
