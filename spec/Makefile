@@ -2,7 +2,7 @@
 ######     Variables     #######
 ################################
 
-NAME:=debug
+NAME:=debug.out
 TARGET_NAME:=minishell
 TARGET_DIR:=../
 
