@@ -46,7 +46,7 @@ LIBFT=../lib/libft/libft.a
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS:= -l$(TARGET_NAME) -L $(TARGET_DIR)
+LDFLAGS+= -l$(TARGET_NAME) -L $(TARGET_DIR)
 LDFLAGS+= $(LIBFT)
 
 ###########################################
@@ -112,4 +112,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean re bonus
+.PHONY: clean fclean re bonus $(TARGET)
