@@ -25,9 +25,15 @@ HASHTABLE_SRC:= \
 	hashtable/mutation.c \
 	hashtable/printer.c \
 	hashtable/internals.c
+STRINGBUILDER_SRC:= \
+	stringbuilder/stringbuilder.c \
+	stringbuilder/action/action.c \
+	stringbuilder/action/delete.c \
+	stringbuilder/action/insert.c \
+	stringbuilder/action/field_validator.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(HASHTABLE_SRC) $(MAIN_SRC)
+SRC:= $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
