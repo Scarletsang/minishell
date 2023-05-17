@@ -6,11 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 12:15:11 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/17 16:18:03 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/expander/hashtable.h"
+#include "MINISHELL/hashtable.h"
 
 t_ht_index	hash(char *key, t_ht_index capacity)
 {

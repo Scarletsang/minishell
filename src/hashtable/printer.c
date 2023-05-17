@@ -6,11 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:38:36 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 11:23:42 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/17 16:18:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/expander/hashtable.h"
+#include "MINISHELL/hashtable.h"
 #include <stdio.h>
 
 void	ht_print(struct s_ht *ht)

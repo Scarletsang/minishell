@@ -6,12 +6,11 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 12:52:39 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/17 16:18:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/expander/hashtable.h"
-#include <stdio.h>
+#include "MINISHELL/hashtable.h"
 
 static int	ht_add_item(struct s_ht *ht, struct s_ht_item *item, char *key,
 	void *value)
