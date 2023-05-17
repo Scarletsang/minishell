@@ -1,60 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hashtable_shell.c                                  :+:      :+:    :+:   */
+/*   stringbuilder_shell.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/13 14:55:09 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 00:28:19 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+#include "stringbuilder_test.h"
 
-struct s_ht	*hashtable_shell_init(void)
+struct s_sb	*stringbuilder_shell_init(void)
 {
-	struct s_ht	*ht;
+	struct s_sb	*sb;
 
-	ht = malloc(sizeof(struct s_ht));
-	if (ht_create(ht, 20))
+	sb = malloc(sizeof(struct s_sb));
+	if (sb_create(sb, 20))
 	{
-		free(ht);
+		free(sb);
 		return (NULL);
 	}
-	return (ht);
+	return (sb);
 }
 
-char	*consume_one(const char **line)
-{
-	const char		*copy;
-	unsigned int	len;
-	char			*result;
-
-	copy = *line;
-	len = 0;
-	while (*copy && *copy != ' ')
-	{
-		len++;
-		copy++;
-	}
-	result = malloc(sizeof(char) * (len + 1));
-	if (!result)
-		return (NULL);
-	ft_strlcpy(result, *line, len + 1);
-	*line += len;
-	return (result);
-}
-
-void	free_arguments(char *arguments[2])
-{
-	if(arguments[0])
-		free(arguments[0]);
-	if(arguments[1])
-		free(arguments[1]);
-}
-
-int	hashtable_shell(struct s_ht *ht, const char *line)
+int	stringbuilder_shell(struct s_sb *ht, const char *line)
 {
 	char	*arguments[2];
 

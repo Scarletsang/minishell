@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/13 14:34:09 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 00:22:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
+#include "hashtable_test.h"
 
 int	main(void)
 {
