@@ -23,6 +23,7 @@ INCLUDE_DIR= \
 HASHTABLE_SRC:= \
 	hashtable/hashtable.c \
 	hashtable/mutation.c \
+	hashtable/unsafe_mutation.c \
 	hashtable/printer.c \
 	hashtable/internals.c
 STRINGBUILDER_SRC:= \

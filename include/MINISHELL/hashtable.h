@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:08:04 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/13 14:33:34 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 06:28:32 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,34 @@ struct s_ht
 
 int			ht_create(struct s_ht *ht, const t_ht_index capacity);
 
-int			ht_add(struct s_ht *ht, char *key, void *value);
+int			ht_add(struct s_ht *ht, const char *key, const void *value);
 
-int			ht_update(struct s_ht *ht, char *key, void *value);
+int			ht_update(struct s_ht *ht, const char *key, const void *value);
 
-void		*ht_get(struct s_ht *ht, char *key);
+void		*ht_get(struct s_ht *ht, const char *key);
 
-void		ht_del(struct s_ht *ht, char *key);
-
-void		ht_del_item(struct s_ht *ht, struct s_ht_item *item);
+void		ht_del(struct s_ht *ht, const char *key);
 
 void		ht_destroy(struct s_ht *ht);
+
+/////////////////////////////////////////////////
+////////     unprotected interface     //////////
+/////////////////////////////////////////////////
+
+int			ht_unsafe_add_item(struct s_ht *ht, struct s_ht_item *item, \
+const char *key, const void *value);
+
+void		ht_unsafe_del_item(struct s_ht *ht, struct s_ht_item *item);
+
+int			ht_unsafe_update_item(struct s_ht_item *item, const void *value);
 
 /////////////////////////////////////
 ////////     internals     //////////
 /////////////////////////////////////
 
-t_ht_index	hash(char *key, t_ht_index capacity);
+t_ht_index	hash(const char *key, t_ht_index capacity);
 
-t_ht_index	hash_for_interval(char *key, t_ht_index capacity);
+t_ht_index	hash_for_interval(const char *key, t_ht_index capacity);
 
 int			ht_rehash(struct s_ht *ht);
 

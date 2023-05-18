@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   internals.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/17 16:18:03 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 06:26:14 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/hashtable.h"
 
-t_ht_index	hash(char *key, t_ht_index capacity)
+t_ht_index	hash(const char *key, t_ht_index capacity)
 {
 	unsigned long	hash;
 	t_ht_index		i;
@@ -40,7 +40,7 @@ static bool	is_coprime(t_ht_index a, t_ht_index b)
 	return (a == 1);
 }
 
-t_ht_index	hash_for_interval(char *key, t_ht_index capacity)
+t_ht_index	hash_for_interval(const char *key, t_ht_index capacity)
 {
 	unsigned long	hash;
 	t_ht_index		interval;

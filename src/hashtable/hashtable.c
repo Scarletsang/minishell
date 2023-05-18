@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:30:47 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/17 16:17:56 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 06:27:22 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	ht_destroy(struct s_ht *ht)
 	t_ht_index	i;
 
 	i = 0;
-	while (i < ht->capacity)
+	while ((ht->occupied > 0) && (i < ht->capacity))
 	{
-		ht_del_item(ht, &ht->items[i]);
+		ht_unsafe_del_item(ht, &ht->items[i]);
 		i++;
 	}
 	free(ht->items);
@@ -41,7 +41,7 @@ void	ht_destroy(struct s_ht *ht)
  * @param key The key.
  * @return void* The value of the key, or NULL if the key is not found.
 */
-void	*ht_get(struct s_ht *ht, char *key)
+void	*ht_get(struct s_ht *ht, const char *key)
 {
 	t_ht_index			index;
 	t_ht_index			interval;
