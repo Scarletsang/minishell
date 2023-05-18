@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stringbuilder_shell.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 00:28:19 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 08:31:03 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ struct s_sb	*stringbuilder_shell_init(void)
 	struct s_sb	*sb;
 
 	sb = malloc(sizeof(struct s_sb));
+	if (!sb)
+		return (NULL);
 	if (sb_create(sb, 20))
 	{
 		free(sb);
@@ -26,66 +28,143 @@ struct s_sb	*stringbuilder_shell_init(void)
 	return (sb);
 }
 
-int	stringbuilder_shell(struct s_sb *ht, const char *line)
+void	sb_print(struct s_sb *sb)
 {
-	char	*arguments[2];
+	printf("%s\n", sb->buffer);
+}
 
-	if (ft_strcmp(line, "print") == 0)
+t_tshell_status	stringbuilder_shell_execute_append(struct s_sb *sb, \
+struct s_tparser *tparser)
+{
+	void	*param[2];
+
+	if (tparser_consume_one_parameter(tparser, TSHELL_STRING))
+		return (TSHELL_FAILURE);
+	param[0] = tparser_read(tparser);
+	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_INT))
 	{
-		ht_print(ht);
-		return (EXIT_SUCCESS);
+		if (sb_perform(sb, sb_action_append(param[0])))
+			return (TSHELL_FAILURE);
 	}
-	else if (ft_strcmp(line, "add") == ' ')
+	else
 	{
-		line += 4;
-		arguments[0] = consume_one(&line);
-		line++;
-		arguments[1] = consume_one(&line);
-		if (!arguments[0] || !arguments[1])
-		{
-			free_arguments(arguments);
-			return (EXIT_FAILURE);
-		}
-		if (ht_add(ht, arguments[0], arguments[1]))
-			return (EXIT_FAILURE);
-		ht_print(ht);
-		return (EXIT_SUCCESS);
+		param[1] = tparser_read(tparser);
+		if (sb_perform(sb, \
+			sb_action_append_len(param[0], \
+				*(unsigned int *) param[1])))
+			return (TSHELL_FAILURE);
 	}
-	else if (ft_strcmp(line, "update") == ' ')
+	sb_print(sb);
+	return (TSHELL_SUCCESS);
+}
+
+t_tshell_status	stringbuilder_shell_execute_insert(struct s_sb *sb, \
+struct s_tparser *tparser)
+{
+	void	*param[3];
+
+	if (tparser_consume_n_parameters(tparser, 2, TSHELL_STRING, TSHELL_INT))
+		return (TSHELL_FAILURE);
+	param[0] = tparser_read(tparser);
+	param[1] = tparser_read(tparser);
+	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_INT))
 	{
-		line += 7;
-		arguments[0] = consume_one(&line);
-		line++;
-		arguments[1] = consume_one(&line);
-		if (!arguments[0] || !arguments[1])
-		{
-			free_arguments(arguments);
-			return (EXIT_FAILURE);
-		}
-		if (ht_update(ht, arguments[0], arguments[1]))
-			return (EXIT_FAILURE);
-		ht_print(ht);
-		return (EXIT_SUCCESS);
+		if (sb_perform(sb, \
+			sb_action_insert(param[0], \
+				*(unsigned int *) param[1])))
+			return (TSHELL_FAILURE);
 	}
-	else if (ft_strcmp(line, "get") == ' ')
+	else
 	{
-		line += 4;
-		arguments[0] = consume_one(&line);
-		if (!arguments[0])
-			return (EXIT_FAILURE);
-		printf("got: %s\n", (char *) ht_get(ht, arguments[0]));
-		return (EXIT_SUCCESS);
+		param[2] = tparser_read(tparser);
+		if (sb_perform(sb, \
+			sb_action_insert_len(param[0], \
+				*(unsigned int *) param[1], \
+				*(unsigned int *) param[2])))
+			return (TSHELL_FAILURE);
 	}
-	else if (ft_strcmp(line, "del") == ' ')
+	sb_print(sb);
+	return (TSHELL_SUCCESS);
+}
+
+t_tshell_status	stringbuilder_shell_execute_delete(struct s_sb *sb, \
+struct s_tparser *tparser)
+{
+	void	*param[2];
+
+	if (tparser_consume_n_parameters(tparser, 2, TSHELL_INT, TSHELL_INT) || \
+		tparser_match_char(tparser, '\0'))
+		return (TSHELL_FAILURE);
+	param[0] = tparser_read(tparser);
+	param[1] = tparser_read(tparser);
+	if (sb_perform(sb, \
+		sb_action_insert(param[0], \
+			*(unsigned int *) param[1])))
+		return (TSHELL_FAILURE);
+	sb_print(sb);
+	return (TSHELL_SUCCESS);
+}
+
+t_tshell_status	stringbuilder_shell_execute_update(struct s_sb *sb, \
+struct s_tparser *tparser)
+{
+	void	*param[4];
+
+	if (tparser_consume_n_parameters(tparser, 3, TSHELL_STRING, TSHELL_INT, TSHELL_INT))
+		return (TSHELL_FAILURE);
+	param[0] = tparser_read(tparser);
+	param[1] = tparser_read(tparser);
+	param[2] = tparser_read(tparser);
+	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_INT))
 	{
-		line += 4;
-		arguments[0] = consume_one(&line);
-		if (!arguments[0])
-			return (EXIT_FAILURE);
-		ht_del(ht, arguments[0]);
-		ht_print(ht);
-		return (EXIT_SUCCESS);
+		if (sb_perform(sb, \
+			sb_action_replace(param[0], \
+				*(unsigned int *) param[1], \
+				*(unsigned int *) param[2])))
+			return (TSHELL_FAILURE);
 	}
-	
-	return (0);
+	else
+	{
+		param[3] = tparser_read(tparser);
+		if (sb_perform(sb, \
+			sb_action_replace_len(param[0], \
+				*(unsigned int *) param[1], \
+				*(unsigned int *) param[2], \
+				*(unsigned int *) param[3])))
+			return (TSHELL_FAILURE);
+	}
+	sb_print(sb);
+	return (TSHELL_SUCCESS);
+}
+// print
+// append str
+// append str len
+// insert str at
+// insert str len at
+// delete start len
+// replace str at len
+// replace str len at len 
+t_tshell_status	stringbuilder_shell(struct s_sb *sb, struct s_tparser *tparser)
+{
+	if (!tparser_match_string(tparser, "print"))
+	{
+		return (tshell_execute_printer(sb, tparser, (t_printer_func) sb_print));
+	}
+	if (!tparser_match_string(tparser, "append"))
+	{
+		return (stringbuilder_shell_execute_append(sb, tparser));
+	}
+	if (!tparser_match_string(tparser, "insert"))
+	{
+		return (stringbuilder_shell_execute_insert(sb, tparser));
+	}
+	if (!tparser_match_string(tparser, "delete"))
+	{
+		return (stringbuilder_shell_execute_delete(sb, tparser));
+	}
+	if (!tparser_match_string(tparser, "update"))
+	{
+		return (stringbuilder_shell_execute_update(sb, tparser));
+	}
+	return (TSHELL_SUCCESS);
 }
