@@ -28,7 +28,7 @@
 (* Basic components *)
 word             ::=   QUOTE  WORD QUOTE
                  |     DQUOTE WORD DQUOTE
-                 |            WORD       
+                 |            WORD
                  ;
 (* Structural syntax *)
 complete_command ::= command PIPE complete_command
@@ -41,12 +41,14 @@ command          ::= cmd_prefix cmd_word [cmd_suffix]
                  |              cmd_name [cmd_suffix]
                  ;
 cmd_name         ::= word
+				 | ASSIGNMENT_WORD
                  ;(* Apply rule 7a *)
 cmd_word         ::= word
+				 | ASSIGNMENT_WORD
                  ; (* Apply rule 7b *)
 cmd_prefix       ::= (io_redirect | ASSIGNMENT_WORD) [cmd_prefix]
                  ;
-cmd_suffix       ::= (io_redirect | cmd_parameter) [cmd_suffix] 
+cmd_suffix       ::= (io_redirect | cmd_parameter) [cmd_suffix]
                  ;
 cmd_parameter    ::= word
                  ;
