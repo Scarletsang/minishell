@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 08:29:32 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/18 09:43:06 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,22 @@ t_tshell_status	hashtable_shell_execute_del(struct s_ht *ht, struct s_tparser *t
 	return (TSHELL_SUCCESS);
 }
 
+t_tshell_status	hashtable_shell_print_mannual(void)
+{
+	printf("%-23s: Print the hash table\n", "print");
+	printf("%-23s: Add an entry to the hash table\n", "add key value");
+	printf("%-23s: Set a new value of an existing key\n", "update key value");
+	printf("%-23s: Get value of a key\n", "get key");
+	printf("%-23s: Delete an entry using a key\n", "del key");
+	return (TSHELL_SUCCESS);
+}
+
 t_tshell_status	hashtable_shell(struct s_ht *ht, struct s_tparser *tparser)
 {
+	if (!tparser_match_string(tparser, "help"))
+	{
+		return (hashtable_shell_print_mannual());
+	}
 	if (!tparser_match_string(tparser, "print"))
 	{
 		return (tshell_execute_printer(ht, tparser, (t_printer_func) ht_print));

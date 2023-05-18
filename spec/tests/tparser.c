@@ -188,9 +188,9 @@ static bool	tparser_has_overflow(int n, int digit, int neg)
 {
 	if (neg > 0)
 	{
-		return (n > (INT_MAX / 10) - digit);
+		return (n > (INT_MAX - digit) / 10);
 	}
-	return (n > (INT_MIN / 10) + digit);
+	return (n < (INT_MIN + digit) / 10 );
 }
 
 int	tparser_peek_digit(struct s_tparser *parser)
@@ -211,7 +211,7 @@ int	tparser_consume_int(struct s_tparser *tparser)
 	reset_line = tparser->line;
 	n = 0;
 	neg = 1;
-	if (tparser_match_char(tparser, '-'))
+	if (!tparser_match_char(tparser, '-'))
 		neg = -1;
 	else
 		tparser_match_char(tparser, '+');
@@ -227,9 +227,10 @@ int	tparser_consume_int(struct s_tparser *tparser)
 		n += digit;
 		tparser->line++;
 		digit = tparser_peek_digit(tparser);
+		if (digit == -1)
+			break ;
 		if (tparser_has_overflow(n, digit, neg))
 		{
-			printf("n: %d\n", n);
 			tparser->line = reset_line;
 			return (EXIT_FAILURE);
 		}

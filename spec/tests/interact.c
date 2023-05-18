@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:44:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 07:44:59 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/18 09:17:19 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void		interact(t_init_func init, t_program_func program, t_free_func cleaner)
 	states = init();
 	if (!states || tparser_create(&tparser, 10))
 		return ;
-	printf("interact shell> ");
+	printf("interactive shell> ");
 	fflush(stdout);
 	while (read(STDIN_FILENO, buffer, 100) > 0)
 	{
@@ -42,7 +42,7 @@ void		interact(t_init_func init, t_program_func program, t_free_func cleaner)
 			break;
 		if(program_status)
 			printf("Program error, received: %s\n", buffer);
-		printf("interact shell> ");
+		printf("interactive shell> ");
 		fflush(stdout);
 	}
 	cleaner(states);
