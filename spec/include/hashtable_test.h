@@ -1,13 +1,14 @@
 #ifndef HASHTABLE_TEST_H
 # define HASHTABLE_TEST_H
 
-#include "MINISHELL/hashtable.h"
+# include "tests.h"
+# include "MINISHELL/hashtable.h"
 
 void		expander_hashtable_test1();
 void		expander_hashtable_test2();
 void		expander_hashtable_test3();
 
-struct s_ht	*hashtable_shell_init(void);
-int			hashtable_shell(struct s_ht *ht, const char *line);
+struct s_ht		*hashtable_shell_init(void);
+t_tshell_status	hashtable_shell(struct s_ht *ht, struct s_tparser *tparser);
 
 #endif

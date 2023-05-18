@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cases.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:45:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/18 00:22:24 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/18 04:34:19 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
 #include "hashtable_test.h"
 
 // hashtable can add
@@ -27,14 +26,14 @@ void	expander_hashtable_test1()
 
 	ht_create(&ht, 10);
 	ht_print(&ht);
-	ht_add(&ht, ft_strdup("key1"), ft_strdup("value1"));
-	ht_add(&ht, ft_strdup("key2"), ft_strdup("value2"));
-	ht_add(&ht, ft_strdup("key3"), ft_strdup("value3"));
-	ht_add(&ht, ft_strdup("1key"), ft_strdup("1value"));
-	ht_add(&ht, ft_strdup("2key"), ft_strdup("2value"));
-	ht_add(&ht, ft_strdup("3key"), ft_strdup("3value"));
-	ht_add(&ht, ft_strdup("4key"), ft_strdup("4value"));
-	ht_add(&ht, ft_strdup("5key"), ft_strdup("5value"));
+	ht_add(&ht, strdup("key1"), strdup("value1"));
+	ht_add(&ht, strdup("key2"), strdup("value2"));
+	ht_add(&ht, strdup("key3"), strdup("value3"));
+	ht_add(&ht, strdup("1key"), strdup("1value"));
+	ht_add(&ht, strdup("2key"), strdup("2value"));
+	ht_add(&ht, strdup("3key"), strdup("3value"));
+	ht_add(&ht, strdup("4key"), strdup("4value"));
+	ht_add(&ht, strdup("5key"), strdup("5value"));
 	printf("\n");
 	ht_print(&ht);
 	printf("got: %s\n", (char *) ht_get(&ht, "key1"));
@@ -52,8 +51,8 @@ void	expander_hashtable_test1()
 	ht_del(&ht, "2key");
 	ht_del(&ht, "3key");
 	ht_del(&ht, "4key");
-	ht_add(&ht, ft_strdup("3key"), ft_strdup("im newwwwwwwwwww"));
-	ht_add(&ht, ft_strdup("3key"), ft_strdup("im newwww222wwwwwww"));
+	ht_add(&ht, strdup("3key"), strdup("im newwwwwwwwwww"));
+	ht_add(&ht, strdup("3key"), strdup("im newwww222wwwwwww"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key1"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key2"));
 	printf("got: %s\n", (char *) ht_get(&ht, "key3"));
@@ -72,7 +71,7 @@ void	expander_hashtable_test2()
 	struct s_ht	ht;
 
 	ht_create(&ht, 20);
-	ht_add(&ht, ft_strdup("3key"), ft_strdup("3value"));
+	ht_add(&ht, strdup("3key"), strdup("3value"));
 	ht_del(&ht, "3key");
 	ht_print(&ht);
 }
@@ -90,7 +89,7 @@ void	expander_hashtable_test3()
 	key = key_start;
 	while (key < (key_start + total))
 	{
-		ht_add(&ht, ft_strdup((char[2]) {key, 0}), ft_strdup((char[3]) {key, '!', 0}));
+		ht_add(&ht, strdup((char[2]) {key, 0}), strdup((char[3]) {key, '!', 0}));
 		key++;
 	}
 	ht_print(&ht);
