@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/18 06:28:48 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/20 04:17:42 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,28 @@
  * @param ht The hash table.
  * @param key The key.
  * @param value The value.
+ * @param owned_by_ht Specify whether the value is owned by the hash table.
  * @return int EXIT_SUCCESS if the key-value pair is added successfully,
+ * EXIT_FAILURE otherwise.
 */
-int	ht_add(struct s_ht *ht, const char *key, const void *value)
+int	ht_add(struct s_ht *ht, const char *key, const void *value, \
+bool owned_by_ht)
 {
-	t_ht_index			index;
-	t_ht_index			interval;
-	struct s_ht_item	*item;
+	struct s_ht_entry	*entry;
 
-	index = hash(key, ht->capacity);
-	item = &ht->items[index];
-	if (item->key && (ft_strcmp(item->key, key) == 0))
+	entry = ht_get_empty_item(ht, key);
+	if (!entry)
 		return (EXIT_FAILURE);
-	if (ht_unsafe_add_item(ht, item, key, value) == EXIT_SUCCESS)
-		return (EXIT_SUCCESS);
-	interval = hash_for_interval(key, ht->capacity);
-	while (item->key)
+	if (ht_entry_set_key(entry, key) || \
+		ht_entry_set_value(entry, value, owned_by_ht))
 	{
-		if (ft_strcmp(item->key, key) == 0)
-			return (EXIT_FAILURE);
-		index = (index + interval) % ht->capacity;
-		item = &ht->items[index];
+		ht_entry_delete(entry);
+		return (EXIT_FAILURE);
 	}
-	return (ht_unsafe_add_item(ht, item, key, value));
+	ht->occupied++;
+	if (ht->occupied * 100 / ht->capacity > 70)
+		return (ht_rehash(ht));
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -50,55 +49,33 @@ int	ht_add(struct s_ht *ht, const char *key, const void *value)
 */
 void	ht_del(struct s_ht *ht, const char *key)
 {
-	t_ht_index			index;
-	t_ht_index			interval;
-	struct s_ht_item	*item;
+	struct s_ht_entry	*entry;
 
-	index = hash(key, ht->capacity);
-	item = &ht->items[index];
-	if (!item->key && !item->deleted)
+	entry = ht_get_item(ht, key);
+	if (!entry)
 		return ;
-	if (item->key && (ft_strcmp(item->key, key) == 0))
-	{
-		ht_unsafe_del_item(ht, item);
-		return ;
-	}
-	interval = hash_for_interval(key, ht->capacity);
-	while (item->key || item->deleted)
-	{
-		index = (index + interval) % ht->capacity;
-		item = &ht->items[index];
-		if (item->key && (ft_strcmp(item->key, key) == 0))
-		{
-			ht_unsafe_del_item(ht, item);
-			return ;
-		}
-	}
+	ht_entry_delete(entry);
+	ht->occupied--;
 }
 
-int	ht_update(struct s_ht *ht, const char *key, const void *value)
+/**
+ * @brief Update the value of a key-value pair in the hash table.
+ * @param ht The hash table.
+ * @param key The key.
+ * @param value The value.
+ * @param owned_by_ht Specify whether the value is owned by the hash table.
+ * @return int EXIT_SUCCESS if the value is updated successfully,
+ * EXIT_FAILURE otherwise.
+*/
+int	ht_update(struct s_ht *ht, const char *key, const void *value, \
+bool owned_by_ht)
 {
-	t_ht_index			index;
-	t_ht_index			interval;
-	struct s_ht_item	*item;
+	struct s_ht_entry	*entry;
 
-	index = hash(key, ht->capacity);
-	item = &ht->items[index];
-	if (!item->key && !item->deleted)
+	entry = ht_get_item(ht, key);
+	if (!entry)
 		return (EXIT_FAILURE);
-	if (item->key && (ft_strcmp(item->key, key) == 0))
-	{
-		return (ht_unsafe_update_item(item, value));
-	}
-	interval = hash_for_interval(key, ht->capacity);
-	while (item->key || item->deleted)
-	{
-		index = (index + interval) % ht->capacity;
-		item = &ht->items[index];
-		if (item->key && (ft_strcmp(item->key, key) == 0))
-		{
-			return (ht_unsafe_update_item(item, value));
-		}
-	}
-	return (EXIT_FAILURE);
+	if (ht_entry_set_value(entry, value, owned_by_ht))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

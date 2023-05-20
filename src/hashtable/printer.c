@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:38:36 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/17 16:18:25 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/20 03:52:46 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	ht_print(struct s_ht *ht)
 	i = 0;
 	while (i < ht->capacity)
 	{
-		if (ht->items[i].key)
-			printf("%s: %s", ht->items[i].key, (char *) ht->items[i].value);
+		if (ht->entries[i].key)
+			printf("%s: %s", ht->entries[i].key, (char *) ht->entries[i].value);
 		else
 			printf("EMPTY");
-		if (ht->items[i].deleted)
+		if (ht->entries[i].deleted)
 			printf(" (deleted)\n");
 		else
 			printf("\n");

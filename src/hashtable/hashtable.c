@@ -6,18 +6,19 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:30:47 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/18 06:27:22 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/20 04:37:33 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/hashtable.h"
+#include <stdio.h>
 
 int	ht_create(struct s_ht *ht, const t_ht_index capacity)
 {
 	ht->capacity = capacity;
 	ht->occupied = 0;
-	ht->items = ft_calloc(capacity, sizeof(struct s_ht_item));
-	if (!ht->items)
+	ht->entries = ft_calloc(capacity, sizeof(struct s_ht_entry));
+	if (!ht->entries)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -29,10 +30,11 @@ void	ht_destroy(struct s_ht *ht)
 	i = 0;
 	while ((ht->occupied > 0) && (i < ht->capacity))
 	{
-		ht_unsafe_del_item(ht, &ht->items[i]);
+		ht_entry_delete(&ht->entries[i]);
+		ht->occupied--;
 		i++;
 	}
-	free(ht->items);
+	free(ht->entries);
 }
 
 /**
@@ -45,23 +47,70 @@ void	*ht_get(struct s_ht *ht, const char *key)
 {
 	t_ht_index			index;
 	t_ht_index			interval;
-	struct s_ht_item	*item;
+	struct s_ht_entry	*entry;
 
 	index = hash(key, ht->capacity);
-	item = &ht->items[index];
-	if (!item->key && !item->deleted)
+	entry = &ht->entries[index];
+	if (!entry->key && !entry->deleted)
 		return (NULL);
-	if (item->key && (ft_strcmp(item->key, key) == 0))
-		return (item->value);
+	if (entry->key && (ft_strcmp(entry->key, key) == 0))
+		return (entry->value);
 	interval = hash_for_interval(key, ht->capacity);
 	index = (index + interval) % ht->capacity;
-	item = &ht->items[index];
-	while (item->key || item->deleted)
+	entry = &ht->entries[index];
+	while (entry->key || entry->deleted)
 	{
-		if (item->key && (ft_strcmp(item->key, key) == 0))
-			return (item->value);
+		if (entry->key && (ft_strcmp(entry->key, key) == 0))
+			return (entry->value);
 		index = (index + interval) % ht->capacity;
-		item = &ht->items[index];
+		entry = &ht->entries[index];
 	}
 	return (NULL);
+}
+
+
+struct s_ht_entry	*ht_get_item(struct s_ht *ht, const char *key)
+{
+	t_ht_index			index;
+	t_ht_index			interval;
+	struct s_ht_entry	*entry;
+
+	index = hash(key, ht->capacity);
+	entry = &ht->entries[index];
+	if (!(entry->key || entry->deleted))
+		return (NULL);
+	if (entry->key && ft_strcmp(entry->key, key) == 0)
+		return (entry);
+	interval = hash_for_interval(key, ht->capacity);
+	while (entry->key || entry->deleted)
+	{
+		index = (index + interval) % ht->capacity;
+		entry = &ht->entries[index];
+		if (entry->key && (ft_strcmp(entry->key, key) == 0))
+			return (entry);
+	}
+	return (NULL);
+}
+
+struct s_ht_entry	*ht_get_empty_item(struct s_ht *ht, const char *key)
+{
+	t_ht_index			index;
+	t_ht_index			interval;
+	struct s_ht_entry	*entry;
+
+	index = hash(key, ht->capacity);
+	entry = &ht->entries[index];
+	if (!entry->key)
+		return (entry);
+	if (ft_strcmp(entry->key, key) == 0)
+		return (NULL);
+	interval = hash_for_interval(key, ht->capacity);
+	while (entry->key)
+	{
+		index = (index + interval) % ht->capacity;
+		entry = &ht->entries[index];
+		if (entry->key && (ft_strcmp(entry->key, key) == 0))
+			return (NULL);
+	}
+	return (entry);
 }
