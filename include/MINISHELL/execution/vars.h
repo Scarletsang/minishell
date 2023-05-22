@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 15:09:46 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 18:57:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,23 +19,17 @@
 # include "MINISHELL/hashtable.h"
 # include "MINISHELL/stringbuilder.h"
 
-struct s_minishell_environ
-{
-	char			**buffer;
-	unsigned int	last_environment_size;
-	bool			environment_changed;
-};
-
 struct s_minishell_vars
 {
-	t_ht						*environment;
-	t_ht						*shell;
-	struct s_minishell_environ	environ;
+	t_ht		environment;
+	t_ht		shell;
+	t_vector	envp;
+	bool		environnement_changed;
 };
 
 int		minishell_vars_init(struct s_minishell_vars *vars);
 
-void	minishell_vars_destroy(struct s_minishell_vars *vars);
+void	minishell_vars_free(struct s_minishell_vars *vars);
 
 int		minishell_vars_import(struct s_minishell_vars *vars, char **envp);
 
