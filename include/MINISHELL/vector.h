@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:44:56 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 15:05:36 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 18:13:36 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,30 @@
 # include <limits.h>
 # include "libft.h"
 
-typedef void	(*t_vector_setter)(void *buffer, void *data);
+/**
+ * @brief A vector setter is an assigment function to assign the value of
+ * an item to the another item. It is equvalent to the assignment operator in
+ * c++. Since the vector is a generic data structure, it needs to know how to
+ * assign the value of an item to another item. When a vector needs to resize or
+ * do insertion, it needs to copy the value of the items to the new buffer.
+ * While using memcpy is a valid option, it is a very inefficient way to copy
+ * items.
+*/
+typedef void	(*t_vector_setter)(void *dest, void *src);
 
+/**
+ * @brief A vector is a generic data structure that stores items of the same
+ * type. It is similar to the std::vector in c++. In other words, it is a 
+ * dynamic array. When the array is full, it will automatically resize itself
+ * to accomodate more items.
+ * 
+ * @details
+ * buffer: The array that holds the items.
+ * item_size: The size of each item in the vector.
+ * size: The number of items in the vector.
+ * capacity: The number of items that the vector can hold.
+ * setter: The function that assigns the value of an item to another item.
+*/
 typedef struct s_vector
 {
 	void			*buffer;

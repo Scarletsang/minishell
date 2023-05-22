@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 14:46:45 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 18:12:09 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,14 @@
 /**
  * @brief A String Builder action stores information about the a string
  * builder operation.
- * 
- * When 
+ * @param entry_str The string to be inserted into the string builder.
+ * @param entry_str_len The length of the string to be inserted into the string
+ * builder.
+ * @param edit_start The index of the string builder where the string will be
+ * inserted.
+ * @param edit_len The length of the string to be replaced in the string builder.
+ * @param field_validator A bit field that indicates which fields are valid. It
+ * is needed because some actions may not need all the fields.
 */
 struct s_sb_action
 {
