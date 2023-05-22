@@ -1,30 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   vars_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 21:59:41 by htsang           ###   ########.fr       */
+/*   Created: 2023/05/22 19:27:13 by htsang            #+#    #+#             */
+/*   Updated: 2023/05/22 19:49:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
-#include "hashtable_test.h"
-#include "stringbuilder_test.h"
+#include "vars_test.h"
 
-int	main(void)
-{
-	// expander_hashtable_test1();
-	// expander_hashtable_test3();
-	interact(\
-		(t_init_func) hashtable_shell_init, \
-		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free);
-	// interact(\
-	// 	(t_init_func) stringbuilder_shell_init, \
-	// 	(t_program_func) stringbuilder_shell, \
-	// 	(t_free_func) sb_free);
-	return (0);
-}
+// struct s_minishell_vars	*vars_shell_init(void)
+// {
+	
+// }
+
+// t_tshell_status			vars_shell(struct s_minishell_vars *vars, \
+// struct s_tparser *tparser)
+// {
+
+// }

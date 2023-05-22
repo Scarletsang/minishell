@@ -8,6 +8,8 @@
 # include <limits.h>
 # include <string.h>
 
+# define TSHELL_MAX_INPUT_SIZE 100
+
 //////////////////////////////////////////////
 /////////////      parser      ///////////////
 //////////////////////////////////////////////
@@ -95,6 +97,23 @@ typedef enum	e_tshell_status
 typedef	void			*(*t_init_func)(void);
 typedef	t_tshell_status	(*t_program_func)(void *states, struct s_tparser *parser);
 typedef	void			(*t_free_func)(void *states);
+
+struct s_tshell
+{
+	const char		name[20];
+	t_init_func		init;
+	t_program_func	program;
+	t_free_func		cleaner;
+};
+
+struct s_tshell_lines
+{
+	char	buffer[TSHELL_MAX_INPUT_SIZE];
+	char	*current_line;
+	size_t	current_line_size;
+	size_t	previous_all_lines_sum_size;
+	ssize_t	read_size;
+};
 
 void				interact(t_init_func init, t_program_func program, t_free_func cleaner);
 
