@@ -3,46 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:09:57 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 00:10:33 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/22 04:39:43 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/stringbuilder.h"
 
-static void	sb_injection_word(struct s_sb *sb, struct s_sb_action *action)
+static void	sb_injection_word(t_sb *sb, struct s_sb_action *action)
 {
-	t_sb_size	replace_word_end;
-
-	replace_word_end = action->edit_start + action->edit_len;
-	ft_memmove(sb->buffer + action->edit_start + action->entry_str_len, \
-		sb->buffer + replace_word_end, sb->size - replace_word_end);
-	ft_memcpy(sb->buffer + action->edit_start, action->entry_str, \
-		action->entry_str_len);
+	vector_buffer_shift(sb, action->edit_start + action->entry_str_len, \
+		action->edit_start + action->edit_len);
+	vector_buffer_copy_from(sb, (void *) action->entry_str, \
+		action->edit_start, action->entry_str_len);
 	sb->size += action->entry_str_len - action->edit_len;
-	sb->buffer[sb->size] = 0;
 }
 
-static int	sb_perform_delete(struct s_sb *sb, struct s_sb_action *action)
+static int	sb_perform_delete(t_sb *sb, struct s_sb_action *action)
 {
-	t_sb_size	remaining_size;
+	size_t	remaining_size;
 
 	if (action->edit_start > sb->size)
 		return (EXIT_FAILURE);
 	remaining_size = sb->size - action->edit_start;
 	if (action->edit_len >= remaining_size)
 	{
-		sb->buffer[action->edit_start] = 0;
+		vector_set(sb, action->edit_start, "\0");
 		sb->size = action->edit_start;
 		return (EXIT_SUCCESS);
 	}
 	remaining_size -= action->edit_len;
 	sb->size -= action->edit_len;
-	ft_memmove(sb->buffer + action->edit_start, \
-		sb->buffer + action->edit_start + action->edit_len, remaining_size);
-	sb->buffer[sb->size] = 0;
+	vector_buffer_shift(sb, action->edit_start, \
+		action->edit_start + action->edit_len);
+	vector_set(sb, sb->size, "\0");
 	return (EXIT_SUCCESS);
 }
 
@@ -56,7 +52,7 @@ static int	sb_perform_delete(struct s_sb *sb, struct s_sb_action *action)
  * between the replacement string length and the substring length.
  * 4. Copy the replacement string at the replacement index.
 */
-static int	sb_perform_replace(struct s_sb *sb, struct s_sb_action *action)
+static int	sb_perform_replace(t_sb *sb, struct s_sb_action *action)
 {
 	if (action->edit_start > sb->size)
 		return (EXIT_FAILURE);
@@ -83,7 +79,7 @@ static int	sb_perform_replace(struct s_sb *sb, struct s_sb_action *action)
  * length.
  * 4. Copy the insertion string at the insertion index.
 */
-static int	sb_perform_insert(struct s_sb *sb, struct s_sb_action *action)
+static int	sb_perform_insert(t_sb *sb, struct s_sb_action *action)
 {
 	if (action->edit_start > sb->size)
 		return (EXIT_FAILURE);
@@ -96,7 +92,7 @@ static int	sb_perform_insert(struct s_sb *sb, struct s_sb_action *action)
 	return (EXIT_SUCCESS);
 }
 
-int	sb_perform(struct s_sb *sb, struct s_sb_action action)
+int	sb_perform(t_sb *sb, struct s_sb_action action)
 {
 	if (!action.entry_str)
 		return (sb_perform_delete(sb, &action));
@@ -113,7 +109,7 @@ int	sb_perform(struct s_sb *sb, struct s_sb_action action)
 	action.field_validator |= SB_EDIT_LEN_BIT;
 	if (!sb_action_has_edit_start(&action))
 	{
-		action.edit_start = sb->size;
+		action.edit_start = sb->size - 1;
 		action.field_validator |= SB_EDIT_START_BIT;
 	}
 	return (sb_perform_insert(sb, &action));

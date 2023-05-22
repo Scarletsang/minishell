@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stringbuilder.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 00:18:27 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/22 14:46:45 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,10 @@
 # define STRINGBUILDER_H
 
 # include <stdlib.h>
-# include "libft.h"
 # include <stdbool.h>
 # include <limits.h>
-
-# define SB_MAX_SIZE UINT_MAX
-
-typedef unsigned int	t_sb_size;
-
+# include "libft.h"
+# include "MINISHELL/vector.h"
 
 ////////////////////////////////////////////////
 ////////     String Builder action    //////////
@@ -36,9 +32,9 @@ typedef unsigned int	t_sb_size;
 struct s_sb_action
 {
 	const char		*entry_str;
-	t_sb_size		entry_str_len;
-	t_sb_size		edit_start;
-	t_sb_size		edit_len;
+	size_t			entry_str_len;
+	size_t			edit_start;
+	size_t			edit_len;
 	unsigned int	field_validator : 3;
 };
 
@@ -53,22 +49,22 @@ struct s_sb_action
 struct s_sb_action	sb_action_append(const char *str);
 
 struct s_sb_action	sb_action_append_len(const char *str, \
-const t_sb_size str_len);
+const size_t str_len);
 
 struct s_sb_action	sb_action_insert(const char *str, \
-const t_sb_size edit_start);
+const size_t edit_start);
 
 struct s_sb_action	sb_action_insert_len(const char *str, \
-const t_sb_size str_len, const t_sb_size edit_start);
+const size_t str_len, const size_t edit_start);
 
-struct s_sb_action	sb_action_delete(const t_sb_size edit_start, \
-const t_sb_size edit_len);
+struct s_sb_action	sb_action_delete(const size_t edit_start, \
+const size_t edit_len);
 
 struct s_sb_action	sb_action_replace(const char *str, \
-const t_sb_size edit_start, const t_sb_size edit_len);
+const size_t edit_start, const size_t edit_len);
 
 struct s_sb_action	sb_action_replace_len(const char *str, \
-const t_sb_size str_len, const t_sb_size edit_start, const t_sb_size edit_len);
+const size_t str_len, const size_t edit_start, const size_t edit_len);
 
 /////////////////////////////////////////////////////////////////
 ////////     String Builder action field validator     //////////
@@ -101,19 +97,14 @@ bool				sb_action_has_edit_len(struct s_sb_action *action);
  * @brief The String builder allows easy and efficient construction of strings
  * from smaller pieces. It is implemented as a dynamic array of characters.
 */
-struct s_sb
-{
-	char		*buffer;
-	t_sb_size	size;
-	t_sb_size	capacity;
-};
+typedef t_vector	t_sb;
 
-int					sb_create(struct s_sb *sb, const t_sb_size capacity);
+int					sb_init(t_sb *sb, const size_t capacity);
 
-int					sb_resize(struct s_sb *sb);
+int					sb_perform(t_sb *sb, struct s_sb_action action);
 
-int					sb_perform(struct s_sb *sb, struct s_sb_action action);
+int					sb_resize(t_sb *sb);
 
-void				sb_destroy(struct s_sb *sb);
+void				sb_free(t_sb *sb);
 
 #endif

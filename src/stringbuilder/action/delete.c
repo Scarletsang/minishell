@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   delete.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:55:14 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/17 19:26:48 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/22 02:09:27 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/stringbuilder.h"
 
-struct s_sb_action	sb_action_delete(const t_sb_size edit_start, \
-const t_sb_size edit_len)
+struct s_sb_action	sb_action_delete(const size_t edit_start, \
+const size_t edit_len)
 {
 	return ((struct s_sb_action){
 		.entry_str = NULL,
@@ -24,7 +24,7 @@ const t_sb_size edit_len)
 }
 
 struct s_sb_action	sb_action_replace(const char *str, \
-const t_sb_size edit_start, const t_sb_size edit_len)
+const size_t edit_start, const size_t edit_len)
 {
 	return ((struct s_sb_action){
 		.entry_str = str,
@@ -35,7 +35,7 @@ const t_sb_size edit_start, const t_sb_size edit_len)
 }
 
 struct s_sb_action	sb_action_replace_len(const char *str, \
-const t_sb_size str_len, const t_sb_size edit_start, const t_sb_size edit_len)
+const size_t str_len, const size_t edit_start, const size_t edit_len)
 {
 	return ((struct s_sb_action){
 		.entry_str = str,

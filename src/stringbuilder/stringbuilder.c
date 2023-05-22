@@ -1,51 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stringBuilder.c                                    :+:      :+:    :+:   */
+/*   stringbuilder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:07 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/17 19:17:01 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/22 03:21:38 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/stringbuilder.h"
 
-int	sb_create(struct s_sb *sb, const t_sb_size capacity)
+int	sb_init(t_sb *sb, const size_t capacity)
 {
-	sb->buffer = ft_calloc(capacity, sizeof(char));
-	if (!sb->buffer)
+	if(vector_init(sb, sizeof(char), capacity + 1, vector_set_char))
 		return (EXIT_FAILURE);
-	sb->capacity = capacity;
-	sb->size = 0;
+	vector_set(sb, 0, "\0");
+	sb->size = 1;
 	return (EXIT_SUCCESS);
 }
 
-int	sb_resize(struct s_sb *sb)
+int	sb_resize(t_sb *sb)
 {
-	char		*new_buffer;
-	t_sb_size	new_capacity;
-
-	if (sb->capacity == SB_MAX_SIZE)
-		return (EXIT_FAILURE);
-	new_capacity = sb->capacity * 2;
-	if (new_capacity > (SB_MAX_SIZE / 2))
-		new_capacity = SB_MAX_SIZE;
-	new_buffer = ft_calloc(new_capacity, sizeof(char));
-	if (!new_buffer)
-		return (EXIT_FAILURE);
-	ft_memcpy(new_buffer, sb->buffer, sb->size);
-	free(sb->buffer);
-	sb->buffer = new_buffer;
-	sb->capacity = new_capacity;
-	return (EXIT_SUCCESS);
+	return (vector_resize(sb));
 }
 
-void	sb_destroy(struct s_sb *sb)
+void	sb_free(t_sb *sb)
 {
-	free(sb->buffer);
-	sb->buffer = NULL;
-	sb->capacity = 0;
-	sb->size = 0;
+	vector_free(sb);
 }

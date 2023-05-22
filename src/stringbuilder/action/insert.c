@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   insert.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 17:44:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/17 19:27:01 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/22 02:09:06 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ struct s_sb_action	sb_action_append(const char *str)
 }
 
 struct s_sb_action	sb_action_append_len(const char *str, \
-const t_sb_size str_len)
+const size_t str_len)
 {
 	return ((struct s_sb_action){
 		.entry_str = str,
@@ -31,7 +31,7 @@ const t_sb_size str_len)
 }
 
 struct s_sb_action	sb_action_insert(const char *str, \
-const t_sb_size edit_start)
+const size_t edit_start)
 {
 	return ((struct s_sb_action){
 		.entry_str = str,
@@ -41,7 +41,7 @@ const t_sb_size edit_start)
 }
 
 struct s_sb_action	sb_action_insert_len(const char *str, \
-const t_sb_size str_len, const t_sb_size edit_start)
+const size_t str_len, const size_t edit_start)
 {
 	return ((struct s_sb_action){
 		.entry_str = str,
