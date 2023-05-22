@@ -6,21 +6,21 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/18 09:35:44 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 14:20:22 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 #include "stringbuilder_test.h"
 
-struct s_sb	*stringbuilder_shell_init(void)
+t_sb	*stringbuilder_shell_init(void)
 {
-	struct s_sb	*sb;
+	t_sb	*sb;
 
-	sb = malloc(sizeof(struct s_sb));
+	sb = malloc(sizeof(t_sb));
 	if (!sb)
 		return (NULL);
-	if (sb_create(sb, 20))
+	if (sb_init(sb, 20))
 	{
 		free(sb);
 		return (NULL);
@@ -28,12 +28,12 @@ struct s_sb	*stringbuilder_shell_init(void)
 	return (sb);
 }
 
-void	sb_print(struct s_sb *sb)
+void	sb_print(t_sb *sb)
 {
-	printf("%s\n", sb->buffer);
+	printf("%s\n", (char *) sb->buffer);
 }
 
-t_tshell_status	stringbuilder_shell_execute_append(struct s_sb *sb, \
+t_tshell_status	stringbuilder_shell_execute_append(t_sb *sb, \
 struct s_tparser *tparser)
 {
 	void	*param[2];
@@ -59,7 +59,7 @@ struct s_tparser *tparser)
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	stringbuilder_shell_execute_insert(struct s_sb *sb, \
+t_tshell_status	stringbuilder_shell_execute_insert(t_sb *sb, \
 struct s_tparser *tparser)
 {
 	void	*param[3];
@@ -90,7 +90,7 @@ struct s_tparser *tparser)
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	stringbuilder_shell_execute_delete(struct s_sb *sb, \
+t_tshell_status	stringbuilder_shell_execute_delete(t_sb *sb, \
 struct s_tparser *tparser)
 {
 	void	*param[2];
@@ -109,7 +109,7 @@ struct s_tparser *tparser)
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	stringbuilder_shell_execute_replace(struct s_sb *sb, \
+t_tshell_status	stringbuilder_shell_execute_replace(t_sb *sb, \
 struct s_tparser *tparser)
 {
 	void	*param[4];
@@ -163,7 +163,7 @@ t_tshell_status	stringbuilder_shell_print_mannual(void)
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	stringbuilder_shell(struct s_sb *sb, struct s_tparser *tparser)
+t_tshell_status	stringbuilder_shell(t_sb *sb, struct s_tparser *tparser)
 {
 	if (!tparser_match_string(tparser, "help"))
 	{

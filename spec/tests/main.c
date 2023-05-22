@@ -23,8 +23,8 @@ int	main(void)
 	// 	(t_program_func) hashtable_shell, \
 	// 	(t_free_func) ht_destroy);
 	interact(\
-		(t_init_func) stringbuilder_shell_init, \
-		(t_program_func) stringbuilder_shell, \
-		(t_free_func) sb_destroy);
+	// 	(t_init_func) stringbuilder_shell_init, \
+	// 	(t_program_func) stringbuilder_shell, \
+	// 	(t_free_func) sb_free);
 	return (0);
 }
