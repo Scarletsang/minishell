@@ -12,6 +12,7 @@ ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
 endif
+SRC_DIR:=tests
 INCLUDE_DIR= \
 	include \
 	../include \
@@ -24,7 +25,7 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-TEST_SRC:= $(shell cd tests && echo *.c)
+TEST_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR) -name '*.c'))
 SRC:= $(TEST_SRC)
 
 ####################################
@@ -35,7 +36,6 @@ SRC:= $(TEST_SRC)
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
 TARGET= $(TARGET_DIR)lib$(TARGET_NAME).so
-LIBFT=../lib/libft/libft.a
 
 # To add a library, add the library header file like this:
 # LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
@@ -44,7 +44,6 @@ LIBFT=../lib/libft/libft.a
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
 LDFLAGS+= -l$(TARGET_NAME) -L $(TARGET_DIR)
-LDFLAGS+= $(LIBFT)
 
 ###########################################
 ######     Object name reformat     #######
@@ -52,7 +51,6 @@ LDFLAGS+= $(LIBFT)
 
 # This in effect makes all the object files to be compiled in the OBJ_DIR directory
 
-SRC_DIR:=tests
 OBJ_DIR:=obj
 OBJ:= $(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
 

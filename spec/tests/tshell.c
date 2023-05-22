@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tshell.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 12:42:56 by anthonytsan      ###   ########.fr       */
+/*   Created: 2023/05/18 05:58:21 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/05/18 07:48:12 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
-#include "hashtable_test.h"
-#include "stringbuilder_test.h"
 
-int	main(void)
+t_tshell_status	tshell_execute_printer(void *states, \
+struct s_tparser *tparser, t_printer_func func)
 {
-	// expander_hashtable_test1();
-	// expander_hashtable_test3();
-	interact(\
-		(t_init_func) hashtable_shell_init, \
-		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free);
-	// interact(\
-	// 	(t_init_func) stringbuilder_shell_init, \
-	// 	(t_program_func) stringbuilder_shell, \
-	// 	(t_free_func) sb_free);
-	return (0);
+	tparser_ignore_spaces(tparser);
+	if (tparser_match_char(tparser, '\0'))
+		return (TSHELL_FAILURE);
+	func(states);
+	return (TSHELL_SUCCESS);
 }

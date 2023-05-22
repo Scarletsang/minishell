@@ -20,14 +20,28 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-EXPANDER_HASHTABLE_SRC:= \
-	expander/hashtable/hashtable.c \
-	expander/hashtable/mutation.c \
-	expander/hashtable/printer.c \
-	expander/hashtable/internals.c
+VECTOR_SRC:= \
+	vector/vector.c \
+	vector/buffer.c \
+	vector/setters.c \
+	vector/action.c
+HASHTABLE_SRC:= \
+	hashtable/hashtable.c \
+	hashtable/mutation.c \
+	hashtable/printer.c \
+	hashtable/getters.c \
+	hashtable/entry.c \
+	hashtable/hash/hash.c \
+	hashtable/hash/rehash.c
+STRINGBUILDER_SRC:= \
+	stringbuilder/stringbuilder.c \
+	stringbuilder/action/action.c \
+	stringbuilder/action/delete.c \
+	stringbuilder/action/insert.c \
+	stringbuilder/action/field_validator.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(EXPANDER_HASHTABLE_SRC) $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
