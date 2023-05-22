@@ -8,7 +8,7 @@ void		expander_hashtable_test1();
 void		expander_hashtable_test2();
 void		expander_hashtable_test3();
 
-struct s_ht		*hashtable_shell_init(void);
-t_tshell_status	hashtable_shell(struct s_ht *ht, struct s_tparser *tparser);
+t_ht			*hashtable_shell_init(void);
+t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser);
 
 #endif
