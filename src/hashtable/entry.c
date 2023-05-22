@@ -16,7 +16,7 @@ void	ht_entry_init(struct s_ht_entry *entry)
 {
 	entry->key = NULL;
 	entry->value = NULL;
-	entry->is_owned = false;
+	entry->cleaner = NULL;
 	entry->deleted = false;
 }
 
@@ -24,11 +24,15 @@ void	ht_entry_delete(struct s_ht_entry *entry)
 {
 	if (entry->key)
 		free(entry->key);
-	if (entry->is_owned && entry->value)
-		free(entry->value);
+	if (entry->cleaner && entry->value)
+	{
+		entry->cleaner(entry->value);
+		if (entry->cleaner != free)
+			free(entry->value);
+	}
 	entry->key = NULL;
 	entry->value = NULL;
-	entry->is_owned = false;
+	entry->cleaner = NULL;
 	entry->deleted = true;
 }
 
@@ -42,21 +46,21 @@ int	ht_entry_set_key(struct s_ht_entry *entry, const char *key)
 }
 
 int	ht_entry_set_value(struct s_ht_entry *entry, const void *value, \
-bool owned_by_ht)
+t_ht_entry_cleaner cleaner)
 {
-	if (entry->is_owned && entry->value)
-		free(entry->value);
-	if (value && owned_by_ht)
+	if (entry->cleaner && entry->value)
+		entry->cleaner(entry->value);
+	if (value && cleaner)
 	{
 		entry->value = ft_strdup(value);
 		if (!entry->value)
 			return (EXIT_FAILURE);
-		entry->is_owned = true;
+		entry->cleaner = cleaner;
 	}
 	else
 	{
 		entry->value = (void *) value;
-		entry->is_owned = false;
+		entry->cleaner = NULL;
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,16 +6,16 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/20 04:17:27 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 05:05:23 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/hashtable.h"
 
-t_ht_index	hash(const char *key, t_ht_index capacity)
+size_t	hash(const char *key, size_t capacity)
 {
 	unsigned long	hash;
-	t_ht_index		i;
+	size_t		i;
 
 	hash = 0;
 	i = 0;
@@ -27,9 +27,9 @@ t_ht_index	hash(const char *key, t_ht_index capacity)
 	return (hash % capacity);
 }
 
-static bool	is_coprime(t_ht_index a, t_ht_index b)
+static bool	is_coprime(size_t a, size_t b)
 {
-	t_ht_index	tmp;
+	size_t	tmp;
 
 	while (b != 0)
 	{
@@ -40,11 +40,11 @@ static bool	is_coprime(t_ht_index a, t_ht_index b)
 	return (a == 1);
 }
 
-t_ht_index	hash_for_interval(const char *key, t_ht_index capacity)
+size_t	hash_for_interval(const char *key, size_t capacity)
 {
 	unsigned long	hash;
-	t_ht_index		interval;
-	t_ht_index		max_interval;
+	size_t		interval;
+	size_t		max_interval;
 
 	hash = 0;
 	while (*key)

@@ -29,9 +29,10 @@ HASHTABLE_SRC:= \
 	hashtable/hashtable.c \
 	hashtable/mutation.c \
 	hashtable/printer.c \
+	hashtable/getters.c \
 	hashtable/entry.c \
-	hashtable/internals/hash.c \
-	hashtable/internals/rehash.c
+	hashtable/hash/hash.c \
+	hashtable/hash/rehash.c
 STRINGBUILDER_SRC:= \
 	stringbuilder/stringbuilder.c \
 	stringbuilder/action/action.c \
