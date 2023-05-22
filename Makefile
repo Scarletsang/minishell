@@ -20,6 +20,11 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
+VECTOR_SRC:= \
+	vector/vector.c \
+	vector/buffer.c \
+	vector/setters.c \
+	vector/action.c
 HASHTABLE_SRC:= \
 	hashtable/hashtable.c \
 	hashtable/mutation.c \
@@ -35,7 +40,7 @@ STRINGBUILDER_SRC:= \
 	stringbuilder/action/field_validator.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
