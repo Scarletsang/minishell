@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:13:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:30:27 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 19:13:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	vector_resize(t_vector *vector)
 
 void	vector_free(t_vector *vector)
 {
-	free(vector->buffer);
+	if (vector->buffer)
+		free(vector->buffer);
 	vector->buffer = NULL;
 	vector->item_size = 0;
 	vector->size = 0;
