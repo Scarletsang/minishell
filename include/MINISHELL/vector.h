@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:44:56 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:46:48 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 15:05:36 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef void	(*t_vector_setter)(void *buffer, void *data);
 
-typedef struct	s_vector
+typedef struct s_vector
 {
 	void			*buffer;
 	size_t			item_size;

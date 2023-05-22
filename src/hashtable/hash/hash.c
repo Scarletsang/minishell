@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:52:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 05:05:23 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/22 15:04:07 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 size_t	hash(const char *key, size_t capacity)
 {
 	unsigned long	hash;
-	size_t		i;
+	size_t			i;
 
 	hash = 0;
 	i = 0;
@@ -42,9 +42,9 @@ static bool	is_coprime(size_t a, size_t b)
 
 size_t	hash_for_interval(const char *key, size_t capacity)
 {
-	unsigned long	hash;
-	size_t		interval;
-	size_t		max_interval;
+	size_t	hash;
+	size_t	interval;
+	size_t	max_interval;
 
 	hash = 0;
 	while (*key)
