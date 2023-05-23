@@ -8,9 +8,6 @@
 %token  WORD
 %token  ASSIGNMENT_WORD
 
-%token  QUOTE  DQUOTE
-(*      '''     '"'  *)
-
 %token  DLESS  DGREAT LESS GREAT
 (*      '<<'   '>>'   '<'   '>'  *)
 
@@ -25,11 +22,6 @@
 %start  complete_command
 %%
 
-(* Basic components *)
-word             ::=   QUOTE  WORD QUOTE
-                 |     DQUOTE WORD DQUOTE
-                 |            WORD
-                 ;
 (* Structural syntax *)
 complete_command ::= command PIPE complete_command
                  |   command
