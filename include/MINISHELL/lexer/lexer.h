@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/22 15:25:23 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/23 21:29:10 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@ typedef enum e_token_type
 {
 	TOKEN_WORD,
 	TOKEN_ASSIGNMENT_WORD,
-	TOKEN_QUOTE,
-	TOKEN_DQUOTE,
 	TOKEN_DLESS,
 	TOKEN_DGREAT,
 	TOKEN_LESS,
 	TOKEN_GREAT,
 	TOKEN_PIPE,
 	TOKEN_ERROR,
+	TOKEN_EOF
 }				t_token_type;
 
 struct s_scanner
@@ -55,5 +54,12 @@ struct s_lexer
 	struct s_token_list	*end;
 	struct s_scanner	scanner;
 };
+
+// return all tokens which has the data structure of linked list
+
+// lexer_init
+
+// tokens_create (creating while reading the line)
+
 
 #endif
