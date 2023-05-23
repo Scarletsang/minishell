@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   loader.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/23 12:42:50 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/23 18:48:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 #include <unistd.h>
 #include "tests.h"
 
-static void	*shell_shell_init(void)
+static void	*loader_shell_init(void)
 {
 	return (NULL);
 }
 
-static t_tshell_status	shell_shell_execute(void *nothing, struct s_tparser *tparser)
+static void	loader_something(void *nothing)
 {
 	pid_t	pid;
 
@@ -33,11 +33,25 @@ static t_tshell_status	shell_shell_execute(void *nothing, struct s_tparser *tpar
 		return (TSHELL_FAILURE);
 	}
 	waitpid(pid, NULL, 0);
-	return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);	
+}
+
+t_tshell_status	loader_shell_print_mannual(void)
+{
+	printf("%-23s: List all avaliable shells\n", "list");
+	printf("%-23s: Run a shell\n", "run [shell]");
+	printf("%-23s: Redirects the content of a file to a shell\n", "run [shell] on [file]");
+	return (TSHELL_SUCCESS);
+}
+
+static t_tshell_status	loader_shell_execute(void *nothing, struct s_tparser *tparser)
+{
+	if (tparser_match_string(tparser, "help"))
+		return (loader_shell_print_mannual());
 }
 
 int	main(void)
 {
-	interact(shell_shell_init, shell_shell_execute, NULL);
+	interact(loader_shell_init, loader_shell_execute, NULL);
 	return (0);
 }

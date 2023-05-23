@@ -3,56 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   interact.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:44:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/23 12:28:46 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/23 21:01:50 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 
-void	tshell_lines_init(struct s_tshell_lines *lines)
-{
-	lines->current_line = lines->buffer;
-	lines->current_line_size = 0;
-	lines->previous_all_lines_sum_size = 0;
-}
-
-static t_tshell_status	tshell_process_line(struct s_tshell_lines *lines)
-{
-	char	*line_end;
-
-	if (lines->previous_all_lines_sum_size >= TSHELL_MAX_INPUT_SIZE)
-		return (TSHELL_FAILURE);
-	line_end = strchr(lines->current_line, '\n');
-	if (!line_end)
-		return (TSHELL_EXIT);
-	*line_end = 0;
-	lines->current_line_size = line_end - lines->current_line;
-	lines->previous_all_lines_sum_size += lines->current_line_size;
-	return (TSHELL_SUCCESS);
-}
-
-static t_tshell_status	tshell_run_program(t_program_func program, \
-void *states, struct s_tparser *tparser, char *buffer)
-{
-	t_tshell_status	program_status;
-
-	program_status = program(states, tparser);
-	if (program_status == TSHELL_EXIT)
-		return (program_status);
-	if(program_status)
-		printf("Program error, received: %s\n", buffer);
-	return (program_status);
-}
-
 static t_tshell_status	tshell_run(t_program_func program, void *states, \
 struct s_tparser *tparser, struct s_tshell_lines *lines)
 {
 	t_tshell_status	line_process_status;
+	t_tshell_status	program_status;
 
-	line_process_status = tshell_process_line(lines);
+	line_process_status = tshell_lines_process_one(lines);
 	if (line_process_status == TSHELL_EXIT)
 	{
 		printf("Line too long\n");
@@ -60,21 +26,31 @@ struct s_tparser *tparser, struct s_tshell_lines *lines)
 	}
 	while (!line_process_status)
 	{
-		if(strcmp(lines->current_line, "exit") == 0)
+		program_status = tshell_builtins_exit(lines);
+		if (program_status == TSHELL_FAILURE)
+		{
+			program_status = tshell_builtins_load(states, tparser);
+			tparser_reset(tparser, lines->current_line);
+		}
+		if (program_status == TSHELL_FAILURE)
+		{
+			program_status = program(states, tparser);
+			tparser_reset(tparser, lines->current_line);
+		}
+		if (program_status == TSHELL_EXIT)
 			return (TSHELL_EXIT);
-		tparser_reset(tparser, lines->current_line);
-		if (tshell_run_program(program, states, tparser, lines->current_line) == TSHELL_EXIT)
-			return (TSHELL_EXIT);
+		if (program_status == TSHELL_FAILURE)
+			printf("Program error, received: %s\n", lines->current_line);
 		lines->current_line += lines->current_line_size + 1;
-		line_process_status = tshell_process_line(lines);
+		line_process_status = tshell_lines_process_one(lines);
 	}
 	return (TSHELL_SUCCESS);
 }
 
 void		interact(t_init_func init, t_program_func program, t_free_func cleaner)
 {
-	struct s_tparser		tparser;
 	void					*states;
+	struct s_tparser		tparser;
 	struct s_tshell_lines	lines;
 
 	states = init();
