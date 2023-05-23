@@ -143,10 +143,10 @@ endif
 pack: CFLAGS += -fPIC
 pack: LDFLAGS += -shared
 pack: $(LIBFT) $(OBJ)
-	@$(CC) $(OBJ) -o lib$(NAME).so $(LDFLAGS) && echo "Compilation of $(NAME).so successful"
+	@$(CC) $(OBJ) -o lib$(NAME).dylib $(LDFLAGS) && echo "Compilation of $(NAME).dylib successful"
 
 unpack:
-	@rm -f lib$(NAME).so
+	@rm -f lib$(NAME).dylib
 
 repack: unpack clean
 	@$(MAKE) pack
