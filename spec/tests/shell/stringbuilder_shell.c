@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 14:20:22 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/23 13:35:23 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,4 +190,13 @@ t_tshell_status	stringbuilder_shell(t_sb *sb, struct s_tparser *tparser)
 		return (stringbuilder_shell_execute_replace(sb, tparser));
 	}
 	return (TSHELL_SUCCESS);
+}
+
+int	main(void)
+{
+	interact(\
+		(t_init_func) stringbuilder_shell_init, \
+		(t_program_func) stringbuilder_shell, \
+		(t_free_func) sb_free);
+	return (0);
 }

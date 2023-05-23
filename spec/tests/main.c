@@ -3,28 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 21:59:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/23 12:42:50 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
+#include <stdio.h>
+#include <unistd.h>
 #include "tests.h"
-#include "hashtable_test.h"
-#include "stringbuilder_test.h"
+
+static void	*shell_shell_init(void)
+{
+	return (NULL);
+}
+
+static t_tshell_status	shell_shell_execute(void *nothing, struct s_tparser *tparser)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+	{
+		if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
+			return (TSHELL_FAILURE);
+		execlp(tparser_read(tparser), tparser_read(tparser), NULL);
+		return (TSHELL_FAILURE);
+	}
+	waitpid(pid, NULL, 0);
+	return (EXIT_SUCCESS);
+}
 
 int	main(void)
 {
-	// expander_hashtable_test1();
-	// expander_hashtable_test3();
-	interact(\
-		(t_init_func) hashtable_shell_init, \
-		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free);
-	// interact(\
-	// 	(t_init_func) stringbuilder_shell_init, \
-	// 	(t_program_func) stringbuilder_shell, \
-	// 	(t_free_func) sb_free);
+	interact(shell_shell_init, shell_shell_execute, NULL);
 	return (0);
 }

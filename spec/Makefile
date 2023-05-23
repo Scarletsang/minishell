@@ -25,8 +25,10 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-TEST_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR) -name '*.c'))
-SRC:= $(TEST_SRC)
+TSHELL_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR)/tshell -name '*.c'))
+SHELL_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR)/shell -name '*.c'))
+MAIN_SRC:= $(SRC_DIR)/main.c
+SRC:= $(TSHELL_SRC) $(SHELL_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -65,6 +67,8 @@ $(NAME): $(TARGET) $(OBJ)
 	@$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) && \
 	ln -sf $(TARGET) ./lib$(TARGET_NAME).so && \
 	echo "Compilation of $(NAME) successful"
+
+
 
 bonus: re
 

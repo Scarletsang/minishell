@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 14:47:21 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/23 13:35:20 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,13 @@ t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser)
 		return (hashtable_shell_execute_del(ht, tparser));
 	}
 	return (TSHELL_SUCCESS);
+}
+
+int	main(void)
+{
+	interact(\
+		(t_init_func) hashtable_shell_init, \
+		(t_program_func) hashtable_shell, \
+		(t_free_func) ht_free);
+	return (0);
 }
