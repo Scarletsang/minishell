@@ -1,7 +1,7 @@
 #ifndef HASHTABLE_TEST_H
 # define HASHTABLE_TEST_H
 
-# include "tests.h"
+# include "tshell.h"
 # include "MINISHELL/hashtable.h"
 
 t_ht			*hashtable_shell_init(void);

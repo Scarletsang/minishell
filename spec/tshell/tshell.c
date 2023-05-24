@@ -3,38 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   tshell.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:58:21 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/23 20:57:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/24 12:39:12 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
+#include "tshell.h"
+#include <fcntl.h>
 
 ///////////////////////////////////////////
 /////////////     lines     ///////////////
 ///////////////////////////////////////////
 
-void	tshell_lines_init(struct s_tshell_lines *lines)
+t_tshell_status	tshell_lines_init(struct s_tshell_lines *lines)
+{
+	lines->buffer = calloc(TSHELL_MAX_INPUT_SIZE, sizeof(char));
+	if (!lines->buffer)
+		return (TSHELL_FAILURE);
+	tshell_lines_reset(lines);
+	return (TSHELL_SUCCESS);
+}
+
+void	tshell_lines_reset(struct s_tshell_lines *lines)
 {
 	lines->current_line = lines->buffer;
 	lines->current_line_size = 0;
 	lines->previous_all_lines_sum_size = 0;
 }
 
+void	tshell_lines_free(struct s_tshell_lines *lines)
+{
+	free(lines->buffer);
+}
+
 t_tshell_status	tshell_lines_process_one(struct s_tshell_lines *lines)
 {
-	char	*line_end;
-
-	if (lines->previous_all_lines_sum_size >= TSHELL_MAX_INPUT_SIZE)
+	if (lines->previous_all_lines_sum_size >= ((size_t) lines->read_size - 1))
 		return (TSHELL_FAILURE);
-	line_end = strchr(lines->current_line, '\n');
-	if (!line_end)
-		return (TSHELL_EXIT);
-	*line_end = 0;
-	lines->current_line_size = line_end - lines->current_line;
-	lines->previous_all_lines_sum_size += lines->current_line_size;
+	lines->current_line_size = 0;
+	while (lines->previous_all_lines_sum_size < (size_t) lines->read_size)
+	{
+		lines->current_line_size++;
+		lines->previous_all_lines_sum_size++;
+		if (lines->current_line[lines->current_line_size] == '\n')
+			break ;
+	}
+	lines->current_line[lines->current_line_size] = '\0';
 	return (TSHELL_SUCCESS);
 }
 
@@ -46,19 +62,31 @@ t_tshell_status	tshell_builtins_exit(struct s_tshell_lines *lines)
 {
 	if (strcmp(lines->current_line, "exit") == 0)
 		return (TSHELL_EXIT);
-	return (TSHELL_SUCCESS);
+	return (TSHELL_FAILURE);
 }
 
-t_tshell_status	tshell_builtins_load(void *states, struct s_tparser *tparser)
+t_tshell_status	tshell_builtins_load(t_program_func program, \
+void *states, struct s_tshell *tshell)
 {
-	if (tparser_match_string(tparser, "load"))
+	int		file;
+	char	*filename;
+
+	if (!tparser_match_string(&tshell->tparser, "load"))
 	{
-		tparser_ignore_spaces(tparser);
-		if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
+		tparser_ignore_spaces(&tshell->tparser);
+		if (tparser_consume_exactly_one_parameter(&tshell->tparser, TSHELL_STRING))
 			return (TSHELL_FAILURE);
-		if (tparser_match_char(tparser, '\0'))
+		if (tparser_match_char(&tshell->tparser, '\0'))
 			return (TSHELL_FAILURE);
-		
+		filename = (char *) tparser_read(&tshell->tparser);
+		file = open(filename, O_RDONLY);
+		if (file == -1)
+		{
+			printf("File %s not found\n", filename);
+			return (TSHELL_FAILURE);
+		}
+		tshell_run_from_fd(program, states, file);
+		close(file);
 		return (TSHELL_SUCCESS);
 	}
 	return (TSHELL_FAILURE);

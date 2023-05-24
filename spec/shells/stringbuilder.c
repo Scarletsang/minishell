@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stringbuilder_shell.c                              :+:      :+:    :+:   */
+/*   stringbuilder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/23 13:35:23 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/24 12:40:20 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
 #include "stringbuilder_test.h"
 
 t_sb	*stringbuilder_shell_init(void)
@@ -189,7 +188,7 @@ t_tshell_status	stringbuilder_shell(t_sb *sb, struct s_tparser *tparser)
 	{
 		return (stringbuilder_shell_execute_replace(sb, tparser));
 	}
-	return (TSHELL_SUCCESS);
+	return (TSHELL_FAILURE);
 }
 
 int	main(void)

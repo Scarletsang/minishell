@@ -1,7 +1,7 @@
 #ifndef STRINGBUILDER_TEST_H
 # define STRINGBUILDER_TEST_H
 
-# include "tests.h"
+# include "tshell.h"
 # include "MINISHELL/stringbuilder.h"
 
 t_sb			*stringbuilder_shell_init(void);

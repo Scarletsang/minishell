@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vars_shell.c                                       :+:      :+:    :+:   */
+/*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 19:27:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 19:49:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/24 12:40:22 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
 #include "vars_test.h"
 
 // struct s_minishell_vars	*vars_shell_init(void)

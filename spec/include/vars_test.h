@@ -1,7 +1,7 @@
 #ifndef VARS_TEST_H
 # define VARS_TEST_H
 
-# include "tests.h"
+# include "tshell.h"
 # include "MINISHELL/execution/vars.h"
 
 struct s_minishell_vars	*vars_shell_init(void);

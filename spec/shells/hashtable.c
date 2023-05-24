@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hashtable_shell.c                                  :+:      :+:    :+:   */
+/*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/23 13:35:20 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/24 12:40:14 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser)
 	{
 		return (hashtable_shell_execute_del(ht, tparser));
 	}
-	return (TSHELL_SUCCESS);
+	return (TSHELL_FAILURE);
 }
 
 int	main(void)
