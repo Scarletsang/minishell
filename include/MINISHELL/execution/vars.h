@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 18:57:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/24 21:08:03 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,17 @@ void	minishell_vars_free(struct s_minishell_vars *vars);
 
 int		minishell_vars_import(struct s_minishell_vars *vars, char **envp);
 
-int		minishell_vars_export_environ(struct s_minishell_vars *vars);
-
 ////////////////////////////////////////////
 ////////////     getters     ///////////////
 ////////////////////////////////////////////
 
-int		minishell_vars_set_shell(struct s_minishell_vars *vars, char *name, \
-char *value);
+char	**minishell_vars_get_envp(struct s_minishell_vars *vars);
 
-int		minishell_vars_set_environmental(struct s_minishell_vars *vars, \
-char *name, char *value);
+int		minishell_vars_set_shell(struct s_minishell_vars *vars, \
+t_sb *key_and_value);
+
+int		minishell_vars_set_environment(struct s_minishell_vars *vars, \
+t_sb *key_and_value);
 
 ////////////////////////////////////////////
 ////////////     actions     ///////////////

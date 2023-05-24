@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 19:17:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/24 20:53:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	minishell_vars_init(struct s_minishell_vars *vars)
 		minishell_vars_free(vars);
 		return (EXIT_FAILURE);
 	}
+	vars->environnement_changed = true;
 	return (EXIT_SUCCESS);
 }
 
@@ -58,7 +59,30 @@ int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
 	return (EXIT_SUCCESS);
 }
 
-int	minishell_vars_export_environ(struct s_minishell_vars *vars)
+char	**minishell_vars_get_envp(struct s_minishell_vars *vars)
 {
-	
+	size_t				i;
+	size_t				valid_entry;
+	struct s_ht_entry	*ht_entry;
+
+	if (vars->environnement_changed)
+	{
+		i = 0;
+		valid_entry = 0;
+		while ((i < vars->environment.capacity) && \
+			(valid_entry < vars->envp.size))
+		{
+			ht_entry = vector_get(&vars->environment, i);
+			if (ht_entry->key)
+			{
+				vector_set(&vars->envp, i, ht_entry->value);
+				valid_entry++;
+			}
+			i++;
+		}
+		vars->environnement_changed = false;
+	}
+	if (vars->envp.size == 0)
+		return (NULL);
+	return (vars->envp.buffer);
 }
