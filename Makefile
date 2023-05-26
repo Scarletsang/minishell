@@ -35,6 +35,7 @@ HASHTABLE_SRC:= \
 	hashtable/hash/rehash.c
 STRINGBUILDER_SRC:= \
 	stringbuilder/stringbuilder.c \
+	stringbuilder/search.c \
 	stringbuilder/action/action.c \
 	stringbuilder/action/delete.c \
 	stringbuilder/action/insert.c \

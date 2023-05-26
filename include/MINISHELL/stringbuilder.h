@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 18:12:09 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/26 13:40:37 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,9 @@ int					sb_perform(t_sb *sb, struct s_sb_action action);
 int					sb_resize(t_sb *sb);
 
 void				sb_free(t_sb *sb);
+
+size_t				sb_strchr_len(const t_sb *sb, const char c);
+
+bool				sb_search_success(const t_sb *sb, const size_t result);
 
 #endif
