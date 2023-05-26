@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/24 20:53:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/26 13:39:15 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,20 @@ void	minishell_vars_free(struct s_minishell_vars *vars)
 
 int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
 {
-	t_sb	key_sb;
-	t_sb	*value_sb;
+	t_sb	key_and_value;
 
 	while (*envp)
 	{
-		if (sb_init(&key_sb, 10))
+		if (sb_init(&key_and_value, 10))
 			return (EXIT_FAILURE);
-		value_sb = malloc(sizeof(t_sb));
-		if (!value_sb || \
-			sb_init(value_sb, 20) || \
-			sb_perform(&key_sb, sb_action_append_len(*envp, \
-				ft_strchr(*envp, '=') - *envp)) || \
-			sb_perform(value_sb, sb_action_append(*envp)) || \
-			ht_set(&vars->environment, key_sb.buffer, value_sb, sb_free))
+		if (sb_perform(&key_and_value, sb_action_append(*envp)) || \
+			minishell_vars_database_set(&vars->environment, &key_and_value))
 		{
-			sb_free(&key_sb);
-			if (value_sb)
-				free(value_sb);
+			sb_free(&key_and_value);
 			return (EXIT_FAILURE);
 		}
+		vars->environnement_changed = true;
+		sb_free(&key_and_value);
 		envp++;
 	}
 	return (EXIT_SUCCESS);

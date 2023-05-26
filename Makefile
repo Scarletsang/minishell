@@ -40,9 +40,13 @@ STRINGBUILDER_SRC:= \
 	stringbuilder/action/delete.c \
 	stringbuilder/action/insert.c \
 	stringbuilder/action/field_validator.c
+VARS_SRC:=\
+	execution/vars/vars.c \
+	execution/vars/database.c \
+	execution/vars/action.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######

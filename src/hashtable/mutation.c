@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:43:53 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/26 12:34:15 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ t_ht_entry_cleaner cleaner)
 
 	entry = ht_get_entry(ht, key);
 	if (!entry)
-		return (EXIT_FAILURE);
+		return (ht_set(ht, key, value, cleaner));
 	if (ht_entry_set_value(entry, value, cleaner))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
