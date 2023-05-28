@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:07 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 15:02:21 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/27 17:00:20 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ int	sb_init(t_sb *sb, const size_t capacity)
 int	sb_resize(t_sb *sb)
 {
 	return (vector_resize(sb));
+}
+
+char	sb_get(const t_sb *sb, const size_t index)
+{
+	return (*(char *) vector_get(sb, index));
 }
 
 void	sb_free(t_sb *sb)

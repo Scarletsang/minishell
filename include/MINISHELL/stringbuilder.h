@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 16:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/26 13:40:37 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:07:56 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,24 +52,24 @@ struct s_sb_action
 // insert_len (str, len, start, MAX)
 // replace_len (str, len, start, len)
 
-struct s_sb_action	sb_action_append(const char *str);
+struct s_sb_action			sb_action_append(const char *str);
 
-struct s_sb_action	sb_action_append_len(const char *str, \
+struct s_sb_action			sb_action_append_len(const char *str, \
 const size_t str_len);
 
-struct s_sb_action	sb_action_insert(const char *str, \
+struct s_sb_action			sb_action_insert(const char *str, \
 const size_t edit_start);
 
-struct s_sb_action	sb_action_insert_len(const char *str, \
+struct s_sb_action			sb_action_insert_len(const char *str, \
 const size_t str_len, const size_t edit_start);
 
-struct s_sb_action	sb_action_delete(const size_t edit_start, \
+struct s_sb_action			sb_action_delete(const size_t edit_start, \
 const size_t edit_len);
 
-struct s_sb_action	sb_action_replace(const char *str, \
+struct s_sb_action			sb_action_replace(const char *str, \
 const size_t edit_start, const size_t edit_len);
 
-struct s_sb_action	sb_action_replace_len(const char *str, \
+struct s_sb_action			sb_action_replace_len(const char *str, \
 const size_t str_len, const size_t edit_start, const size_t edit_len);
 
 /////////////////////////////////////////////////////////////////
@@ -83,17 +83,19 @@ enum e_sb_validator_bit
 	SB_EDIT_LEN_BIT = 0b100
 };
 
-void				sb_action_set_validator_bit(struct s_sb_action *action, \
-enum e_sb_validator_bit bit);
+void						sb_action_set_validator_bit(\
+struct s_sb_action *action, enum e_sb_validator_bit bit);
 
-void				sb_action_flip_validator_bit(struct s_sb_action *action, \
-enum e_sb_validator_bit bit);
+void						sb_action_flip_validator_bit(\
+struct s_sb_action *action, enum e_sb_validator_bit bit);
 
-bool				sb_action_has_entry_str_len(struct s_sb_action *action);
+bool						sb_action_has_entry_str_len(\
+struct s_sb_action *action);
 
-bool				sb_action_has_edit_start(struct s_sb_action *action);
+bool						sb_action_has_edit_start(\
+struct s_sb_action *action);
 
-bool				sb_action_has_edit_len(struct s_sb_action *action);
+bool						sb_action_has_edit_len(struct s_sb_action *action);
 
 /////////////////////////////////////////
 ////////     String Builder    //////////
@@ -103,18 +105,37 @@ bool				sb_action_has_edit_len(struct s_sb_action *action);
  * @brief The String builder allows easy and efficient construction of strings
  * from smaller pieces. It is implemented as a dynamic array of characters.
 */
-typedef t_vector	t_sb;
+typedef t_vector			t_sb;
 
-int					sb_init(t_sb *sb, const size_t capacity);
+int							sb_init(t_sb *sb, const size_t capacity);
 
-int					sb_perform(t_sb *sb, struct s_sb_action action);
+char						sb_get(const t_sb *sb, const size_t index);
 
-int					sb_resize(t_sb *sb);
+int							sb_perform(t_sb *sb, struct s_sb_action action);
 
-void				sb_free(t_sb *sb);
+int							sb_resize(t_sb *sb);
 
-size_t				sb_strchr_len(const t_sb *sb, const char c);
+void						sb_free(t_sb *sb);
 
-bool				sb_search_success(const t_sb *sb, const size_t result);
+/////////////////////////////////////////////////
+////////     String Builder iterator   //////////
+/////////////////////////////////////////////////
+
+/**
+ * @brief The String builder iterator iterates over the string contained
+ * in the string builder.
+*/
+typedef t_vector_iterator	t_sb_iterator;
+
+void						sb_iterator_init(t_sb_iterator *iterator, \
+const t_vector *vector);
+
+int							sb_iterator_next(t_sb_iterator *iterator);
+
+int							sb_iterator_prev(t_sb_iterator *iterator);
+
+char						sb_iterator_current(t_sb_iterator *iterator);
+
+bool						sb_iterator_is_end(const t_sb_iterator *iterator);
 
 #endif
