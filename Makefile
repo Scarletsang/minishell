@@ -24,6 +24,7 @@ VECTOR_SRC:= \
 	vector/vector.c \
 	vector/buffer.c \
 	vector/setters.c \
+	vector/iterator.c \
 	vector/action.c
 HASHTABLE_SRC:= \
 	hashtable/hashtable.c \

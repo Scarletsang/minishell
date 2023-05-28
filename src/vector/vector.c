@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:13:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 19:13:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/05/29 00:00:54 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_vector_setter setter)
 	return (EXIT_SUCCESS);
 }
 
-void	*vector_get(t_vector *vector, size_t index)
+void	*vector_get(const t_vector *vector, size_t index)
 {
 	return (vector->buffer + (index * vector->item_size));
 }

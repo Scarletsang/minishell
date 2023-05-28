@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 15:44:56 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 18:13:36 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:10:38 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define VECTOR_H
 
 # include <stdlib.h>
+# include <stdbool.h>
 # include <limits.h>
 # include "libft.h"
 
@@ -53,7 +54,7 @@ typedef struct s_vector
 int		vector_init(t_vector *vector, size_t item_size, \
 size_t capacity, t_vector_setter setter);
 
-void	*vector_get(t_vector *vector, size_t index);
+void	*vector_get(const t_vector *vector, size_t index);
 
 void	vector_set(t_vector *vector, size_t index, void *data);
 
@@ -91,5 +92,29 @@ void	vector_buffer_shift(t_vector *vector, size_t to, size_t from);
 
 void	vector_buffer_copy_from(t_vector *vector, void *buffer, \
 size_t index, size_t copy_amount);
+
+/////////////////////////////////////////////
+////////      vector iterator      //////////
+/////////////////////////////////////////////
+
+/**
+ * @brief A vector iterator is an iterator that iterates through the vector.
+*/
+typedef struct s_vector_iterator
+{
+	const t_vector	*vector;
+	size_t			index;
+}				t_vector_iterator;
+
+void	vector_iterator_init(t_vector_iterator *iterator, \
+const t_vector *vector);
+
+int		vector_iterator_next(t_vector_iterator *iterator);
+
+int		vector_iterator_prev(t_vector_iterator *iterator);
+
+void	*vector_iterator_current(t_vector_iterator *iterator);
+
+bool	vector_iterator_is_end(const t_vector_iterator *iterator);
 
 #endif
