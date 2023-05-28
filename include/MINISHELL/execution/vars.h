@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/26 13:36:40 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:02:56 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include "MINISHELL/vector.h"
 # include "MINISHELL/hashtable.h"
 # include "MINISHELL/stringbuilder.h"
+# include "MINISHELL/stringbuilder/clipper.h"
 
 struct s_minishell_vars
 {
@@ -39,23 +40,24 @@ int		minishell_vars_import(struct s_minishell_vars *vars, char **envp);
 
 char	**minishell_vars_get_envp(struct s_minishell_vars *vars);
 
-char	*minishell_vars_extract_key(const t_sb *key_and_value);
+int		minishell_vars_database_set(t_ht *database, const char *key, \
+char *value);
 
-int		minishell_vars_database_set(t_ht *database, const t_sb *key_and_value);
-
-char	*minishell_vars_database_get(t_ht *database, const t_sb *key_and_value);
+char	*minishell_vars_database_get(t_ht *database, const char *key);
 
 ////////////////////////////////////////////
 ////////////     actions     ///////////////
 ////////////////////////////////////////////
 
-int		minishell_vars_export(struct s_minishell_vars *vars, \
-const t_sb *value_and_name);
+int		minishell_vars_export(struct s_minishell_vars *vars, const char *key, \
+char *value);
 
-void	minishell_vars_unset(struct s_minishell_vars *vars, \
-const t_sb *value_and_name);
+int		minishell_vars_export_without_value(struct s_minishell_vars *vars, \
+const char *key);
+
+void	minishell_vars_unset(struct s_minishell_vars *vars, const char *key);
 
 char	*minishell_vars_echo(struct s_minishell_vars *vars, \
-const t_sb *value_and_name);
+const char *key);
 
 #endif
