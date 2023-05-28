@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 23:50:45 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 15:03:21 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/28 23:43:42 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	ht_entry_set_key(struct s_ht_entry *entry, const char *key)
 	return (EXIT_SUCCESS);
 }
 
-int	ht_entry_set_value(struct s_ht_entry *entry, const void *value, \
+int	ht_entry_set_value(struct s_ht_entry *entry, void *value, \
 t_ht_entry_cleaner cleaner)
 {
 	if (entry->cleaner && entry->value)

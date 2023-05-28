@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 00:35:00 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/26 12:34:15 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:02:07 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @return int EXIT_SUCCESS if the key-value pair is added successfully,
  * EXIT_FAILURE otherwise.
 */
-int	ht_set(t_ht *ht, const char *key, const void *value, \
+int	ht_set(t_ht *ht, const char *key, void *value, \
 t_ht_entry_cleaner cleaner)
 {
 	struct s_ht_entry	*entry;
@@ -67,7 +67,7 @@ void	ht_del(t_ht *ht, const char *key)
  * @return int EXIT_SUCCESS if the value is updated successfully,
  * EXIT_FAILURE otherwise.
 */
-int	ht_update(t_ht *ht, const char *key, const void *value, \
+int	ht_update(t_ht *ht, const char *key, void *value, \
 t_ht_entry_cleaner cleaner)
 {
 	struct s_ht_entry	*entry;

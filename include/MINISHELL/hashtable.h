@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:08:04 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:46:38 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:02:15 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void				ht_entry_delete(struct s_ht_entry *entry);
 int					ht_entry_set_key(struct s_ht_entry *entry, const char *key);
 
 int					ht_entry_set_value(struct s_ht_entry *entry, \
-const void *value, t_ht_entry_cleaner cleaner);
+void *value, t_ht_entry_cleaner cleaner);
 
 /**
  * The hash table is implemented with open addressing, and double hashing
@@ -57,7 +57,7 @@ int					ht_init(t_ht *ht, const size_t capacity);
 
 void				*ht_get(t_ht *ht, const char *key);
 
-int					ht_set(t_ht *ht, const char *key, const void *value, \
+int					ht_set(t_ht *ht, const char *key, void *value, \
 t_ht_entry_cleaner cleaner);
 
 int					ht_resize(t_ht *ht);
@@ -77,7 +77,7 @@ struct s_ht_entry	*ht_get_empty_entry(t_ht *ht, const char *key);
 //////////////////////////////////////////////
 
 int					ht_update(t_ht *ht, const char *key, \
-const void *value, t_ht_entry_cleaner cleaner);
+void *value, t_ht_entry_cleaner cleaner);
 
 void				ht_del(t_ht *ht, const char *key);
 
