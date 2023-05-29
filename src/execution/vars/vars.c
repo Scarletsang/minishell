@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/28 23:37:03 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 01:46:57 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	minishell_vars_import_cleaner(char **key, t_sb *key_and_value)
 {
 	if (*key)
 		free(*key);
-	*key = NULL;
 	sb_free(key_and_value);
 	return (EXIT_FAILURE);
 }
@@ -47,17 +46,17 @@ int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
 	t_sb				key_and_value;
 	char				*key;
 
+	key = NULL;
 	while (*envp)
 	{
-		if (sb_init(&key_and_value, 10))
-			return (EXIT_FAILURE);
+		if (sb_init(&key_and_value, 10) || \
+			sb_perform(&key_and_value, sb_action_append(*envp)))
+			return (minishell_vars_import_cleaner(&key, &key_and_value));
 		sb_clipper_init(&clipper, &key_and_value);
-		if (sb_perform(&key_and_value, sb_action_append(*envp)) || \
-			sb_clipper_area(&clipper, NULL, "="))
+		if (sb_clipper_area(&clipper, NULL, "="))
 			return (minishell_vars_import_cleaner(&key, &key_and_value));
 		key = sb_clipper_run(&clipper);
-		if (!key || \
-			minishell_vars_database_set(&vars->environment, key, *envp))
+		if (!key || minishell_vars_export(vars, key, *envp))
 			return (minishell_vars_import_cleaner(&key, &key_and_value));
 		vars->environnement_changed = true;
 		minishell_vars_import_cleaner(&key, &key_and_value);

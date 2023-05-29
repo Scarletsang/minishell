@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/28 23:58:08 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:30:28 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ void	minishell_vars_unset(struct s_minishell_vars *vars, const char *key)
 	ht_del(&vars->environment, key);
 }
 
-char	*minishell_vars_echo(struct s_minishell_vars *vars, \
+const char	*minishell_vars_echo(struct s_minishell_vars *vars, \
 const char *key)
 {
-	char	*result;
+	const char	*result;
 
 	result = minishell_vars_database_get(&vars->environment, key);
 	if (!result)
