@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/24 12:40:14 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 00:18:42 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_ht	*hashtable_shell_init(void)
 }
 
 t_tshell_status	hashtable_shell_execute_func2(t_ht *ht, struct s_tparser *tparser, \
-int	(*func2)(t_ht *ht, const char *key, const void *value, t_ht_entry_cleaner func))
+int	(*func2)(t_ht *ht, const char *key, void *value, t_ht_entry_cleaner func))
 {
 	char	*param[2];
 
