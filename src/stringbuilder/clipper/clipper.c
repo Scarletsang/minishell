@@ -6,7 +6,7 @@
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 21:10:42 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/28 23:03:58 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 02:15:54 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*sb_clipper_run(const struct s_sb_clipper *clipper)
 	size_t			i;
 
 	result = malloc(sizeof(char) * (clipper->rbound - \
-		clipper->lbound + 1));
+		clipper->lbound + 2));
 	if (!result)
 		return (NULL);
 	sb_iterator_init(&it, clipper->sb);

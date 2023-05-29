@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   search.c                                           :+:      :+:    :+:   */
+/*   area.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 12:28:52 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/27 22:55:41 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/29 02:12:21 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ const char *end_match)
 		end_match, clipper->rbound - clipper->lbound);
 	if (!end)
 		return (EXIT_FAILURE);
-	clipper->rbound = end - (const char *)clipper->sb->buffer;
+	if ((end - 1) < (const char *) clipper->sb->buffer)
+		return (EXIT_FAILURE);
+	clipper->rbound = end - (const char *)clipper->sb->buffer - 1;
 	return (EXIT_SUCCESS);
 }
 
@@ -59,16 +61,22 @@ const char *end_match)
 
 	lbound = clipper->lbound;
 	rbound = clipper->rbound;
-	if (!start_match || !sb_clipper_area_left(clipper, start_match))
+	if (start_match)
 	{
-		clipper->lbound = lbound;
-		return (EXIT_FAILURE);
+		if (sb_clipper_area_left(clipper, start_match))
+		{
+			clipper->lbound = lbound;
+			return (EXIT_FAILURE);
+		}
 	}
-	if (!end_match || !sb_clipper_area_right(clipper, end_match))
+	if (end_match)
 	{
-		clipper->lbound = lbound;
-		clipper->rbound = rbound;
-		return (EXIT_FAILURE);
+		if (sb_clipper_area_right(clipper, end_match))
+		{
+			clipper->lbound = lbound;
+			clipper->rbound = rbound;
+			return (EXIT_FAILURE);
+		}
 	}
 	return (EXIT_SUCCESS);
 }
