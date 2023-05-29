@@ -49,7 +49,7 @@ LDFLAGS+= -ltshell -L$(CURDIR)/tshell -Wl,-rpath,$(CURDIR)/tshell
 
 # This in effect makes all the object files to be compiled in the OBJ_DIR directory
 
-SHELLS:= $(patsubst $(SRC_DIR)/%.c,%.shell,$(SRC))
+SHELLS:= $(patsubst $(SRC_DIR)/%.c,%.shell.out,$(SRC))
 
 #################################
 ######     Main rules     #######
@@ -59,7 +59,7 @@ all: DEPS
 	@$(MAKE) $(SHELLS) -j
 
 .SECONDEXPANSION:
-%.shell: $(SRC_DIR)/%.c
+%.shell.out: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) $< -o $@ $(LDFLAGS) && \
 	install_name_tool -change @rpath/libminishell.dylib $(MINISHELL) $@ && \
 	install_name_tool -change @rpath/libtshell.dylib $(TSHELL) $@ && \
@@ -67,9 +67,9 @@ all: DEPS
 
 run:
 ifdef WITH
-	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./$(WITH).shell
+	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./$(WITH).shell.out
 else
-	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./loader.shell
+	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./loader.shell.out
 endif
 
 ##########################################

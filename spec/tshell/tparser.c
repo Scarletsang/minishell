@@ -125,15 +125,10 @@ int	tparser_match_int(struct s_tparser *tparser, int n)
 
 int	tparser_match_char(struct s_tparser *tparser, char c)
 {
-	if (c == 0)
-	{
-		if (*tparser->line)
-			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-	}
 	if (*tparser->line != c)
 		return (EXIT_FAILURE);
-	tparser->line++;
+	if (c != '\0')
+		tparser->line++;
 	return (EXIT_SUCCESS);
 }
 
@@ -265,6 +260,11 @@ int		tparser_consume_string(struct s_tparser *parser)
 	i = 0;
 	while (parser->line[i] && parser->line[i] != ' ')
 		i++;
+	if (i == 0)
+	{
+		parser->line = reset_line;
+		return (EXIT_FAILURE);
+	}
 	if (parser->content_size > parser->content_capacity)
 	{
 		if (tparser_resize(parser))
