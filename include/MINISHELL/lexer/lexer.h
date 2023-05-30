@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/26 19:39:49 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/30 22:07:13 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,13 @@
 
 # include "libft.h"
 # include <stdbool.h>
+
+typedef enum e_err_code
+{
+	NO_LINE,
+	ERROR_WHEN_LEX,
+	MALLOC_FAIL
+}			t_err_code;
 
 typedef enum e_token_type
 {
@@ -52,7 +59,7 @@ struct s_lexer
 {
 	struct s_token_list	*start;
 	struct s_token_list	*end;
-	struct s_scanner	scanner;
+	// struct s_scanner	scanner;
 };
 
 // return all tokens which has the data structure of linked list
@@ -61,6 +68,4 @@ struct s_lexer
 
 // tokens_create (creating while reading the line)
 
-
 #endif
-    
