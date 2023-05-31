@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:07:45 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/30 21:42:22 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:55:53 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,24 @@ struct s_token_list	*token_new(struct s_token token)
 
 void	token_add_back(struct s_lexer *lexer, struct s_token_list *token_lst)
 {
-	struct s_token_list	*token_last;
-
-	if (!lexer->start)
-		return ;
-	token_last = (struct s_token_list *)ft_lstlast((t_list *)lexer->start);
-	if (token_last)
-	{
-		token_last->next = token_lst;
-		lexer->end = token_lst;
-	}
-	else
+	if (lexer->start == NULL)
 	{
 		lexer->start = token_lst;
 		lexer->end = token_lst;
 	}
+	else
+	{
+		lexer->end->next = token_lst;
+		lexer->end = lexer->end->next;
+	}
 }
 
 void	token_clear_when_lexer_failed(struct s_lexer *lexer, \
-void (*del)(void *))
+t_token_cleaner del, char *err_message)
 {
-	struct s_token_lst	*tmp_token_lst;
+	struct s_token_list	*tmp_token_lst;
 
+	printf("%s\n", err_message);
 	if (!lexer->start || !del)
 		return ;
 	while (lexer->start)
@@ -59,7 +55,7 @@ void (*del)(void *))
 	lexer->end = NULL;
 }
 
-void	token_delone(struct s_token_list *token_lst, void (*del)(void *))
+void	token_delone(struct s_token_list *token_lst, t_token_cleaner del)
 {
 	if (!token_lst || !del)
 		return ;

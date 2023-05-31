@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:58:30 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 19:05:06 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/31 22:00:58 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,17 @@ char	*get_token_type(t_token_type token_type)
 		print = "ERROR";
 	else if (token_type == TOKEN_EOF)
 		print = "EOF";
+	return (print);
 }
 
-void	token_print(struct s_token token)
+void	token_print(struct s_token *token)
 {
-	printf("%15s'%.*s'\n", get_token_type(token.type), \
-	token.length, token.start);
+	printf("%15s '%.*s'\n", get_token_type(token->type), \
+	token->length, token->start);
 }
 
 void	token_lstitr_print(struct s_token_list *token_lst, \
-void (*token_print)(void))
+t_token_printer token_print)
 {
 	struct s_token_list	*tmp_token_node;
 
@@ -56,8 +57,8 @@ void (*token_print)(void))
 	tmp_token_node = token_lst;
 	while (tmp_token_node)
 	{
-		token_print(tmp_token_node.token);
-		tmp_token_node = tmp_token_node.next;
+		token_print(&tmp_token_node->token);
+		tmp_token_node = tmp_token_node->next;
 	}
 }
 
@@ -69,8 +70,8 @@ int	main(void)
 
 	line = readline("minishell>");
 	lexer_init(&lexer);
-	token_list_get(&lexer, line);
-	token_lstitr_print(lexer.start, token_print);
+	err_code = token_list_get(&lexer, line);
+	token_lstitr_print(lexer.start, (t_token_printer)token_print);
 	free(line); // Free the memory allocated by readline
 	return (err_code);
 }

@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:04:53 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/30 22:06:23 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/31 22:04:46 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ struct s_token	token_error(const char *message)
 	struct s_token	token;
 
 	token.type = TOKEN_ERROR;
-	token.start = message;
+	token.start = (char *)message;
 	token.length = ft_strlen(message);
 	return (token);
 }
@@ -54,7 +54,7 @@ struct s_token	token_match_operator(struct s_scanner *scanner, char c)
 		else
 			return (token_make(TOKEN_LESS, *scanner));
 	}
-	return (token_error("Unexpected character.\n"));
+	return (token_error("Unexpected character."));
 }
 
 //token word
@@ -71,15 +71,15 @@ struct s_token	token_match_word(struct s_scanner *scanner)
 			while (scanner_peek(*scanner) != c && !scanner_at_end(*scanner))
 				scanner_advance(scanner);
 			if (scanner_at_end(*scanner))
-				return (token_error("Unterminated string.\n"));
+				return (token_error("Unterminated string."));
 			scanner_advance(scanner);
-			if (is_token_delimeter(scanner_peek(*scanner)))
+			if (scanner_is_at_delimeter(*scanner))
 				return (token_make(TOKEN_WORD, *scanner));
 		}
 		else
 		{
 			scanner_advance(scanner);
-			if (is_token_delimeter(scanner_peek(*scanner)))
+			if (scanner_is_at_delimeter(*scanner))
 				return (token_make(TOKEN_WORD, *scanner));
 		}
 	}
@@ -103,5 +103,5 @@ struct s_token	token_scan(struct s_scanner *scanner)
 		scanner_recede(scanner);
 		return (token_match_word(scanner));
 	}
-	return (token_error("Unexpected character.\n"));
+	return (token_error("Unexpected character."));
 }
