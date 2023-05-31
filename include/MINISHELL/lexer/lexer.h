@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 21:52:51 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/31 22:08:03 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct s_lexer
 };
 
 typedef void	(*t_token_cleaner)(void *);
-// typedef void	(*t_token_updater)(void *);
+typedef void	(*t_token_updater)(void *);
 typedef void	(*t_token_printer)(void *);
 /**
 lexer
