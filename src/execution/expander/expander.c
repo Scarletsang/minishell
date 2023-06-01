@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:46:53 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 02:38:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/01 15:06:33 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ int	minishell_expander(t_sb *sb, const struct s_minishell_vars *vars)
 		{
 			if (minishell_expander_quote(&it))
 				return (EXIT_FAILURE);
+			continue ;
 		}
 		if (sb_iterator_current(&it) == '\"')
 		{
 			if (minishell_expander_dquote(&it, vars))
 				return (EXIT_FAILURE);
+			continue ;
 		}
 		sb_iterator_next(&it);
 	}

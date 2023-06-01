@@ -6,14 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 02:44:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/01 15:14:43 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/expander.h"
-#include <stdio.h>
 
-static int	minishell_expander_substitute(t_sb_iterator *it, size_t from, \
+static int	minishell_expander_substitute(t_sb_iterator *it, const size_t from, \
 const struct s_minishell_vars *vars)
 {
 	struct s_sb_clipper	clipper;
@@ -22,20 +21,18 @@ const struct s_minishell_vars *vars)
 
 	sb_clipper_init(&clipper, it->vector);
 	clipper.lbound = from + 1;
-	clipper.rbound = it->index - 1;
+	clipper.rbound = it->index;
 	key = sb_clipper_run(&clipper);
 	if (!key)
 		return (EXIT_FAILURE);
-	it->index = from;
 	key_value = minishell_vars_echo(vars, key);
 	free(key);
+	it->index = from;
 	if (!key_value)
-		return (sb_iterator_mut_delete(it, clipper.rbound - \
-			clipper.lbound + 2));
+		return (sb_iterator_mut_delete(it, clipper.rbound - from + 1));
 	while (*key_value && *key_value++ != '=')
 		;
-	return (sb_iterator_mut_replace(it, key_value, \
-		clipper.rbound - clipper.lbound + 2));
+	return (sb_iterator_mut_replace(it, key_value, clipper.rbound - from + 1));
 }
 
 static int	minishell_expander_substite_special(t_sb_iterator *it, \
@@ -71,9 +68,15 @@ const struct s_minishell_vars *vars)
 		return (EXIT_SUCCESS);
 	if (!minishell_expander_substite_special(it, vars))
 		return (EXIT_SUCCESS);
-	while (!sb_iterator_is_end(it) && \
-		minishell_expander_match_any(it, " \"$"))
+	while (!sb_iterator_is_end(it))
+	{
+		if (!minishell_expander_match_any(it, " \"$"))
+		{
+			sb_iterator_prev(it);
+			break ;
+		}
 		sb_iterator_next(it);
+	}
 	if (dollar == it->index)
 		return (EXIT_FAILURE);
 	return (minishell_expander_substitute(it, dollar, vars));
