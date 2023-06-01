@@ -2,6 +2,7 @@
 !**/
 !**/*.*
 !Makefile
+!.gitignore
 .DS_Store
 **/*.DSYM
 **/*.out
