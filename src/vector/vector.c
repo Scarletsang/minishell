@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:13:19 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/29 00:00:54 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 03:21:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,19 @@ void	*vector_get(const t_vector *vector, size_t index)
 	return (vector->buffer + (index * vector->item_size));
 }
 
-void	vector_set(t_vector *vector, size_t index, void *data)
+void	*vector_set(t_vector *vector, size_t index, void *data)
 {
-	vector->setter(vector_get(vector, index), data);
+	void	*element;
+
+	element = vector_get(vector, index);
+	vector->setter(element, data);
+	return (element);
 }
 
+/**
+ * @details Double the current capacity of the vector. If the capacity after
+ * resizing exceeds SIZE_MAX, then the new capacity is set to SIZE_MAX.
+*/
 int	vector_resize(t_vector *vector)
 {
 	char	*old_buffer;

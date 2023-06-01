@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:38:55 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/28 22:30:00 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 03:19:50 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ const t_vector *vector)
 {
 	iterator->vector = vector;
 	iterator->index = 0;
+	iterator->current = NULL;
 }
 
 int	vector_iterator_next(t_vector_iterator *iterator)
@@ -24,6 +25,7 @@ int	vector_iterator_next(t_vector_iterator *iterator)
 	if (iterator->index < iterator->vector->size)
 	{
 		iterator->index++;
+		iterator->current = NULL;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
@@ -34,14 +36,22 @@ int	vector_iterator_prev(t_vector_iterator *iterator)
 	if (iterator->index > 0)
 	{
 		iterator->index--;
+		iterator->current = NULL;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
 
+/**
+ * @details If the current is not cached, then calculate it, otherwise simply
+ * return the cached current. The cache is cleared whenever the iterator is
+ * moved, see vector_iterator_next and vector_iterator_prev.
+ */
 void	*vector_iterator_current(t_vector_iterator *iterator)
 {
-	return (vector_get(iterator->vector, iterator->index));
+	if (iterator->current == NULL)
+		iterator->current = vector_get(iterator->vector, iterator->index);
+	return (iterator->current);
 }
 
 bool	vector_iterator_is_end(const t_vector_iterator *iterator)
