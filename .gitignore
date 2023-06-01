@@ -1,5 +1,12 @@
+*
+!**/
+!**/*.*
+!Makefile
+!.gitignore
 .DS_Store
-**/debug.out.DSYM
+**/*.DSYM
 **/*.out
 **/leaks_result
 **/*.o
+**/*.dylib
+**/*.so

@@ -1,18 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   setters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/01 15:25:47 by htsang           ###   ########.fr       */
+/*   Created: 2023/05/21 20:01:52 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/06/01 15:24:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "MINISHELL/vector.h"
 
-# include <stdlib.h>
+void	vector_set_char(void *buffer, void *character)
+{
+	*(char *) buffer = *(char *) character;
+}
 
-#endif
+void	vector_set_int(void *buffer, void *integer)
+{
+	*(int *) buffer = *(int *) integer;
+}
+
+void	vector_set_string(void *buffer, void *string)
+{
+	*(char **) buffer = (char *) string;
+}
+
+void	vector_set_ptr(void *buffer, void *ptr)
+{
+	*(void **) buffer = ptr;
+}

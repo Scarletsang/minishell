@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   database.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/01 15:25:47 by htsang           ###   ########.fr       */
+/*   Created: 2023/05/20 19:25:31 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/06/01 02:16:28 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "MINISHELL/execution/vars.h"
 
-# include <stdlib.h>
+int	minishell_vars_database_set(t_ht *database, const char *key, \
+const char *value)
+{
+	if (!ht_update(database, key, value, free))
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
 
-#endif
+const char	*minishell_vars_database_get(const t_ht *database, const char *key)
+{
+	return (ht_get(database, key));
+}

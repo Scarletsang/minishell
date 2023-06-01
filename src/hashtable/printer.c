@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/01 15:25:47 by htsang           ###   ########.fr       */
+/*   Created: 2023/05/13 01:38:36 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/06/01 15:24:43 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "MINISHELL/hashtable.h"
+#include <stdio.h>
 
-# include <stdlib.h>
+void	ht_print(t_ht *ht)
+{
+	size_t				i;
+	struct s_ht_entry	*entry;
 
-#endif
+	i = 0;
+	while (i < ht->capacity)
+	{
+		entry = vector_get(ht, i);
+		if (entry->key)
+			printf("%s: %s", entry->key, (char *) entry->value);
+		else
+			printf("EMPTY");
+		if (entry->deleted)
+			printf(" (deleted)\n");
+		else
+			printf("\n");
+		i++;
+	}
+	printf("\n");
+}

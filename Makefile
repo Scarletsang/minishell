@@ -20,9 +20,41 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
+VECTOR_SRC:= \
+	vector/vector.c \
+	vector/buffer.c \
+	vector/setters.c \
+	vector/iterator.c \
+	vector/action.c
+HASHTABLE_SRC:= \
+	hashtable/hashtable.c \
+	hashtable/mutation.c \
+	hashtable/printer.c \
+	hashtable/getters.c \
+	hashtable/entry.c \
+	hashtable/hash/hash.c \
+	hashtable/hash/rehash.c
+STRINGBUILDER_SRC:= \
+	stringbuilder/stringbuilder.c \
+	stringbuilder/iterator/iterator.c \
+	stringbuilder/iterator/manipulation.c \
+	stringbuilder/clipper/clipper.c \
+	stringbuilder/clipper/area.c \
+	stringbuilder/action/action.c \
+	stringbuilder/action/delete.c \
+	stringbuilder/action/insert.c \
+	stringbuilder/action/field_validator.c
+VARS_SRC:=\
+	execution/vars/vars.c \
+	execution/vars/database.c \
+	execution/vars/action.c
+EXPANDER_SRC:=\
+	execution/expander/expander.c \
+	execution/expander/expander_dollar.c \
+	execution/expander/match.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -33,12 +65,21 @@ SRC:= $(MAIN_SRC)
 LIBFT=lib/libft/libft.a
 
 # To add a library, add the library header file like this:
-LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
+LIB_INCLUDE_DIR+= lib/libft
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS:= -lreadline -L $(shell brew --prefix readline)/lib/
+LDFLAGS+= $(LIBFT)
+
+# Specify the location of the binary and header file of the readline library
+# on MacOS
+ifeq ($(shell uname), Darwin)
+	LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
+	LDFLAGS+= -lreadline -L$(shell brew --prefix readline)/lib
+else
+	LDFLAGS+= -lreadline
+endif
 
 ###########################################
 ######     Object name reformat     #######
@@ -70,6 +111,8 @@ bonus: re
 
 # $(LIBRARY_NAME):
 # 	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/LIBRARY_NAME
+$(LIBFT):
+	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/libft
 
 #########################################
 ######     Object compilation     #######

@@ -2,17 +2,18 @@
 ######     Variables     #######
 ################################
 
+NAME:=libtshell.so
+
 CC:=cc
-CFLAGS:= -Wall -Wextra -Werror
+CFLAGS:= -Wall -Wextra -Werror -fPIC
+LDFLAGS:= -shared
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
 endif
-SRC_DIR:=shells
+SRC_DIR:=.
 INCLUDE_DIR= \
-	include \
-	../include \
-	../lib/libft
+	../include
 
 ###################################
 ######     Source files     #######
@@ -21,7 +22,7 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-MAIN_SRC:= $(shell find $(SRC_DIR) -name '*.c')
+MAIN_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR) -name '*.c'))
 SRC:= $(MAIN_SRC)
 
 ####################################
@@ -31,8 +32,6 @@ SRC:= $(MAIN_SRC)
 # To compile a library, store a variable for their library file like this
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
-MINISHELL= $(CURDIR)/../libminishell.so
-TSHELL= $(CURDIR)/tshell/libtshell.so
 
 # To add a library, add the library header file like this:
 # LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
@@ -40,35 +39,29 @@ TSHELL= $(CURDIR)/tshell/libtshell.so
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS+= -lminishell -L$(CURDIR)/.. -Wl,-rpath,$(CURDIR)/..
-LDFLAGS+= -ltshell -L$(CURDIR)/tshell -Wl,-rpath,$(CURDIR)/tshell
+ifeq ($(shell uname), Linux)
+	LDFLAGS+= -lbsd
+endif
 
-###############################################
-######     Executive names reformat     #######
-###############################################
+###########################################
+######     Object name reformat     #######
+###########################################
 
 # This in effect makes all the object files to be compiled in the OBJ_DIR directory
 
-SHELLS:= $(patsubst $(SRC_DIR)/%.c,%.shell.out,$(SRC))
+OBJ_DIR:=obj
+OBJ:= $(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
 
 #################################
 ######     Main rules     #######
 #################################
 
-all: DEPS
-	@$(MAKE) $(SHELLS) -j
+all:
+	@$(MAKE) $(NAME) -j
 
-.SECONDEXPANSION:
-%.shell.out: $(SRC_DIR)/%.c
-	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) $< -o $@ $(LDFLAGS) && \
-	echo "Compilation of $@ successful"
-
-run:
-ifdef WITH
-	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./$(WITH).shell.out
-else
-	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./loader.shell.out
-endif
+$(NAME): $(OBJ)
+	@$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) && \
+	echo "Compilation of $(NAME) successful"
 
 ##########################################
 ######     Library compilation     #######
@@ -76,29 +69,32 @@ endif
 
 # To compile a library, add a rule like this:
 
-DEPS: $(MINISHELL) $(TSHELL)
-
-$(MINISHELL):
-	@$(MAKE) $(if $(FSANITIZE),FSANITIZE=yes,) -C .. repack
-
-$(TSHELL):
-	@$(MAKE) $(if $(FSANITIZE),FSANITIZE=yes,) -C tshell re
-
 # $(LIBRARY_NAME):
 # 	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/LIBRARY_NAME
+
+#########################################
+######     Object compilation     #######
+#########################################
+
+.SECONDEXPANSION:
+$(OBJ_DIR)/%.o: $(SRC_DIR)/$$(subst @,/,$$*).c
+	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) -c $< -o $@
+
+$(OBJ): $(OBJ_DIR)
+
+$(OBJ_DIR):
+	@mkdir -p $(OBJ_DIR)
 
 ###############################
 ######     Cleaning     #######
 ###############################
 
 clean: 
-	@$(MAKE) -C .. clean
-	@$(MAKE) -C tshell clean
+	@rm -f $(OBJ)
 
 fclean: clean
-	@$(MAKE) -C .. unpack
-	@$(MAKE) -C tshell fclean
-	@rm -f $(SHELLS)
+	@rm -rf $(OBJ_DIR)
+	@rm -f $(NAME)
 
 re: fclean all
 
