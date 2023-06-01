@@ -31,8 +31,8 @@ SRC:= $(MAIN_SRC)
 # To compile a library, store a variable for their library file like this
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
-MINISHELL= $(CURDIR)/../libminishell.dylib
-TSHELL= $(CURDIR)/tshell/libtshell.dylib
+MINISHELL= $(CURDIR)/../libminishell.so
+TSHELL= $(CURDIR)/tshell/libtshell.so
 
 # To add a library, add the library header file like this:
 # LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
@@ -61,8 +61,6 @@ all: DEPS
 .SECONDEXPANSION:
 %.shell.out: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) $< -o $@ $(LDFLAGS) && \
-	install_name_tool -change @rpath/libminishell.dylib $(MINISHELL) $@ && \
-	install_name_tool -change @rpath/libtshell.dylib $(TSHELL) $@ && \
 	echo "Compilation of $@ successful"
 
 run:

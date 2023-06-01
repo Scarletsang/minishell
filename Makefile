@@ -65,14 +65,21 @@ SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER
 LIBFT=lib/libft/libft.a
 
 # To add a library, add the library header file like this:
-LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
 LIB_INCLUDE_DIR+= lib/libft
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS+= -lreadline -L $(shell brew --prefix readline)/lib/
 LDFLAGS+= $(LIBFT)
+
+# Specify the location of the binary and header file of the readline library
+# on MacOS
+ifeq ($(shell uname), Darwin)
+	LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
+	LDFLAGS+= -lreadline -L$(shell brew --prefix readline)/lib
+else
+	LDFLAGS+= -lreadline
+endif
 
 ###########################################
 ######     Object name reformat     #######
@@ -156,10 +163,10 @@ endif
 pack: CFLAGS += -fPIC
 pack: LDFLAGS += -shared
 pack: $(LIBFT) $(OBJ)
-	@$(CC) $(OBJ) -o lib$(NAME).dylib $(LDFLAGS) && echo "Compilation of $(NAME).dylib successful"
+	@$(CC) $(OBJ) -o lib$(NAME).so $(LDFLAGS) && echo "Compilation of $(NAME).so successful"
 
 unpack:
-	@rm -f lib$(NAME).dylib
+	@rm -f lib$(NAME).so
 
 repack: unpack clean
 	@$(MAKE) pack
