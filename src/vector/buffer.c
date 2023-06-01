@@ -3,16 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   buffer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 20:16:44 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 05:02:09 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 03:16:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/vector.h"
 #include <stdio.h>
 
+/**
+ * @details If the vector is empty, nothing happens. If the buffer need to be
+ * shifted to the right, then it copies the buffer from the end to the start.
+ * If the buffer need to be shifted to the left, then it copies the buffer
+ * from the start to the end. The implementation is exactly like memmove, but
+ * it copies with the vector_setter for more efficient copying.
+*/
 void	vector_buffer_shift(t_vector *vector, size_t to, size_t from)
 {
 	size_t	distance;

@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 23:30:47 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:43:46 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 13:49:45 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/hashtable.h"
 
+/**
+ * @details Hashtable is implemented using a vector of entries, this function
+ * is a t_vector_setter function to copy an entry into another entry.
+*/
 static void	ht_setter(struct s_ht_entry *entry, struct s_ht_entry *new_entry)
 {
 	entry->key = new_entry->key;

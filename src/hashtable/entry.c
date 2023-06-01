@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   entry.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/19 23:50:45 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 15:03:21 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 13:45:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,10 @@ void	ht_entry_delete(struct s_ht_entry *entry)
 	entry->deleted = true;
 }
 
+/**
+ * @details When setting the key of an entry, the given key will be be copied
+ * to a new allocated memory using strdup.
+*/
 int	ht_entry_set_key(struct s_ht_entry *entry, const char *key)
 {
 	entry->deleted = false;

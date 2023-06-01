@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stringbuilder_shell.c                              :+:      :+:    :+:   */
+/*   stringbuilder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 14:20:22 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 22:23:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
 #include "stringbuilder_test.h"
 
 t_sb	*stringbuilder_shell_init(void)
@@ -75,17 +74,16 @@ struct s_tparser *tparser)
 				param[0], \
 				*(unsigned int *) param[1])))
 			return (TSHELL_FAILURE);
+		sb_print(sb);
+		return (TSHELL_SUCCESS);
 	}
-	else
-	{
-		param[2] = tparser_read(tparser);
-		if (sb_perform(sb, \
-			sb_action_insert_len(\
-				param[0], \
-				*(unsigned int *) param[1], \
-				*(unsigned int *) param[2])))
-			return (TSHELL_FAILURE);
-	}
+	param[2] = tparser_read(tparser);
+	if (sb_perform(sb, \
+		sb_action_insert_len(\
+			param[0], \
+			*(unsigned int *) param[1], \
+			*(unsigned int *) param[2])))
+		return (TSHELL_FAILURE);
 	sb_print(sb);
 	return (TSHELL_SUCCESS);
 }
@@ -157,6 +155,7 @@ t_tshell_status	stringbuilder_shell_print_mannual(void)
 	printf("%-23s: Print the string buffer\n", "print");
 	printf("%-23s: Append a string to the end of the buffer. Optionally, append only a particular length of the string\n", "append str [str_len]");
 	printf("%-23s: Insert a string at a particular index\n", "insert str at");
+	printf("%-23s: Insert a particular length of the string at a particular index\n", "insert str len at");
 	printf("%-23s: Delete a particular length of the string from a particular index\n", "delete start len");
 	printf("%-23s: Replace a particular length of the string from a particular index with a string\n", "replace str at len");
 	printf("%-23s: Replace a particular length of the string from a particular index with a particular length of a string\n", "replace str len at len");
@@ -189,5 +188,13 @@ t_tshell_status	stringbuilder_shell(t_sb *sb, struct s_tparser *tparser)
 	{
 		return (stringbuilder_shell_execute_replace(sb, tparser));
 	}
-	return (TSHELL_SUCCESS);
+	return (TSHELL_FAILURE);
+}
+
+int	main(void)
+{
+	return (interact(\
+		(t_init_func) stringbuilder_shell_init, \
+		(t_program_func) stringbuilder_shell, \
+		(t_free_func) sb_free));
 }

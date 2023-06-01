@@ -2,17 +2,13 @@
 ######     Variables     #######
 ################################
 
-NAME:=debug.out
-TARGET_NAME:=minishell
-TARGET_DIR:=../
-
 CC:=cc
 CFLAGS:= -Wall -Wextra -Werror
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
 	LDFLAGS+= -g3 -fsanitize=address
 endif
-SRC_DIR:=tests
+SRC_DIR:=shells
 INCLUDE_DIR= \
 	include \
 	../include \
@@ -25,8 +21,8 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-TEST_SRC:= $(patsubst $(SRC_DIR)/%,%, $(shell find $(SRC_DIR) -name '*.c'))
-SRC:= $(TEST_SRC)
+MAIN_SRC:= $(shell find $(SRC_DIR) -name '*.c')
+SRC:= $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -35,7 +31,8 @@ SRC:= $(TEST_SRC)
 # To compile a library, store a variable for their library file like this
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
-TARGET= $(TARGET_DIR)lib$(TARGET_NAME).so
+MINISHELL= $(CURDIR)/../libminishell.so
+TSHELL= $(CURDIR)/tshell/libtshell.so
 
 # To add a library, add the library header file like this:
 # LIB_INCLUDE_DIR+= $(shell brew --prefix readline)/include
@@ -43,30 +40,35 @@ TARGET= $(TARGET_DIR)lib$(TARGET_NAME).so
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
-LDFLAGS+= -l$(TARGET_NAME) -L $(TARGET_DIR)
+LDFLAGS+= -lminishell -L$(CURDIR)/.. -Wl,-rpath,$(CURDIR)/..
+LDFLAGS+= -ltshell -L$(CURDIR)/tshell -Wl,-rpath,$(CURDIR)/tshell
 
-###########################################
-######     Object name reformat     #######
-###########################################
+###############################################
+######     Executive names reformat     #######
+###############################################
 
 # This in effect makes all the object files to be compiled in the OBJ_DIR directory
 
-OBJ_DIR:=obj
-OBJ:= $(addprefix $(OBJ_DIR)/,$(subst /,@,$(SRC:.c=.o)))
+SHELLS:= $(patsubst $(SRC_DIR)/%.c,%.shell.out,$(SRC))
 
 #################################
 ######     Main rules     #######
 #################################
 
-all:
-	@$(MAKE) $(NAME) -j
+all: DEPS
+	@$(MAKE) $(SHELLS) -j
 
-$(NAME): $(TARGET) $(OBJ)
-	@$(CC) $(OBJ) -o $(NAME) $(LDFLAGS) && \
-	ln -sf $(TARGET) ./lib$(TARGET_NAME).so && \
-	echo "Compilation of $(NAME) successful"
+.SECONDEXPANSION:
+%.shell.out: $(SRC_DIR)/%.c
+	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) $< -o $@ $(LDFLAGS) && \
+	echo "Compilation of $@ successful"
 
-bonus: re
+run:
+ifdef WITH
+	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./$(WITH).shell.out
+else
+	@DYLD_LIBRARY_PATH=$(CURDIR)/..:$(CURDIR)/tshell ./loader.shell.out
+endif
 
 ##########################################
 ######     Library compilation     #######
@@ -74,37 +76,30 @@ bonus: re
 
 # To compile a library, add a rule like this:
 
-$(TARGET):
-	@$(MAKE) $(if $(FSANITIZE),FSANITIZE=yes,) -C $(TARGET_DIR) repack
+DEPS: $(MINISHELL) $(TSHELL)
+
+$(MINISHELL):
+	@$(MAKE) $(if $(FSANITIZE),FSANITIZE=yes,) -C .. repack
+
+$(TSHELL):
+	@$(MAKE) $(if $(FSANITIZE),FSANITIZE=yes,) -C tshell re
 
 # $(LIBRARY_NAME):
 # 	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/LIBRARY_NAME
-
-#########################################
-######     Object compilation     #######
-#########################################
-
-.SECONDEXPANSION:
-$(OBJ_DIR)/%.o: $(SRC_DIR)/$$(subst @,/,$$*).c
-	@$(CC) $(CFLAGS) $(addprefix -iquote ,$(INCLUDE_DIR)) $(addprefix -I ,$(LIB_INCLUDE_DIR)) -c $< -o $@
-
-$(OBJ): $(OBJ_DIR)
-
-$(OBJ_DIR):
-	@mkdir -p $(OBJ_DIR)
 
 ###############################
 ######     Cleaning     #######
 ###############################
 
 clean: 
-	@rm -f $(OBJ)
+	@$(MAKE) -C .. clean
+	@$(MAKE) -C tshell clean
 
 fclean: clean
-	@rm -f lib$(TARGET_NAME).so
-	@rm -rf $(OBJ_DIR)
-	@rm -f $(NAME)
+	@$(MAKE) -C .. unpack
+	@$(MAKE) -C tshell fclean
+	@rm -f $(SHELLS)
 
 re: fclean all
 
-.PHONY: clean fclean re bonus $(TARGET)
+.PHONY: clean fclean re

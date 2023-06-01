@@ -1,5 +1,5 @@
-#ifndef TESTS_H
-# define TESTS_H
+#ifndef TSHELL_H
+# define TSHELL_H
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -7,6 +7,11 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <string.h>
+# ifdef __linux__
+# include <bsd/string.h>
+#endif
+
+# define TSHELL_MAX_INPUT_SIZE 1024
 
 //////////////////////////////////////////////
 /////////////      parser      ///////////////
@@ -96,13 +101,53 @@ typedef	void			*(*t_init_func)(void);
 typedef	t_tshell_status	(*t_program_func)(void *states, struct s_tparser *parser);
 typedef	void			(*t_free_func)(void *states);
 
-void				interact(t_init_func init, t_program_func program, t_free_func cleaner);
+int					interact(t_init_func init, t_program_func program, t_free_func cleaner);
+
+//////////////////////////////////////////////////
+/////////////     tshell lines     ///////////////
+//////////////////////////////////////////////////
+
+struct s_tshell_lines
+{
+	char	*buffer;
+	char	*current_line;
+	size_t	current_line_size;
+	size_t	previous_all_lines_sum_size;
+	ssize_t	read_size;
+};
+
+t_tshell_status		tshell_lines_init(struct s_tshell_lines *lines);
+
+void				tshell_lines_reset(struct s_tshell_lines *lines);
+
+t_tshell_status		tshell_lines_process_one(struct s_tshell_lines *lines);
+
+void				tshell_lines_free(struct s_tshell_lines *lines);
+
+////////////////////////////////////////////
+/////////////     tshell     ///////////////
+////////////////////////////////////////////
+
+struct s_tshell
+{
+	struct s_tparser		tparser;
+	struct s_tshell_lines	lines;
+};
+
+t_tshell_status		tshell_run(t_program_func program, void *states);
+
+t_tshell_status		tshell_run_from_fd(t_program_func program, void *states, int fd);
 
 /////////////////////////////////////////////////////
 /////////////     Execute command     ///////////////
 /////////////////////////////////////////////////////
 
 typedef	void		(*t_printer_func)(void *states);
+
+t_tshell_status		tshell_builtins_exit(struct s_tshell_lines *lines);
+
+t_tshell_status		tshell_builtins_load(t_program_func program, \
+void *states, struct s_tshell *tshell);
 
 t_tshell_status		tshell_execute_printer(void *states, \
 struct s_tparser *tparser, t_printer_func func);

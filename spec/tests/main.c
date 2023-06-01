@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<<< HEAD:spec/tests/main.c
 /*   Created: 2022/10/29 14:52:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 12:42:56 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/13 04:55:32 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
-#include "hashtable_test.h"
-#include "stringbuilder_test.h"
+========
+/*   Created: 2023/05/29 12:49:43 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/06/01 15:25:08 by htsang           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	main(void)
+#include "MINISHELL/execution/expander.h"
+>>>>>>>> execution:src/execution/expander/match.c
+
+int	minishell_expander_match_any(t_sb_iterator *it, const char *set)
 {
-	// expander_hashtable_test1();
-	// expander_hashtable_test3();
-	interact(\
-		(t_init_func) hashtable_shell_init, \
-		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free);
-	// interact(\
-	// 	(t_init_func) stringbuilder_shell_init, \
-	// 	(t_program_func) stringbuilder_shell, \
-	// 	(t_free_func) sb_free);
-	return (0);
+	size_t	i;
+	char	current;
+
+	i = 0;
+	current = sb_iterator_current(it);
+	while (set[i])
+	{
+		if (current == set[i])
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	return (EXIT_FAILURE);
 }

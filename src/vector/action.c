@@ -3,36 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 18:26:09 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 03:07:48 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 19:06:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/vector.h"
 
-int	vector_append(t_vector *vector, void *data)
+void	*vector_append(t_vector *vector, void *data)
 {
+	void	*element;
+
 	if (vector->size == vector->capacity)
 		if (vector_resize(vector))
-			return (EXIT_FAILURE);
-	vector_set(vector, vector->size, data);
+			return (NULL);
+	element = vector_set(vector, vector->size, data);
 	vector->size++;
-	return (EXIT_SUCCESS);
+	return (element);
 }
 
-int	vector_insert(t_vector *vector, void *data, size_t index)
+void	*vector_insert(t_vector *vector, void *data, size_t index)
 {
+	void	*element;
+
 	if (index > vector->size)
-		return (EXIT_FAILURE);
+		return (NULL);
 	if (vector->size == vector->capacity)
 		if (vector_resize(vector))
-			return (EXIT_FAILURE);
+			return (NULL);
 	vector_buffer_shift(vector, index + 1, index);
-	vector_set(vector, index, data);
+	element = vector_set(vector, index, data);
 	vector->size++;
-	return (EXIT_SUCCESS);
+	return (element);
 }
 
 int	vector_remove(t_vector *vector, size_t index)

@@ -1,0 +1,4 @@
+append wtf
+append excuseme?
+insert 12345 2 4
+replace 8989898989 4 2

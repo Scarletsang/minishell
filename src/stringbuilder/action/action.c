@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/17 18:09:57 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/22 04:39:43 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 03:33:23 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,16 @@ static int	sb_perform_insert(t_sb *sb, struct s_sb_action *action)
 	return (EXIT_SUCCESS);
 }
 
+/**
+ * @details If entry_str is not specified, then it is a delete operation.
+ * If entry_str_len is not specified, then the whole entry_str will be
+ * taken into account, so it will be set to the length of the entry_str. If
+ * edit_len is set, then it is a replace operation. Eventually, an append
+ * operation is the same as an insert operation, except that the insertion
+ * happens at the end of the buffer. An append operation does not specify
+ * an edit_start, so it will be set to the index of the last character of
+ * the buffer.
+*/
 int	sb_perform(t_sb *sb, struct s_sb_action action)
 {
 	if (!action.entry_str)

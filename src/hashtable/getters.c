@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:43:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:43:30 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:50 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param key The key.
  * @return void* The value of the key, or NULL if the key is not found.
 */
-void	*ht_get(t_ht *ht, const char *key)
+void	*ht_get(const t_ht *ht, const char *key)
 {
 	struct s_ht_entry	*entry;
 
@@ -28,7 +28,7 @@ void	*ht_get(t_ht *ht, const char *key)
 	return (entry->value);
 }
 
-struct s_ht_entry	*ht_get_entry(t_ht *ht, const char *key)
+struct s_ht_entry	*ht_get_entry(const t_ht *ht, const char *key)
 {
 	size_t				index;
 	size_t				interval;
@@ -51,7 +51,7 @@ struct s_ht_entry	*ht_get_entry(t_ht *ht, const char *key)
 	return (NULL);
 }
 
-struct s_ht_entry	*ht_get_empty_entry(t_ht *ht, const char *key)
+struct s_ht_entry	*ht_get_empty_entry(const t_ht *ht, const char *key)
 {
 	size_t				index;
 	size_t				interval;

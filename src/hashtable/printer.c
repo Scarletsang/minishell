@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 01:38:36 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 12:42:43 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:43 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

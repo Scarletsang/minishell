@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rehash.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 04:17:16 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 14:31:58 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
