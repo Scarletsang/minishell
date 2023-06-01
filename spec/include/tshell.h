@@ -7,6 +7,9 @@
 # include <stdbool.h>
 # include <limits.h>
 # include <string.h>
+# ifdef __linux__
+# include <bsd/string.h>
+#endif
 
 # define TSHELL_MAX_INPUT_SIZE 1024
 
@@ -98,7 +101,7 @@ typedef	void			*(*t_init_func)(void);
 typedef	t_tshell_status	(*t_program_func)(void *states, struct s_tparser *parser);
 typedef	void			(*t_free_func)(void *states);
 
-void				interact(t_init_func init, t_program_func program, t_free_func cleaner);
+int					interact(t_init_func init, t_program_func program, t_free_func cleaner);
 
 //////////////////////////////////////////////////
 /////////////     tshell lines     ///////////////

@@ -2,7 +2,7 @@
 ######     Variables     #######
 ################################
 
-NAME:=libtshell.dylib
+NAME:=libtshell.so
 
 CC:=cc
 CFLAGS:= -Wall -Wextra -Werror -fPIC
@@ -39,6 +39,9 @@ SRC:= $(MAIN_SRC)
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
+ifeq ($(shell uname), Linux)
+	LDFLAGS+= -lbsd
+endif
 
 ###########################################
 ######     Object name reformat     #######

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interact.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:44:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/24 12:43:09 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 22:24:20 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,18 +87,20 @@ t_tshell_status	tshell_run_from_fd(t_program_func program, void *states, int fd)
 	return (TSHELL_SUCCESS);
 }
 
-void	interact(t_init_func init, t_program_func program, t_free_func cleaner)
+int	interact(t_init_func init, t_program_func program, t_free_func cleaner)
 {
 	void	*states;
+	int		exit_status;
 
 	states = init();
 	if (!states)
-		return ;
-	tshell_run(program, states);
+		return (EXIT_FAILURE);
+	exit_status = tshell_run(program, states);
 	if (states)
 	{
 		if (cleaner)
 			cleaner(states);
 		free(states);
 	}
+	return (exit_status);
 }
