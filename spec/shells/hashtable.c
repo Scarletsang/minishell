@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashtable.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/29 00:18:42 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 22:23:53 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_ht	*hashtable_shell_init(void)
 }
 
 t_tshell_status	hashtable_shell_execute_func2(t_ht *ht, struct s_tparser *tparser, \
-int	(*func2)(t_ht *ht, const char *key, void *value, t_ht_entry_cleaner func))
+const struct s_ht_entry	*(*func2)(t_ht *ht, const char *key, const void *value, t_ht_entry_cleaner func))
 {
 	char	*param[2];
 
@@ -36,7 +36,7 @@ int	(*func2)(t_ht *ht, const char *key, void *value, t_ht_entry_cleaner func))
 		return (TSHELL_FAILURE);
 	param[0] = tparser_read(tparser);
 	param[1] = tparser_read(tparser);
-	if (func2(ht, param[0], param[1], free))
+	if (!func2(ht, param[0], param[1], free))
 	{
 		return (TSHELL_FAILURE);
 	}
@@ -102,9 +102,8 @@ t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser)
 
 int	main(void)
 {
-	interact(\
+	return (interact(\
 		(t_init_func) hashtable_shell_init, \
 		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free);
-	return (0);
+		(t_free_func) ht_free));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 19:27:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/29 02:02:07 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 22:24:00 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,13 @@ struct s_tparser *tparser)
 t_tshell_status	vars_shell_execute_export(struct s_minishell_vars *vars, \
 struct s_tparser *tparser)
 {
-	char	*param[2];
-
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 	{
 		ht_print(&vars->environment);
 		return (TSHELL_SUCCESS);
 	}
-	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
-	{
-		if (minishell_vars_export_without_value(vars, tparser_read(tparser)))
-			return (TSHELL_FAILURE);
-		return (TSHELL_SUCCESS);
-	}
-	param[0] = tparser_read(tparser);
-	param[1] = tparser_read(tparser);
-	if (minishell_vars_export(vars, param[0], param[1]))
-	{
+	if (minishell_vars_export(vars, tparser_read(tparser)))
 		return (TSHELL_FAILURE);
-	}
 	return (TSHELL_SUCCESS);
 }
 
@@ -146,9 +134,8 @@ struct s_tparser *tparser)
 
 int	main(void)
 {
-	interact(\
+	return (interact(\
 		(t_init_func) vars_shell_init, \
 		(t_program_func) vars_shell, \
-		(t_free_func) minishell_vars_free);
-	return (0);
+		(t_free_func) minishell_vars_free));
 }

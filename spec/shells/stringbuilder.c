@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stringbuilder.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/29 02:31:38 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/05/31 22:23:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,9 +193,8 @@ t_tshell_status	stringbuilder_shell(t_sb *sb, struct s_tparser *tparser)
 
 int	main(void)
 {
-	interact(\
+	return (interact(\
 		(t_init_func) stringbuilder_shell_init, \
 		(t_program_func) stringbuilder_shell, \
-		(t_free_func) sb_free);
-	return (0);
+		(t_free_func) sb_free));
 }
