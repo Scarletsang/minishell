@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/29 01:46:57 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 14:16:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,33 @@ void	minishell_vars_free(struct s_minishell_vars *vars)
 	vector_free(&vars->envp);
 }
 
-static int	minishell_vars_import_cleaner(char **key, t_sb *key_and_value)
-{
-	if (*key)
-		free(*key);
-	sb_free(key_and_value);
-	return (EXIT_FAILURE);
-}
-
+/**
+ * @details Iterates through the given environment variables and adds them to
+ * the environment hash table. The key is the part of the string before the
+ * first '=' character, and the value is simply the whole string. Then it will
+ * use the key to add the env to the enviornment database. The value is not
+ * owned by the database.
+*/
 int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
 {
-	struct s_sb_clipper	clipper;
-	t_sb				key_and_value;
-	char				*key;
+	char	*key;
 
 	key = NULL;
 	while (*envp)
 	{
-		if (sb_init(&key_and_value, 10) || \
-			sb_perform(&key_and_value, sb_action_append(*envp)))
-			return (minishell_vars_import_cleaner(&key, &key_and_value));
-		sb_clipper_init(&clipper, &key_and_value);
-		if (sb_clipper_area(&clipper, NULL, "="))
-			return (minishell_vars_import_cleaner(&key, &key_and_value));
-		key = sb_clipper_run(&clipper);
-		if (!key || minishell_vars_export(vars, key, *envp))
-			return (minishell_vars_import_cleaner(&key, &key_and_value));
+		key = ft_strchr(*envp, '=');
+		if (!key)
+			return (EXIT_FAILURE);
+		key = ft_substr(*envp, 0, key - *envp);
+		if (!key)
+			return (EXIT_FAILURE);
+		if (!ht_update(&vars->environment, key, *envp, NULL))
+		{
+			free(key);
+			return (EXIT_FAILURE);
+		}
 		vars->environnement_changed = true;
-		minishell_vars_import_cleaner(&key, &key_and_value);
+		free(key);
 		envp++;
 	}
 	return (EXIT_SUCCESS);
