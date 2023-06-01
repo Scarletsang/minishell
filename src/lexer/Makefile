@@ -12,6 +12,7 @@ SRC := \
 	scanner_maniputalor.c \
 	token_maker.c \
 	token_lst_utils.c \
+	token_assignword_updater.c \
 	lexer_tester.c
 
 LIBFT = ../../lib/libft/libft.a

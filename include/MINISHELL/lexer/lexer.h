@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 22:08:03 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/01 14:59:05 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-typedef enum e_err_code
+typedef enum e_exit_code
 {
-	NO_LINE,
+	LEXER_SUCCESS,
 	ERROR_WHEN_LEX,
-	MALLOC_FAIL,
-	LEXER_SUCCESS
-}			t_err_code;
+	NO_LINE,
+	MALLOC_FAIL
+}			t_exit_code;
 
 typedef enum e_token_type
 {
@@ -71,7 +71,7 @@ typedef void	(*t_token_printer)(void *);
 lexer
 */
 void				lexer_init(struct s_lexer *lexer);
-t_err_code			token_list_get(struct s_lexer *lexer, char *line);
+t_exit_code			token_list_get(struct s_lexer *lexer, char *line);
 
 /**
 scanner
@@ -97,12 +97,18 @@ struct s_token		token_match_word(struct s_scanner *scanner);
 struct s_token		token_scan(struct s_scanner *scanner);
 //adding tokens to a linked list, clear when sth failed
 struct s_token_list	*token_new(struct s_token token);
-void				token_add_back(struct s_lexer *lexer, struct s_token_list *token_lst);
+void				token_add_back(struct s_lexer *lexer, \
+				struct s_token_list *token_lst);
 void				token_clear_when_lexer_failed(struct s_lexer *lexer, \
 t_token_cleaner del, char *err_message);
-void				token_delone(struct s_token_list *token_lst, t_token_cleaner del);
+void				token_delone(struct s_token_list *token_lst, \
+				t_token_cleaner del);
 void				del(struct s_token *token_content);
-
+//update token if it should be ASSIGNMENT_WORD
+void				token_update(struct s_token *token);
+void				token_lstitr_update_assignmentword(\
+				struct s_token_list *token_lst, t_token_updater token_update);
+bool				token_is_assignmentword(struct s_token token);
 /**lexer tester
 */
 

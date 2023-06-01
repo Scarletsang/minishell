@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:04:53 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 22:04:46 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/01 14:39:27 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ struct s_token	token_match_word(struct s_scanner *scanner)
 			while (scanner_peek(*scanner) != c && !scanner_at_end(*scanner))
 				scanner_advance(scanner);
 			if (scanner_at_end(*scanner))
-				return (token_error("Unterminated string."));
+				return (token_error("Unterminated string when matching quote"));
 			scanner_advance(scanner);
 			if (scanner_is_at_delimeter(*scanner))
 				return (token_make(TOKEN_WORD, *scanner));
