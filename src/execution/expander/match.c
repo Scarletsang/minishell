@@ -1,16 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expander.h                                         :+:      :+:    :+:   */
+/*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/12 18:02:32 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/12 23:07:30 by anthonytsan      ###   ########.fr       */
+/*   Created: 2023/05/29 12:49:43 by anthonytsan       #+#    #+#             */
+/*   Updated: 2023/05/30 19:32:53 by anthonytsan      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPANDER_H
-# define EXPANDER_H
+#include "MINISHELL/execution/expander.h"
 
-#endif
+int	minishell_expander_match_any(t_sb_iterator *it, const char *set)
+{
+	size_t	i;
+	char	current;
+
+	i = 0;
+	current = sb_iterator_current(it);
+	while (set[i])
+	{
+		if (current == set[i])
+			return (EXIT_SUCCESS);
+		i++;
+	}
+	return (EXIT_FAILURE);
+}

@@ -48,9 +48,13 @@ VARS_SRC:=\
 	execution/vars/vars.c \
 	execution/vars/database.c \
 	execution/vars/action.c
+EXPANDER_SRC:=\
+	execution/expander/expander.c \
+	execution/expander/expander_dollar.c \
+	execution/expander/match.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
