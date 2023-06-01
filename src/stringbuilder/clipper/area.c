@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   area.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 12:28:52 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/29 02:12:21 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:31 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

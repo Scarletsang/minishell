@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   getters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 14:43:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/30 16:59:20 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:50 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

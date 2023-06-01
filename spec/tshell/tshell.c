@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tshell.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 05:58:21 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/24 12:39:12 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:25:13 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

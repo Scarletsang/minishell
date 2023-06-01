@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setters.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/21 20:01:52 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/22 02:56:10 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

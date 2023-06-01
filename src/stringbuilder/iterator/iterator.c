@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   iterator.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 23:38:55 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/30 17:01:41 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:27 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

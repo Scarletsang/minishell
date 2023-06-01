@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   match.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 12:49:43 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/30 19:32:53 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:25:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

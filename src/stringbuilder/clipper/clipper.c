@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clipper.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 21:10:42 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/29 02:15:54 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 15:24:29 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

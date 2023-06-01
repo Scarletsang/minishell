@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anthonytsang <anthonytsang@student.42.f    +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:47:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/05/30 22:14:03 by anthonytsan      ###   ########.fr       */
+/*   Updated: 2023/06/01 14:23:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
