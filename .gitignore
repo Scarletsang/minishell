@@ -8,5 +8,7 @@
 **/*.out
 **/leaks_result
 **/*.o
+**/*.so
+**/*.txt
 **/*.dylib
 **/*.so
