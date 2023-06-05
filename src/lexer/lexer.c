@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/01 14:53:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:11:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	lexer_init(struct s_lexer *lexer)
 	// lexer->scanner.current = line;
 }
 
-t_exit_code	token_list_get(struct s_lexer *lexer, char *line)
+t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
 {
 	struct s_scanner	scanner;
 	struct s_token		token;

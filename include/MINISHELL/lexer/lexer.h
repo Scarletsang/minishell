@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/01 15:05:43 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:11:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@
 # include <stdbool.h>
 # include <stdio.h>
 
-typedef enum e_exit_code
+typedef enum e_lexer_exit_code
 {
 	LEXER_SUCCESS,
 	ERROR_WHEN_LEX,
 	NO_LINE,
 	MALLOC_FAIL
-}			t_exit_code;
+}			t_lexer_exit_code;
 
 typedef enum e_token_type
 {
@@ -71,7 +71,7 @@ typedef void	(*t_token_printer)(void *);
 lexer
 */
 void				lexer_init(struct s_lexer *lexer);
-t_exit_code			token_list_get(struct s_lexer *lexer, char *line);
+t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line);
 
 /**
 scanner
