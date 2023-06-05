@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/05 19:10:03 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/05 21:16:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ struct s_AST_node_content
 	t_sb_vector					command;
 };
 
+// TODO: interface for AST node content
+
 enum e_AST_node_type
 {
 	AST_NODE_COMMAND,
@@ -42,5 +44,7 @@ struct s_AST_node
 	struct s_AST_node			*left;
 	struct s_AST_node			*right;
 };
+
+// TODO: interface for AST node
 
 #endif
