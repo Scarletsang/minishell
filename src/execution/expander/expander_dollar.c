@@ -6,14 +6,14 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 15:14:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/07 16:29:23 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/expander.h"
 
 static int	minishell_expander_substitute(t_sb_iterator *it, const size_t from, \
-const struct s_minishell_vars *vars)
+const struct s_ms_vars *vars)
 {
 	struct s_sb_clipper	clipper;
 	char				*key;
@@ -25,7 +25,7 @@ const struct s_minishell_vars *vars)
 	key = sb_clipper_run(&clipper);
 	if (!key)
 		return (EXIT_FAILURE);
-	key_value = minishell_vars_echo(vars, key);
+	key_value = ms_vars_echo(vars, key);
 	free(key);
 	it->index = from;
 	if (!key_value)
@@ -36,7 +36,7 @@ const struct s_minishell_vars *vars)
 }
 
 static int	minishell_expander_substite_special(t_sb_iterator *it, \
-const struct s_minishell_vars *vars)
+const struct s_ms_vars *vars)
 {
 	size_t	i;
 	char	special[sizeof(SUPPORTED_SPECIAL_VARS)];
@@ -49,28 +49,28 @@ const struct s_minishell_vars *vars)
 		{
 			sb_iterator_prev(it);
 			return (sb_iterator_mut_replace(it, \
-				minishell_vars_database_get(&vars->special, special + i), 2));
+				ms_vars_database_get(&vars->special, special + i), 2));
 		}
 		i += 2;
 	}
 	return (EXIT_FAILURE);
 }
 
-int	minishell_expander_dquote_dollar(t_sb_iterator *it, \
-const struct s_minishell_vars *vars)
+int	ms_expander_dquote_dollar(t_sb_iterator *it, \
+const struct s_ms_vars *vars)
 {
 	size_t	dollar;
 
 	dollar = it->index;
 	if (sb_iterator_next(it))
 		return (EXIT_FAILURE);
-	if (!minishell_expander_match_any(it, " \""))
+	if (!ms_expander_match_any(it, " \""))
 		return (EXIT_SUCCESS);
 	if (!minishell_expander_substite_special(it, vars))
 		return (EXIT_SUCCESS);
 	while (!sb_iterator_is_end(it))
 	{
-		if (!minishell_expander_match_any(it, " \"$"))
+		if (!ms_expander_match_any(it, " \"$"))
 		{
 			sb_iterator_prev(it);
 			break ;

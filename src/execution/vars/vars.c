@@ -6,26 +6,26 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 14:16:56 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/07 16:28:39 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/vars.h"
 
-int	minishell_vars_init(struct s_minishell_vars *vars)
+int	ms_vars_init(struct s_ms_vars *vars)
 {
 	if (ht_init(&vars->environment, 20) || \
 		ht_init(&vars->shell, 10) || \
 		vector_init(&vars->envp, sizeof(char *), 20, vector_set_string))
 	{
-		minishell_vars_free(vars);
+		ms_vars_free(vars);
 		return (EXIT_FAILURE);
 	}
 	vars->environnement_changed = true;
 	return (EXIT_SUCCESS);
 }
 
-void	minishell_vars_free(struct s_minishell_vars *vars)
+void	ms_vars_free(struct s_ms_vars *vars)
 {
 	ht_free(&vars->environment);
 	ht_free(&vars->shell);
@@ -39,7 +39,7 @@ void	minishell_vars_free(struct s_minishell_vars *vars)
  * use the key to add the env to the enviornment database. The value is not
  * owned by the database.
 */
-int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
+int	ms_vars_import(struct s_ms_vars *vars, char **envp)
 {
 	char	*key;
 
@@ -64,7 +64,7 @@ int	minishell_vars_import(struct s_minishell_vars *vars, char **envp)
 	return (EXIT_SUCCESS);
 }
 
-char	**minishell_vars_get_envp(struct s_minishell_vars *vars)
+char	**ms_vars_get_envp(struct s_ms_vars *vars)
 {
 	size_t				i;
 	size_t				valid_entry;
