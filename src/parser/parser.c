@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/07 13:47:22 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/07 21:39:59 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	parser_init(struct s_parser *parser, struct s_token_list *start)
 	parser->head = NULL;
 	parser->current = NULL;
 	parser->current_token = start;
+	parser->start_token = start;
+	// parser->malloc_fail = false;
 }
 
 t_parser_exit_code	ast_set(struct s_parser *parser)
