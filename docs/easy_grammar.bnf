@@ -42,13 +42,8 @@ cmd_parameter    ::= WORD
                  ;
 
 (* Redirection syntax *)
-io_redirect      ::= io_file | io_here_doc
+io_redirect      ::= (LESS | GREAT | DGREAT | DLESS) filename_or_heredoc_end
                  ;
-io_file          ::= (LESS | GREAT | DGREAT) filename
-                 ;
-filename         ::= WORD
-                 ; (* Apply rule 2 *)
-io_here_doc      ::= DLESS   here_doc_end
-				 ;
-here_doc_end     ::= word
-                 ; (* Apply rule 3 *)
+filename_or_heredoc_end
+		         ::= WORD
+                 ; (* Apply rule 2 when it's filename, otherwise rule 3 *)
