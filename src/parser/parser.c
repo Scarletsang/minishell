@@ -1,34 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.h                                           :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/07 12:46:29 by sawang           ###   ########.fr       */
+/*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
+/*   Updated: 2023/06/07 12:45:42 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSER_H
-# define PARSER_H
+#include "MINISHELL/parser/ast.h"
 
-# include "MINISHELL/parser/ast.h"
-
-typedef enum e_parser_exit_code
-{
-	PARSER_SUCCESS,
-	SYNTAX_ERROR,
-	MALLOC_FAIL
-}			t_lexer_exit_code;
-
-struct s_parser
-{
-	struct s_ast_node	*head;
-	struct s_ast_node	*current;
-	struct s_token_list	*current_token;
-};
-
-// TODO: interface for parser
-
-#endif
+bool	
