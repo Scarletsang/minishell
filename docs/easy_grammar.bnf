@@ -1,4 +1,3 @@
-
 (* From https://pubs.opengroup.org/onlinepubs/009695399/utilities/xcu_chap02.html#tag_02_10 *)
 
 (* -------------------------------------------------------
@@ -25,12 +24,12 @@
 
 (* Structural syntax *)
 complete_command ::= command PIPE complete_command
-                 |   command
+                 |   command EOF
                  ;
 
 (* Command syntax *)
-command          ::= [cmd_prefix] cmd_word [cmd_suffix]
-                 |   cmd_prefix
+command          ::= cmd_prefix [cmd_word] [cmd_suffix]
+                 |   cmd_word [cmd_suffix]
                  ;
 cmd_word         ::= WORD
                  ; (* Apply rule 7b *)
@@ -42,13 +41,7 @@ cmd_parameter    ::= WORD
                  ;
 
 (* Redirection syntax *)
-io_redirect      ::= io_file | io_here_doc
+io_redirect      ::= (LESS | GREAT | DGREAT | DLESS) filename_or_heredoc_end
                  ;
-io_file          ::= (LESS | GREAT | DGREAT) filename
-                 ;
-filename         ::= WORD
-                 ; (* Apply rule 2 *)
-io_here_doc      ::= DLESS   here_doc_end
-				 ;
-here_doc_end     ::= word
-                 ; (* Apply rule 3 *)
+filename_or_heredoc_end ::= WORD
+                        ; (* Apply rule 2 when it's filename, otherwise rule 3 *)
