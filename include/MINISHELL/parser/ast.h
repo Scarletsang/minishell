@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/07 16:45:05 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/08 16:02:41 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct s_ast_node_content
 {
 	t_ast_redirection_vector	redirection_in;
 	t_ast_redirection_vector	redirection_out;
-	t_sb_vector					assignment;
+	t_sb_vector					assignment_word;
 	t_sb_vector					command;
 };
 

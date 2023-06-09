@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/07 13:47:34 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/09 15:02:46 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(void)
 		if (parser_check_before_run(lexer, lexer_exit_code) == EXIT_SUCCESS)
 		{
 			parser_init(parser, lexer.start);
-			parser_exit_code = ast_set(&parser);
+			parser_exit_code = parse_complete_command(&parser);
 			// print ast
 		}
 		else
@@ -45,5 +45,5 @@ int	main(void)
         free(line); // Free the memory allocated by readline
 		line = readline("minishell>");
 	}
-	return (lexer_exit_code);
+	return (parser_exit_code);
 }

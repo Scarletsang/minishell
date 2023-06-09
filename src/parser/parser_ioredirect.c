@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:51:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/07 21:39:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/09 19:46:26 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,23 @@ t_parser_exit_code	parse_io_redirect(struct s_parser *parser)
 	struct s_ast_redirection	io_file;
 	struct s_token_list			cur_tok;
 
+	// parser->start_token = parser->current_token;//???
+	if (parser->malloc_fail == true)
+		return (PARSER_FAILURE); //malloc fail
 	cur_tok = parser_token_peek(parser);
 	if (ast_redirect_type_set(parser, &io_file))
-		return (PARSER_FAILURE);
-	if (parser_token_peek_next(parser).token.type != TOKEN_WORD)
-		return (PARSER_FAILURE);
+		return (PARSER_FAILURE); //nothing to parse
+	if (parser_token_peek_next(parser).token.type != TOKEN_WORD && \
+		parser_token_peek_next(parser).token.type != TOKEN_ASSIGNMENT_WORD)
+		return (PARSER_FAILURE); //syntax error
 	parser_token_advance(parser);
-	if (ast_redirect_content_set(&io_file, parser) == EXIT_FAILURE || \
+	if (ast_redirect_content_set(parser, &io_file) == EXIT_FAILURE || \
 		vector_append(is_redirect_in_or_out(parser, io_file), \
 		&io_file) == EXIT_FAILURE)
 	{
 		sb_free(&io_file.content);
-		return (MALLOC_FAIL);
+		parser->malloc_fail = true;
+		return (PARSER_FAILURE); // malloc fail;
 	}
 	parser_token_advance(parser);
 	return (PARSER_SUCCESS);
