@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:56:31 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/09 20:28:53 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/12 16:32:01 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,32 +43,36 @@ t_parser_exit_code	parse_cmd_word(struct s_parser *parser)
 	return (PARSER_SUCCESS);
 }
 
+//in parse_cmd, create the new node and save it in parser->current
 t_parser_exit_code	parse_cmd(struct s_parser *parser)
 {
-	apply the new rule
-	// t_parser_exit_code	cmd_prefix_exit_code;
-	// t_parser_exit_code	cmd_word_exit_code;
-	// t_parser_exit_code	cmd_suffix_exit_code;
+	// apply the new rule
+	struct s_ast_node	*new_node;
 
-	// if (malloc_fail(parser) == true)
-	// 	return (PARSER_FAILURE);
-	// cmd_prefix_exit_code = parse_cmd_prefix(parser);
-	// cmd_word_exit_code = parse_cmd_word(parser);
-	// if (cmd_prefix_exit_code == PARSER_FAILURE && \
-	// cmd_word_exit_code == PARSER_FAILURE)
-	// 	return (PARSER_FAILURE);
-	// if (cmd_prefix_exit_code == PARSER_SUCCESS && \
-	// (parser->current_token->token.type == TOKEN_EOF || \
-	// parser->current_token->token.type == TOKEN_PIPE))
-	// 	return (PARSER_SUCCESS);
-	// if (cmd_word_exit_code == PARSER_FAILURE)
-	// 	return (PARSER_FAILURE);
-	// cmd_suffix_exit_code = parse_cmd_suffix(parser);
-	// if (cmd_suffix_exit_code == PARSER_FAILURE)
-	// {
-	// 	if (parser->current_token->token.type == TOKEN_EOF || \
-	// 	parser->current_token->token.type == TOKEN_PIPE)
-	// 		return (PARSER_SUCCESS);
-	// 	return (PARSER_FAILURE);
-	// }
+	if (parser->malloc_fail == true)
+		return (PARSER_FAILURE);
+	new_node = malloc (sizeof(struct s_ast_node));
+	if (new_node == NULL)
+	{
+		parser->malloc_fail = true;
+		return (PARSER_FAILURE);
+	}
+	new_node->type = AST_NODE_CMD;
+	if (parser->head == NULL)
+		parser->head = new_node;
+	else if (parser->head->type == AST_NODE_PIPE)
+		parser->head->right = new_node;
+	parser->current = new_node;
+	if (parse_prefix(parser) == PARSER_FAILURE)
+	{
+		if (parse_cmd_word(parser) == PARSER_FAILURE)
+			return (free(new_node), PARSER_FAILURE); //syntax error
+	}
+	else
+	{
+		if (parse_cmd_word(parser) == PARSER_FAILURE)
+			return (PARSER_SUCCESS);
+	}
+	parse_cmd_suffix(parser);
+	return (PARSER_SUCCESS);
 }

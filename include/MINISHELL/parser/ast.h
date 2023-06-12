@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/08 16:02:41 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/12 16:00:18 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ struct s_ast_node_content
 
 enum e_ast_node_type
 {
-	AST_NODE_COMMAND,
+	AST_NODE_CMD,
 	AST_NODE_PIPE,
 	AST_NODE_AND,
 	AST_NODE_OR

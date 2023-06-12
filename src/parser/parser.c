@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/09 16:47:00 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/12 14:13:34 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,4 @@ void	parser_init(struct s_parser *parser, struct s_token_list *start)
 	parser->current_token = start;
 	parser->start_token = start;
 	parser->malloc_fail = false;
-}
-
-t_parser_exit_code	parse_complete_command(struct s_parser *parser)
-{
-	// parser->current = parser->head;
-	if (parse_command(parser) == PARSER_FAILURE)
-		return (PARSER_FAILURE);
-	if (parse_pipe(parser) == PARSER_FAILURE)
-		return (PARSER_SUCCESS);
-	if (parse_complete_command(parser) == PARSER_FAILURE)
-		return (PARSER_FAILURE); //syntax error
-	return (PARSER_SUCCESS);
 }
