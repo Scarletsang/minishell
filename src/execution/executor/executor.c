@@ -6,35 +6,16 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/09 20:58:16 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/11 17:19:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/executor.h"
 
-void	ms_executor_init(struct s_ms_executor *executor)
-{
-	executor->stdout_pipe = PIPE1;
-}
-
-int	ms_executor_pipe(struct s_ms_executor *executor)
-{
-	if (pipe(ms_executor_get_stdout_pipe(executor)) == -1)
-		return (EXIT_FAILURE);
-	executor->stdout_pipe ^= 1;
-	return (EXIT_SUCCESS);
-}
-
-pid_t	ms_executor_fork(struct s_ms_executor *executor)
-{
-	executor->last_child_pid = fork();
-	return (executor->last_child_pid);
-}
-
-t_executor_exit_code	ms_executor_wait(struct s_ms_executor *executor)
+t_executor_return_value	ms_executor_wait(struct s_ms_executor *executor)
 {
 	int						wstatus;
-	t_executor_exit_code	exit_code;
+	t_executor_return_value	exit_code;
 	pid_t					pid;
 
 	pid = 1;
@@ -47,4 +28,24 @@ t_executor_exit_code	ms_executor_wait(struct s_ms_executor *executor)
 		}
 	}
 	return (exit_code);
+}
+
+void	ms_executor_init(struct s_ms_executor *executor)
+{
+	ms_piper_init(&executor->piper);
+	executor->last_child_pid = -1;
+}
+
+t_executor_exit_code	ms_executor_destroy(struct s_ms_executor *executor)
+{
+	executor->last_child_pid = -1;
+	if (ms_piper_destroy(&executor->piper))
+		return (EXECUTION_ERROR);
+	return (EXECUTION_SUCCESS);
+}
+
+pid_t	ms_executor_fork(struct s_ms_executor *executor)
+{
+	executor->last_child_pid = fork();
+	return (executor->last_child_pid);
 }
