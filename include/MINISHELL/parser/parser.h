@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/09 13:22:21 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:28:37 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ struct s_parser
 	struct s_ast_node	*head;
 	struct s_ast_node	*current;
 	struct s_token_list	*current_token;
-	struct s_token_list *start_token; //???
+	// struct s_token_list *start_token;
 	bool				malloc_fail;
 };
 

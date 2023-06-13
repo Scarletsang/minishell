@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:13:19 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 14:31:06 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:29:40 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_parser_exit_code	parse_pipe(struct s_parser *parser)
 		return (PARSER_FAILURE);
 	if (parser->current_token->token.type != TOKEN_PIPE)
 		return (PARSER_FAILURE); //syntax error
-	if (ast_node_pipe_create_and_link(parser) == EXIT_FAILURE)
+	if (ast_node_pipe_create_and_insert(parser) == EXIT_FAILURE)
 		return (PARSER_FAILURE); //malloc fail
 	parser_token_advance(parser);
 	return (PARSER_SUCCESS);

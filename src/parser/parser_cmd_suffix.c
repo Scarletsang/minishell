@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:10:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:03:46 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 16:38:25 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_parser_exit_code	parse_cmd_parameter(struct s_parser *parser)
 
 t_parser_exit_code	parse_cmd_suffix(struct s_parser *parser)
 {
-	if (malloc_fail(parser) == true)
+	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
 	if (parse_io_redirect(parser) == PARSER_SUCCESS)
 	{
