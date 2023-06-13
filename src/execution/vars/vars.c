@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/07 16:28:39 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/13 22:27:10 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,12 @@ char	**ms_vars_get_envp(struct s_ms_vars *vars)
 	if (vars->envp.size == 0)
 		return (NULL);
 	return (vars->envp.buffer);
+}
+
+int	ms_vars_set_envp(struct s_ms_vars *vars, char *pair)
+{
+	if (!vector_append(&vars->envp, pair))
+		return (EXIT_FAILURE);
+	vars->environnement_changed = true;
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/11 23:07:45 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/13 23:53:34 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void		ms_vars_free(struct s_ms_vars *vars);
  * updated when the environment variables are changed.
 */
 char		**ms_vars_get_envp(struct s_ms_vars *vars);
+
+int			ms_vars_set_envp(struct s_ms_vars *vars, char *pair);
 
 /**
  * @brief Import all the environment variables from the given envp, usually from
