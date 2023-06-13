@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:47:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 17:26:21 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 21:40:06 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,24 +50,35 @@ struct s_ast_node	*ast_node_cmd_create(struct s_parser *parser)
 		return (NULL);
 	}
 	new_node->type = AST_NODE_CMD;
-	new_node->content = NULL;//?????
-	new_node->right = NULL;
-	new_node->left = NULL;
-	if (vector_init(&new_node->content->redirection_in, sizeof(struct \
-	s_ast_redirection), 5, vector_set_io_redirect) || vector_init(\
-	&new_node->content->redirection_out, sizeof(struct s_ast_redirection), \
-	5, vector_set_io_redirect) || vector_init(&new_node->content->\
-	assignment_word, sizeof(t_sb), 5, vector_set_string) || vector_init(\
-	&new_node->content->command, sizeof(t_sb), 5, vector_set_string))
+	new_node->content = ft_calloc(1, sizeof(struct s_ast_node_content));//?????
+	if (new_node->content == NULL)
 	{
 		parser->malloc_fail = true;
 		free(new_node);
 		return (NULL);
 	}
+	new_node->right = NULL;
+	new_node->left = NULL;
+	if (vector_init(&new_node->content->redirection_in, \
+			sizeof(struct s_ast_redirection), 5, vector_set_io_redirect) || \
+		vector_init(&new_node->content->redirection_out, \
+			sizeof(struct s_ast_redirection), 5, vector_set_io_redirect) || \
+		vector_init(&new_node->content->assignment_word, \
+			sizeof(t_sb), 5, vector_set_string) || \
+		vector_init(&new_node->content->command, \
+			sizeof(t_sb), 5, vector_set_string))
+	{
+		parser->malloc_fail = true;
+		vector_free(&new_node->content->redirection_in);
+		vector_free(&new_node->content->redirection_out);
+		vector_free(&new_node->content->assignment_word);
+		vector_free(&new_node->content->command);
+		free(new_node->content);
+		free(new_node);
+		return (NULL);
+	}
 	return (new_node);
 }
-
-
 
 // struct s_ast_node	*ast_node_cmd_create(struct s_parser *parser)
 // {

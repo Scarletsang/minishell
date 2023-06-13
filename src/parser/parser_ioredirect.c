@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:51:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:05:34 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 17:36:34 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_parser_exit_code	parse_io_redirect(struct s_parser *parser)
 		return (PARSER_FAILURE); //malloc fail
 	cur_tok = parser_token_peek(parser);
 	if (ast_redirect_type_set(parser, &io_file))
-		return (PARSER_FAILURE); //nothing to parse
+		return (PARSER_FAILURE); //syntax error
 	if (parser_token_peek_next(parser).token.type != TOKEN_WORD && \
 		parser_token_peek_next(parser).token.type != TOKEN_ASSIGNMENT_WORD)
 		return (PARSER_FAILURE); //syntax error
