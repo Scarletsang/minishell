@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:21:27 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:26:52 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,13 @@ int	main(void)
 			parser_init(parser, lexer.start);
 			parser_exit_code = parse_complete_command(&parser);
 			if (parser.malloc_fail == true)
+				// print malloc fail
 				// free ast
-			else if (parser_exit_code == PARSER_SUCCESS)
-				// print ast
-			else
+			else if (parser_exit_code == PARSER_FAILURE)
 				// print syntex error
+				// and free ast
+			else
+				// print ast
 			// free lexer
 		}
 		else
