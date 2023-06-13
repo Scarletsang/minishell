@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:51:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/09 19:46:26 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:05:34 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,17 @@ t_parser_exit_code	ast_redirect_type_set(struct s_parser *parser, \
 	return (PARSER_SUCCESS);
 }
 
-int	ast_redirect_content_set(struct s_parser *parser, \
-	struct s_ast_redirection *io_file)
-{
-	if (sb_init(&io_file->content, 10) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (sb_perform(&io_file->content, \
-		sb_action_append_len(parser->current_token->token.start, \
-		parser->current_token->token.length)) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}
+// int	ast_redirect_content_set(struct s_parser *parser, \
+// 	struct s_ast_redirection *io_file)
+// {
+// 	if (sb_init(&io_file->content, 10) == EXIT_FAILURE)
+// 		return (EXIT_FAILURE);
+// 	if (sb_perform(&io_file->content, \
+// 		sb_action_append_len(parser->current_token->token.start, \
+// 		parser->current_token->token.length)) == EXIT_FAILURE)
+// 		return (EXIT_FAILURE);
+// 	return (EXIT_SUCCESS);
+// }
 
 t_parser_exit_code	parse_io_redirect(struct s_parser *parser)
 {
@@ -64,7 +64,7 @@ t_parser_exit_code	parse_io_redirect(struct s_parser *parser)
 		parser_token_peek_next(parser).token.type != TOKEN_ASSIGNMENT_WORD)
 		return (PARSER_FAILURE); //syntax error
 	parser_token_advance(parser);
-	if (ast_redirect_content_set(parser, &io_file) == EXIT_FAILURE || \
+	if (ast_node_str_set(parser, &io_file.content) == EXIT_FAILURE || \
 		vector_append(is_redirect_in_or_out(parser, io_file), \
 		&io_file) == EXIT_FAILURE)
 	{
