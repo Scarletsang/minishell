@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/12 14:13:34 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:12:33 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ bool	parser_check_before_run(struct s_lexer *lexer, \
 		return (EXIT_FAILURE);
 	if (lexer_exit_code == NO_LINE)
 		return (EXIT_FAILURE);
-	// if (lexer_exit_code == LEXER_SUCCESS)
-	// 	return (EXIT_SUCCESS);
 	//should I check if it is empty token list at first and free the token list?
 	// should I return success or failure in thsi case?
 	// if (lexer->start->token.type == TOKEN_EOF)

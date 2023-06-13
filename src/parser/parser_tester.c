@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/09 15:02:46 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 15:21:27 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(void)
 	t_parser_exit_code	parser_exit_code;
 
 	line = readline("minishell>");
-	while(line)
+	while (line)
 	{
 		add_history(line);
 		lexer_init(&lexer);
@@ -36,7 +36,13 @@ int	main(void)
 		{
 			parser_init(parser, lexer.start);
 			parser_exit_code = parse_complete_command(&parser);
-			// print ast
+			if (parser.malloc_fail == true)
+				// free ast
+			else if (parser_exit_code == PARSER_SUCCESS)
+				// print ast
+			else
+				// print syntex error
+			// free lexer
 		}
 		else
 			return (EXIT_FAILURE);
