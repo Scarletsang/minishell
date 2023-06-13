@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 17:56:31 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:04:26 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/13 17:20:13 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,14 @@ t_parser_exit_code	parse_cmd_word(struct s_parser *parser)
 //in parse_cmd, create the new node and save it in parser->current
 t_parser_exit_code	parse_cmd(struct s_parser *parser)
 {
+	struct s_ast_node	*new_node;
+
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
-	if (ast_node_cmd_create_and_link(parser) == EXIT_FAILURE)
+	new_node = ast_node_cmd_create(parser);
+	if (!new_node)
 		return (PARSER_FAILURE);
+	ast_node_cmd_insert(parser, new_node);
 	if (parse_prefix(parser) == PARSER_FAILURE)
 	{
 		if (parse_cmd_word(parser) == PARSER_FAILURE)
