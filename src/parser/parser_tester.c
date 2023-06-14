@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 21:39:27 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 15:08:11 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,6 @@
 #include "MINISHELL/parser/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
-
-typedef enum e_printing_branch {
-	LEFT,
-	RIGHT
-}			t_printing_branch;
-
-struct s_ast_node	*from_identidier_to_tree(struct s_ast_node *node, \
-t_printing_branch branch)
-{
-	if (branch == LEFT)
-		return (node->left);
-	else
-		return (node->right);
-}
 
 void	print_content_redirection(struct s_ast_redirection_vector *redirection)
 {
@@ -70,37 +56,6 @@ void	print_ast_content(struct s_ast_node_content *content)
 	print_content_sb_vector(&content->assignment_word);
 	printf("\tcommand: ");
 	print_content_sb_vector(&content->command);
-}
-
-struct s_ast_node	*from_identidier_to_tree(struct s_ast_node *node, t_printing_branch branch)
-{
-	if (branch == LEFT)
-		return (node->left);
-	else
-		return (node->right);
-}
-
-void	print_ast_recursive(struct s_ast_node *node, int level, t_printing_branch branch)
-{
-	if (node == NULL)
-		return ;
-
-	// Print the right subtree
-	print_tree_recursive(from_identidier_to_tree(node, branch), level + 1, branch);
-	// Print the current node
-	for (int i = 0; i < level; i++) {
-		printf("    .");
-    }
-	printf("type: %d\t", node->type);
-	print_ast_content(node->content);
-	// Print the left subtree
-	print_tree_recursive(from_identidier_to_tree(node, !branch), level + ((node->type != AST_NODE_CMD)), branch);
-}
-
-void	print_ast(struct s_ast_node *root)
-{
-    print_tree_recursive(root, 0, LEFT);
-    printf("--------\n");
 }
 
 int	main(void)

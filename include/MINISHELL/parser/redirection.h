@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:16:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/07 18:50:37 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:05:27 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef t_vector	t_ast_redirection_vector;
 
 // TODO: interface for redirection vector
+void	vector_set_io_redirect(void	*buffer, void *io_redirect);
 
 // handle < redirection (stdin)
 // handle << heredoc
@@ -39,5 +40,6 @@ struct s_ast_redirection
 };
 
 // TODO: interface for redirection (the struct)
+int	ast_node_str_set(struct s_parser *parser, t_sb *content_str); //?????should it be here?
 
 #endif

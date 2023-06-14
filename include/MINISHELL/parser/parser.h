@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:28:37 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:00:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,24 @@ struct s_parser
 };
 
 // TODO: interface for parser
+t_parser_exit_code	parse_io_redirect(struct s_parser *parser);
+t_parser_exit_code	parse_assignment_word(struct s_parser *parser);
+t_parser_exit_code	parse_cmd_prefix(struct s_parser *parser);
+t_parser_exit_code	parse_cmd_parameter(struct s_parser *parser);
+t_parser_exit_code	parse_cmd_suffix(struct s_parser *parser);
+t_parser_exit_code	parse_cmd_word(struct s_parser *parser);
+t_parser_exit_code	parse_cmd(struct s_parser *parser);
+t_parser_exit_code	parse_pipe(struct s_parser *parser);
+t_parser_exit_code	parse_eof(struct s_parser *parser);
+t_parser_exit_code	parse_complete_command(struct s_parser *parser);
 
-
+//free function for parser
 
 //parser token scanner utils
 void				parser_token_advance(struct s_parser *parser);
 struct s_token_list	parser_token_peek_next(struct s_parser *parser);
 struct s_token_list	parser_token_peek(struct s_parser *parser);
+
+//parser printer
+
 #endif

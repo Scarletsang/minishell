@@ -6,13 +6,13 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:51:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 17:36:34 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 21:57:23 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/parser/parser.h"
 
-t_ast_redirection_vector	*is_redirect_in_or_out(struct s_parser *parser, \
+static t_ast_redirection_vector	*is_redirect_in_or_out(struct s_parser *parser, \
 	struct s_ast_redirection io_file)
 {
 	if (io_file.type <= 1)
@@ -21,7 +21,7 @@ t_ast_redirection_vector	*is_redirect_in_or_out(struct s_parser *parser, \
 		return (&parser->current->content->redirection_out);
 }
 
-t_parser_exit_code	ast_redirect_type_set(struct s_parser *parser, \
+static t_parser_exit_code	ast_redirect_type_set(struct s_parser *parser, \
 	struct s_ast_redirection *io_file)
 {
 	if (parser->current_token->token.type == TOKEN_LESS)

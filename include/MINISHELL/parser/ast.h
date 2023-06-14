@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/12 16:00:18 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 22:04:52 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,9 @@ struct s_ast_node
 };
 
 // TODO: interface for AST node
+struct s_ast_node	*ast_node_cmd_create(struct s_parser *parser);
+void	ast_node_cmd_insert(struct s_parser *parser, \
+struct s_ast_node *new_node);
+int	ast_node_pipe_create_and_insert(struct s_parser *parser);
 
 #endif

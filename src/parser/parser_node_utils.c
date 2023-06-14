@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:47:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 21:40:06 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/14 21:53:41 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct s_ast_node	*ast_node_cmd_create(struct s_parser *parser)
 		return (NULL);
 	}
 	new_node->type = AST_NODE_CMD;
-	new_node->content = ft_calloc(1, sizeof(struct s_ast_node_content));//?????
+	new_node->content = ft_calloc(1, sizeof(struct s_ast_node_content *));//?????
 	if (new_node->content == NULL)
 	{
 		parser->malloc_fail = true;
