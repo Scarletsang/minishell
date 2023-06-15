@@ -6,13 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/07 16:29:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 19:57:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/expander.h"
 
-static int	minishell_expander_substitute(t_sb_iterator *it, const size_t from, \
+static int	ms_expander_substitute(t_sb_iterator *it, const size_t from, \
 const struct s_ms_vars *vars)
 {
 	struct s_sb_clipper	clipper;
@@ -35,7 +35,7 @@ const struct s_ms_vars *vars)
 	return (sb_iterator_mut_replace(it, key_value, clipper.rbound - from + 1));
 }
 
-static int	minishell_expander_substite_special(t_sb_iterator *it, \
+static int	ms_expander_substite_special(t_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
 	size_t	i;
@@ -66,7 +66,7 @@ const struct s_ms_vars *vars)
 		return (EXIT_FAILURE);
 	if (!ms_expander_match_any(it, " \""))
 		return (EXIT_SUCCESS);
-	if (!minishell_expander_substite_special(it, vars))
+	if (!ms_expander_substite_special(it, vars))
 		return (EXIT_SUCCESS);
 	while (!sb_iterator_is_end(it))
 	{
@@ -79,5 +79,5 @@ const struct s_ms_vars *vars)
 	}
 	if (dollar == it->index)
 		return (EXIT_FAILURE);
-	return (minishell_expander_substitute(it, dollar, vars));
+	return (ms_expander_substitute(it, dollar, vars));
 }

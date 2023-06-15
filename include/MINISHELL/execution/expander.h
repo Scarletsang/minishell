@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:47:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/07 16:28:02 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 19:58:36 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 ///////////////////////////////////////
 
 int	ms_expander(t_sb *sb, const struct s_ms_vars *vars);
+
+int	ms_expander_remove_quotes(t_sb *sb);
 
 ////////////////////////////////////////////////
 ///////////    private interface    ////////////
