@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/05 21:16:05 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 19:33:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@
 # include "MINISHELL/stringbuilder.h"
 # include "MINISHELL/parser/redirection.h"
 
-typedef t_vector t_sb_vector;
+typedef t_vector	t_sb_vector;
 
-struct s_AST_node_content
+struct s_ast_node_content
 {
-	t_AST_redirection_vector	redirection_in;
-	t_AST_redirection_vector	redirection_out;
+	t_ast_redirection_vector	redirection_in;
+	t_ast_redirection_vector	redirection_out;
 	t_sb_vector					assignment;
 	t_sb_vector					command;
 };
 
 // TODO: interface for AST node content
 
-enum e_AST_node_type
+enum e_ast_node_type
 {
 	AST_NODE_COMMAND,
 	AST_NODE_PIPE,
@@ -37,12 +37,12 @@ enum e_AST_node_type
 	AST_NODE_OR
 };
 
-struct s_AST_node
+struct s_ast_node
 {
-	enum e_AST_node_type		type;
-	struct s_AST_node_content	*content;
-	struct s_AST_node			*left;
-	struct s_AST_node			*right;
+	enum e_ast_node_type		type;
+	struct s_ast_node_content	*content;
+	struct s_ast_node			*left;
+	struct s_ast_node			*right;
 };
 
 // TODO: interface for AST node

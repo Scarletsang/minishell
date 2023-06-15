@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/13 23:45:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 20:10:07 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef int	t_executor_return_value;
 struct s_ms_executor
 {
 	struct s_ms_piper	piper;
-	t_vector			child_assignments;
 	pid_t				last_child_pid;
 };
 
@@ -61,33 +60,36 @@ t_executor_exit_code	ms_executor_write_to_fd(int fd);
 */
 
 t_executor_exit_code	ms_executor_enact(struct s_ms_executor *executor, \
-struct s_AST_node *node, struct s_ms *ms);
+struct s_ast_node *node, struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_in_pipe(struct s_ms_executor *executor, \
-struct s_AST_node *node, struct s_ms *ms);
+struct s_ast_node *node, struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_pipe(struct s_ms_executor *executor, \
-struct s_AST_node *node, struct s_ms *ms);
+struct s_ast_node *node, struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_builtin(\
-struct s_ms_executor *executor, struct s_AST_node_content *content, struct s_ms *ms);
+struct s_ms_executor *executor, struct s_ast_node_content *content, struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_command(\
-struct s_ms_executor *executor, struct s_AST_node_content *content, struct s_ms *ms);
+struct s_ms_executor *executor, struct s_ast_node_content *content, struct s_ms *ms);
 
 /**
  * @brief ast node execution (used by ms_executor_ast)
 */
 
+t_executor_exit_code	ms_executor_expand_content(\
+struct s_ast_node_content *content, struct s_ms *ms);
+
 t_executor_exit_code	ms_executor_enact_assignment(\
 struct s_ms_executor *executor, t_sb_vector *assignment, struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_redirection_in(\
-struct s_ms_executor *executor, t_AST_redirection_vector *redirection_in, \
+struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in, \
 struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_redirection_out(\
-struct s_ms_executor *executor, t_AST_redirection_vector *redirection_out, \
+struct s_ms_executor *executor, t_ast_redirection_vector *redirection_out, \
 struct s_ms *ms);
 
 t_executor_exit_code	ms_executor_enact_command_execution(\

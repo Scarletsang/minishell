@@ -6,13 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/11 17:22:42 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 19:33:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution.h"
 
-t_executor_return_value	ms_execute(struct s_AST_node *node, struct s_ms *ms)
+t_executor_return_value	ms_execute(struct s_ast_node *node, struct s_ms *ms)
 {
 	struct s_ms_executor	executor;
 	t_executor_return_value	return_value;

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/05 22:04:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/15 20:51:11 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 struct s_parser
 {
-	struct s_AST_node	*head;
-	struct s_AST_node	*current;
-	struct s_token_list *current_token;
+	struct s_ast_node	*head;
+	struct s_ast_node	*current;
+	struct s_token_list	*current_token;
 };
 
 // TODO: interface for parser
