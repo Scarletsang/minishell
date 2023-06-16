@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/15 20:10:07 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:47:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,39 @@ typedef int	t_executor_return_value;
 struct s_ms_executor
 {
 	struct s_ms_piper	piper;
+	t_vector			envp;
 	pid_t				last_child_pid;
 };
 
-void					ms_executor_init(struct s_ms_executor *executor);
+t_executor_exit_code	ms_executor_init(struct s_ms_executor *executor);
 
 t_executor_return_value	ms_executor_wait(struct s_ms_executor *executor);
 
 t_executor_exit_code	ms_executor_destroy(struct s_ms_executor *executor);
+
+
+////////////////////////////////////////////
+////////////   envp interface   ////////////
+////////////////////////////////////////////
+
+t_executor_exit_code	ms_executor_envp_set(struct s_ms_executor *executor, \
+struct s_ms_vars *vars, char *pair);
+
+char					**ms_executor_envp_get(struct s_ms_executor *executor);
+
+/**
+ * @brief Copy all entries from the environment database to the executor's
+ * envp, which stores the envp expected by the execve syscall. It will only
+ * copy the entries if the environment has been changed since the last call to
+ * this function.
+*/
+t_executor_exit_code	ms_executor_envp_import_from_environment(\
+struct s_ms_executor *executor, struct s_ms_vars *vars);
+
+void					ms_executor_envp_reset(struct s_ms_executor *executor);
+
+t_executor_exit_code	ms_executor_envp_set(\
+struct s_ms_executor *executor, struct s_ms_vars *vars, char *pair);
 
 //////////////////////////////////////////////////////////
 ////////////   interface used by ms_execute   ////////////

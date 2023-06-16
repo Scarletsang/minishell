@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/13 23:53:34 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/16 13:10:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,22 +45,12 @@ struct s_ms_vars
 	t_ht		environment;
 	t_ht		special;
 	t_ht		shell;
-	t_vector	envp;
 	bool		environnement_changed;
 };
 
 int			ms_vars_init(struct s_ms_vars *vars);
 
 void		ms_vars_free(struct s_ms_vars *vars);
-
-/**
- * @brief Returns the environment variables in the format that is expected by
- * the execve() function. The result is cached in the envp vector and is only
- * updated when the environment variables are changed.
-*/
-char		**ms_vars_get_envp(struct s_ms_vars *vars);
-
-int			ms_vars_set_envp(struct s_ms_vars *vars, char *pair);
 
 /**
  * @brief Import all the environment variables from the given envp, usually from
