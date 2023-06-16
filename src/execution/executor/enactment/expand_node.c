@@ -19,7 +19,7 @@ t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
 	struct s_ast_redirection	*redirection;
 
 	vector_iterator_init(&iterator, redirection_vector);
-	while (vector_iterator_is_end(&iterator))
+	while (!vector_iterator_is_end(&iterator))
 	{
 		redirection = vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_HEREDOC)
@@ -45,7 +45,7 @@ t_sb_vector *sb_vector, struct s_ms *ms)
 	t_sb				*sb;
 
 	vector_iterator_init(&iterator, sb_vector);
-	while (vector_iterator_is_end(&iterator))
+	while (!vector_iterator_is_end(&iterator))
 	{
 		sb = vector_iterator_current(&iterator);
 		if (ms_expander(sb, (const struct s_ms_vars *) &ms->vars))
