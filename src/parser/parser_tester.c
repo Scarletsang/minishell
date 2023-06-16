@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 18:35:29 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:46:43 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	print_ast_content(struct s_ast_node_content *content)
 	printf("\tredirection_out: ");
 	print_content_redirection(&content->redirection_out);
 	printf("\tassignment_word: ");
-	print_content_sb_vector(&content->assignment_word);
+	print_content_sb_vector(&content->assignment);
 	printf("\tcommand: ");
 	print_content_sb_vector(&content->command);
 }

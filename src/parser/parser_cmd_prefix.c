@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:38:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 18:34:11 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:46:43 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_parser_exit_code	parse_assignment_word(struct s_parser *parser)
 	if (parser->current_token->token.type != TOKEN_ASSIGNMENT_WORD)
 		return (PARSER_FAILURE); //nothing to parse
 	if (ast_node_str_set(&assignment, parser->current_token->token.start, parser->current_token->token.length) == EXIT_FAILURE || \
-		!vector_append(&parser->current->content->assignment_word, &assignment))
+		!vector_append(&parser->current->content->assignment, &assignment))
 	{
 		sb_free(&assignment);
 		parser->malloc_fail = true;

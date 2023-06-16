@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:36:57 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:58:37 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:46:43 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ast_node_content_init(\
 			sizeof(struct s_ast_redirection), 5, vector_set_io_redirect) || \
 			vector_init(&node_cmd_content->redirection_out, \
 			sizeof(struct s_ast_redirection), 5, vector_set_io_redirect) || \
-			vector_init(&node_cmd_content->assignment_word, \
+			vector_init(&node_cmd_content->assignment, \
 			sizeof(t_sb), 5, vector_set_sb) || \
 			vector_init(&node_cmd_content->command, \
 			sizeof(t_sb), 5, vector_set_sb))
@@ -33,8 +33,8 @@ void	ast_node_content_free(struct s_ast_node_content *content)
 		free_io_redirect_vector(&content->redirection_in);
 	if (content->redirection_out.buffer)
 		free_io_redirect_vector(&content->redirection_out);
-	if (content->assignment_word.buffer)
-		free_sb_vector(&content->assignment_word);
+	if (content->assignment.buffer)
+		free_sb_vector(&content->assignment);
 	if (content->command.buffer)
 		free_sb_vector(&content->command);
 	free(content);
