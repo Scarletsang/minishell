@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:44:07 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/30 22:01:33 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:30:38 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	scanner_recede(struct s_scanner *scanner)
 
 void	scanner_skipwhitespace(struct s_scanner *scanner)
 {
-	int		i;
-
 	while (is_white_space(scanner_peek(*scanner)))
 		scanner_advance(scanner);
 }
