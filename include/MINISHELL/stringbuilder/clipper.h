@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 22:14:25 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 13:20:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:52:16 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define CLIPPER_H
 
 # include "MINISHELL/stringbuilder.h"
-# include "MINISHELL/stringbuilder/sb_iterator.h"
 # include "MINISHELL/vector.h"
+# include "MINISHELL/slice.h"
 
 //////////////////////////////////////////////////////////
 ////////     String Builder clipper interface   //////////
@@ -43,11 +43,15 @@ struct s_sb_clipper
 	size_t		rbound;
 };
 
-void	sb_clipper_init(struct s_sb_clipper *clipper, const t_sb *sb);
+void			sb_clipper_init(struct s_sb_clipper *clipper, const t_sb *sb);
 
-int		sb_clipper_move_lbound(struct s_sb_clipper *clipper);
+int				sb_clipper_move_lbound(struct s_sb_clipper *clipper);
 
-int		sb_clipper_move_rbound(struct s_sb_clipper *clipper);
+int				sb_clipper_move_rbound(struct s_sb_clipper *clipper);
+
+char			sb_clipper_at_lbound(const struct s_sb_clipper *clipper);
+
+char			sb_clipper_at_rbound(const struct s_sb_clipper *clipper);
 
 /**
  * @brief Finds the occurance of two strings in a string builder, and sets the
@@ -64,12 +68,14 @@ int		sb_clipper_move_rbound(struct s_sb_clipper *clipper);
  * @param start_match The string to be found to move the left bound.
  * @param end_match The string to be found to move the right bound.
 */
-int		sb_clipper_area(struct s_sb_clipper *clipper, const char *start_match, \
-const char *end_match);
+int				sb_clipper_area(struct s_sb_clipper *clipper, \
+const char *start_match, const char *end_match);
 
 /**
  * @brief Creates a null-terminated substring from a string builder clipper.
 */
-char	*sb_clipper_run(const struct s_sb_clipper *clipper);
+char			*sb_clipper_run(const struct s_sb_clipper *clipper);
+
+t_string_slice	sb_clipper_slice(const struct s_sb_clipper *clipper);
 
 #endif
