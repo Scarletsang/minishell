@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:50:22 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:29:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:39:48 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ t_token_updater token_update)
 bool	token_is_assignmentword(struct s_token token)
 {
 	int	i;
-	int	j;
 
 	if (!ft_isalpha(token.start[0]) && token.start[0] != '_')
 		return (false);
