@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:10:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 16:38:25 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 17:56:02 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ t_parser_exit_code	parse_cmd_parameter(struct s_parser *parser)
 	if (parser->current_token->token.type != TOKEN_WORD && \
 	parser->current_token->token.type != TOKEN_ASSIGNMENT_WORD)
 		return (PARSER_FAILURE);
-	if (ast_node_str_set(parser, &cmd_parameter) == EXIT_FAILURE || \
-	vector_append(&parser->current->content->command, &cmd_parameter) == \
-	EXIT_FAILURE)
+	if (ast_node_str_set(&cmd_parameter, parser->current_token->token.start, parser->current_token->token.length) == EXIT_FAILURE || \
+		!vector_append(&parser->current->content->command, &cmd_parameter))
 	{
 		sb_free(&cmd_parameter);
 		parser->malloc_fail = true;
@@ -53,7 +52,7 @@ t_parser_exit_code	parse_cmd_suffix(struct s_parser *parser)
 		parse_cmd_suffix(parser);
 		return (PARSER_SUCCESS);
 	}
-	if (parse_wordlist(parser) == PARSER_SUCCESS)
+	if (parse_cmd_word(parser) == PARSER_SUCCESS)
 	{
 		parse_cmd_suffix(parser);
 		return (PARSER_SUCCESS);

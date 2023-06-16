@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 21:38:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 14:54:02 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 18:34:11 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ t_parser_exit_code	parse_assignment_word(struct s_parser *parser)
 		return (PARSER_FAILURE); //malloc fail
 	if (parser->current_token->token.type != TOKEN_ASSIGNMENT_WORD)
 		return (PARSER_FAILURE); //nothing to parse
-	if (ast_node_str_set(parser, &assignment) == EXIT_FAILURE || \
-	vector_append(&parser->current->content->assignment_word, \
-	&assignment) == EXIT_FAILURE)
+	if (ast_node_str_set(&assignment, parser->current_token->token.start, parser->current_token->token.length) == EXIT_FAILURE || \
+		!vector_append(&parser->current->content->assignment_word, &assignment))
 	{
 		sb_free(&assignment);
 		parser->malloc_fail = true;
@@ -58,19 +57,16 @@ t_parser_exit_code	parse_assignment_word(struct s_parser *parser)
 
 t_parser_exit_code	parse_cmd_prefix(struct s_parser *parser)
 {
-	t_parser_exit_code	io_redirect_exit_code;
-	t_parser_exit_code	assignment_exit_code;
-
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE); //malloc fail
 	if (parse_io_redirect(parser) == PARSER_SUCCESS)
 	{
-		parser_cmd_prefix(parser);
+		parse_cmd_prefix(parser);
 		return (PARSER_SUCCESS);
 	}
 	if (parse_assignment_word(parser) == PARSER_SUCCESS)
 	{
-		parser_cmd_prefix(parser);
+		parse_cmd_prefix(parser);
 		return (PARSER_SUCCESS);
 	}
 	return (PARSER_FAILURE); //nothing to p

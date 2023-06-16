@@ -6,45 +6,27 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:13:19 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/13 15:29:40 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 20:17:30 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/parser/parser.h"
 
-//create the new node, which is pipe and update the parser->head
-// t_parser_exit_code	parse_pipe(struct s_parser *parser)
-// {
-// 	struct s_ast_node	*new_node;
-
-// 	if (parser->malloc_fail == true)
-// 		return (PARSER_FAILURE);
-// 	if (parser->current_token->token.type != TOKEN_PIPE)
-// 		return (PARSER_FAILURE); //syntax error
-// 	new_node = malloc (sizeof(struct s_ast_node));
-// 	if (new_node == NULL)
-// 	{
-// 		parser->malloc_fail = true;
-// 		return (PARSER_FAILURE);
-// 	}
-// 	new_node->type = AST_NODE_PIPE;
-// 	new_node->content = NULL;
-// 	new_node->right = NULL;
-// 	new_node->left = parser->head;
-// 	parser->current = new_node;
-// 	parser->head = parser->current;
-// 	parser_token_advance(parser);
-// 	return (PARSER_SUCCESS);
-// }
-
 t_parser_exit_code	parse_pipe(struct s_parser *parser)
 {
+	struct s_ast_node	*new_node;
+
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
 	if (parser->current_token->token.type != TOKEN_PIPE)
 		return (PARSER_FAILURE); //syntax error
-	if (ast_node_pipe_create_and_insert(parser) == EXIT_FAILURE)
-		return (PARSER_FAILURE); //malloc fail
+	new_node = ast_node_pipe_create();
+	if (!new_node)
+	{
+		parser->malloc_fail = true;
+		return (PARSER_FAILURE);
+	}
+	parser_ast_pipe_insert(parser, new_node);
 	parser_token_advance(parser);
 	return (PARSER_SUCCESS);
 }

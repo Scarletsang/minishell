@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/14 22:04:52 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/16 21:12:54 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,9 @@
 # define AST_H
 
 # include "MINISHELL/vector.h"
+# include "MINISHELL/parser/parser.h"
 # include "MINISHELL/stringbuilder.h"
-# include "MINISHELL/parser/redirection.h"
-
-typedef t_vector	t_sb_vector;
-
-struct s_ast_node_content
-{
-	t_ast_redirection_vector	redirection_in;
-	t_ast_redirection_vector	redirection_out;
-	t_sb_vector					assignment_word;
-	t_sb_vector					command;
-};
-
-// TODO: interface for AST node content
+# include "MINISHELL/parser/content.h"
 
 enum e_ast_node_type
 {
@@ -46,9 +35,14 @@ struct s_ast_node
 };
 
 // TODO: interface for AST node
-struct s_ast_node	*ast_node_cmd_create(struct s_parser *parser);
-void	ast_node_cmd_insert(struct s_parser *parser, \
-struct s_ast_node *new_node);
-int	ast_node_pipe_create_and_insert(struct s_parser *parser);
+
+// should takee no param, malloc failure can be checked outside and set malloc fail outside
+struct s_ast_node	*ast_node_cmd_create(void);
+struct s_ast_node	*ast_node_pipe_create(void);
+
+void				ast_node_free(struct s_ast_node *node);
+
+// should be interface for parser
+
 
 #endif
