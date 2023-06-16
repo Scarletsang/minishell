@@ -67,9 +67,6 @@ struct s_ms_executor *executor, struct s_ms_vars *vars);
 
 void					ms_executor_envp_reset(struct s_ms_executor *executor);
 
-t_executor_exit_code	ms_executor_envp_set(\
-struct s_ms_executor *executor, struct s_ms_vars *vars, char *pair);
-
 //////////////////////////////////////////////////////////
 ////////////   interface used by ms_execute   ////////////
 //////////////////////////////////////////////////////////

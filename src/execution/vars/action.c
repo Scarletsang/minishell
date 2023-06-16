@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/07 16:29:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/16 16:00:51 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,12 @@ const char *value)
 	if (ms_vars_database_set(&vars->shell, key, value))
 		return (EXIT_FAILURE);
 	entry_in_environment = ms_vars_database_get(&vars->environment, key);
-	if (entry_in_environment && ht_update(&vars->environment, key, \
-		value, NULL))
-		return (EXIT_FAILURE);
+	if (entry_in_environment)
+	{
+		if (!ht_update(&vars->environment, key, value, NULL))
+			return (EXIT_FAILURE);
+		vars->environnement_changed = true;
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -31,6 +34,7 @@ int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 	if (!ht_update(&vars->environment, key, \
 		ms_vars_database_get(&vars->shell, key), NULL))
 		return (EXIT_FAILURE);
+	vars->environnement_changed = true;
 	return (EXIT_SUCCESS);
 }
 
