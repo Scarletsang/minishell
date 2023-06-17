@@ -60,6 +60,11 @@ LEXER_SRC:=\
 	lexer/token_lst_utils.c \
 	lexer/token_assignword_updater.c
 PARSER_SRC:=\
+	parser/node_content/ast_node_content.c \
+	parser/node_content/content_vector.c \
+	parser/node_content/content_vector_utils.c \
+	parser/node_content/redirection.c \
+	parser/ast/ast_node.c \
 	parser/parser.c \
 	parser/parser_cmd.c \
 	parser/parser_cmd_prefix.c \
@@ -67,9 +72,8 @@ PARSER_SRC:=\
 	parser/parser_complete_command.c \
 	parser/parser_free.c \
 	parser/parser_ioredirect.c \
-	parser/parser_node_cmd_utils.c \
-	parser/parser_node_pipe_utils.c \
-	parser/parser_scanner_utils.c
+	parser/parser_scanner_utils.c \
+	parser/parser_tree_inserter.c
 MAIN_SRC:= \
 	parser/parser_tester.c \
 	parser/parser_tester_printer.c

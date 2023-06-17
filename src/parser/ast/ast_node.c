@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_node_create.c                                  :+:      :+:    :+:   */
+/*   ast_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:20:44 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:37:27 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:47:36 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ struct s_ast_node	*ast_node_cmd_create(void)
 	}
 	new_node->right = NULL;
 	new_node->left = NULL;
-	if (ast_node_cmd_content_vector_init(new_node->content) == EXIT_FAILURE)
-		return (free_node(new_node), NULL);
+	if (ast_node_content_init(new_node->content) == EXIT_FAILURE)
+		return (ast_node_free(new_node), NULL);
 	return (new_node);
 }
 
@@ -39,7 +39,7 @@ struct s_ast_node	*ast_node_pipe_create(void)
 
 	new_node = ft_calloc(1, sizeof(struct s_ast_node));
 	if (new_node == NULL)
-		return (EXIT_FAILURE);
+		return (NULL);
 	new_node->type = AST_NODE_PIPE;
 	new_node->content = NULL;
 	new_node->right = NULL;

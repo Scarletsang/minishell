@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:16:03 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:47:02 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,16 @@ struct s_parser
 	bool				malloc_fail;
 };
 
-bool	parser_check_before_run(struct s_lexer *lexer, \
+void				parser_init(struct s_parser *parser, \
+	struct s_token_list *start);
+void				parser_free(struct s_parser *parser);
+
+//parser main
+bool				parser_check_before_run(struct s_lexer *lexer, \
 	t_lexer_exit_code lexer_exit_code);
-void	parser_init(struct s_parser *parser, struct s_token_list *start);
-void	parser_free(struct s_parser *parser);
+struct s_ast_node	*parser_run(char *line);
+struct s_ast_node	*ast_parser_clear_when_failed(struct s_parser *parser, \
+	char *err_message);
 
 // TODO: interface for parser
 t_parser_exit_code	parse_io_redirect(struct s_parser *parser);
@@ -51,9 +57,9 @@ t_parser_exit_code	parse_eof(struct s_parser *parser);
 t_parser_exit_code	parse_complete_command(struct s_parser *parser);
 
 // update ast
-void	parser_ast_cmd_insert(struct s_parser *parser, \
+void				parser_ast_cmd_insert(struct s_parser *parser, \
 	struct s_ast_node *new_node);
-void	parser_ast_pipe_insert(struct s_parser *parser, \
+void				parser_ast_pipe_insert(struct s_parser *parser, \
 	struct s_ast_node *new_node);
 
 //parser token scanner utils
