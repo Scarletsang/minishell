@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:47:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/15 19:58:36 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:09:19 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "MINISHELL/execution/vars.h"
 # include "MINISHELL/stringbuilder.h"
-# include "MINISHELL/stringbuilder/clipper.h"
+# include "MINISHELL/stringbuilder/sb_iterator.h"
 
 # define SUPPORTED_SPECIAL_VARS "?\0$"
 

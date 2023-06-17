@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/15 19:57:49 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:09:36 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/expander.h"
+# include "MINISHELL/stringbuilder/clipper.h"
 
 static int	ms_expander_substitute(t_sb_iterator *it, const size_t from, \
 const struct s_ms_vars *vars)
