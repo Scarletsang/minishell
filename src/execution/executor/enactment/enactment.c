@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:41:25 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:06:26 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:08:22 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ struct s_ast_node *node, struct s_ms *ms)
 			return (EXECUTION_ERROR);
 		if (executor->last_child_pid != 0)
 			return (EXECUTION_SUCCESS);
+		// use sender and receiver
 		exit(ms_executor_enact_command(executor, &node->content, ms));
 	}
 	return (EXECUTION_FAILURE);
@@ -54,6 +55,7 @@ struct s_ms_executor *executor, struct s_ast_node *node, struct s_ms *ms)
 			return (EXECUTION_ERROR);
 		if (executor->last_child_pid != 0)
 			return (EXECUTION_SUCCESS);
+		// use sender and receiver
 		if (ms_executor_enact_builtin(executor, &node->content, ms) \
 			!= EXECUTION_FAILURE)
 			exit(EXIT_FAILURE); // TODO: executor cleanup

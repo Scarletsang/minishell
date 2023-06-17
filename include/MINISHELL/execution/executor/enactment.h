@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:05:38 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:06:04 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:10:04 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ struct s_ast_node *node, struct s_ms *ms);
 t_executor_exit_code	ms_executor_enact_builtin(\
 struct s_ms_executor *executor, struct s_ast_node_content *content, struct s_ms *ms);
 
-t_executor_exit_code	ms_executor_enact_command(\
+t_executor_return_value	ms_executor_enact_command(\
 struct s_ms_executor *executor, struct s_ast_node_content *content, struct s_ms *ms);
 
 /**
