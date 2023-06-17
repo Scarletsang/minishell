@@ -6,13 +6,12 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/17 17:48:08 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:24:07 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 // #include <stdio.h>
-// #include "MINISHELL/lexer/lexer.h"
 #include "MINISHELL/parser/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
