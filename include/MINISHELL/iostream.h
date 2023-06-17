@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:56:31 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 22:40:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:06:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,22 @@
 #  define IOSTREAM_BUFFER_SIZE 20
 # endif
 
-struct s_ms_iostream
+struct s_iostream
 {
 	t_sb				sb;
 	struct s_sb_clipper	clipper;
 	ssize_t				read_size;
 };
 
-int		iostream_init(struct s_ms_iostream *iostream);
+int				iostream_init(struct s_iostream *iostream);
 
-int		iostream_read(struct s_ms_iostream *iostream, int fd);
+int				iostream_read(struct s_iostream *iostream, int fd);
 
-int		iostream_read_until(struct s_ms_iostream *iostream, int fd, \
-const char *end_match);
+int				iostream_read_until(struct s_iostream *iostream, \
+int fd, const char *end_match);
 
-void	iostream_free(struct s_ms_iostream *iostream);
+t_string_slice	iostream_to_slice(struct s_iostream *iostream);
+
+void			iostream_free(struct s_iostream *iostream);
 
 #endif
