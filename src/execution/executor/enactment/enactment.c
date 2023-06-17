@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:41:25 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:08:22 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:23:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ struct s_ast_node *node, struct s_ms *ms)
 		return (ms_executor_enact_pipe(executor, node, ms));
 	else if (node->type == AST_NODE_COMMAND)
 	{
-		if (ms_executor_expand_content(&node->content, ms) == EXECUTION_ERROR)
+		if (ms_executor_expand_content(node->content, ms) == EXECUTION_ERROR)
 			return (EXECUTION_ERROR);
-		exit_code = ms_executor_enact_builtin(executor, &node->content, ms);
+		exit_code = ms_executor_enact_builtin(executor, node->content, ms);
 		if (exit_code != EXECUTION_FAILURE)
 			return (exit_code);
 		if (ms_executor_fork(executor) < 0)
@@ -32,7 +32,7 @@ struct s_ast_node *node, struct s_ms *ms)
 		if (executor->last_child_pid != 0)
 			return (EXECUTION_SUCCESS);
 		// use sender and receiver
-		exit(ms_executor_enact_command(executor, &node->content, ms));
+		exit(ms_executor_enact_command(executor, node->content, ms));
 	}
 	return (EXECUTION_FAILURE);
 }
@@ -40,13 +40,11 @@ struct s_ast_node *node, struct s_ms *ms)
 t_executor_exit_code	ms_executor_enact_in_pipe(\
 struct s_ms_executor *executor, struct s_ast_node *node, struct s_ms *ms)
 {
-	t_executor_exit_code	exit_code;
-
 	if (node->type == AST_NODE_PIPE)
 		return (ms_executor_enact_pipe(executor, node, ms));
 	else if (node->type == AST_NODE_COMMAND)
 	{
-		if (ms_executor_expand_content(&node->content, ms) == EXECUTION_ERROR)
+		if (ms_executor_expand_content(node->content, ms) == EXECUTION_ERROR)
 			return (EXECUTION_ERROR);
 		ms_piper_create_receiver(&executor->piper);
 		if (ms_piper_create_sender(&executor->piper))
@@ -56,10 +54,10 @@ struct s_ms_executor *executor, struct s_ast_node *node, struct s_ms *ms)
 		if (executor->last_child_pid != 0)
 			return (EXECUTION_SUCCESS);
 		// use sender and receiver
-		if (ms_executor_enact_builtin(executor, &node->content, ms) \
+		if (ms_executor_enact_builtin(executor, node->content, ms) \
 			!= EXECUTION_FAILURE)
 			exit(EXIT_FAILURE); // TODO: executor cleanup
-		exit(ms_executor_enact_command(executor, &node->content, ms));
+		exit(ms_executor_enact_command(executor, node->content, ms));
 	}
 	return (EXECUTION_FAILURE);
 }
