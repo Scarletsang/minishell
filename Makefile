@@ -52,9 +52,22 @@ EXPANDER_SRC:=\
 	execution/expander/expander.c \
 	execution/expander/expander_dollar.c \
 	execution/expander/match.c
+EXECUTION_SRC:=\
+	execution/execution.c \
+	execution/executor/executor.c \
+	execution/executor/action.c \
+	execution/executor/envp.c \
+	execution/executor/enactment/enactment.c \
+	execution/executor/enactment/expand_node.c \
+	execution/executor/enactment/node.c \
+	execution/executor/enactment/redirection.c \
+	execution/executor/piper/internal.c \
+	execution/executor/piper/piper.c \
+	execution/executor/piper/transmission.c \
+	execution/executor/builtins/builtins.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(MAIN_SRC)
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(EXECUTION_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
