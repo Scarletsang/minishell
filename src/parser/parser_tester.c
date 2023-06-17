@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:46:43 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:48:08 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,44 +63,19 @@ void	print_ast_content(struct s_ast_node_content *content)
 int	main(void)
 {
 	char				*line;
-	struct s_lexer		lexer;
-	t_lexer_exit_code	lexer_exit_code;
-	struct s_parser		parser;
-	t_parser_exit_code	parser_exit_code;
+	struct s_ast_node	*ast_root;
 
 	line = readline("minishell>");
 	while (line)
 	{
-		add_history(line);
-		lexer_init(&lexer);
-		lexer_exit_code = token_list_get(&lexer, line);
-		// token_lstitr_print(lexer.start, (t_token_printer)token_print);
-		if (parser_check_before_run(&lexer, lexer_exit_code) == EXIT_SUCCESS)
-		{
-			parser_init(&parser, lexer.start);
-			parser_exit_code = parse_complete_command(&parser);
-			if (parser.malloc_fail == true)
-				printf("malloc error\n");
-				// print malloc fail
-				// free ast
-			else if (parser_exit_code == PARSER_FAILURE)
-				printf("syntax error\n");
-				// print syntex error
-					// bash-3.2$ > testtest.txt >>
-					// bash: syntax error near unexpected token `newline'
-					// bash-3.2$ > testtest.txt >><
-					// bash: syntax error near unexpected token `<'
-				// and free ast
-			else
-				print_ast(parser.head);
-			// free lexer
-		}
-		else
-			return (EXIT_FAILURE);
+		ast_root = parser_run(line);
+		if (ast_root)
+			print_ast(ast_root);
+		ast_node_free(ast_root);
 		// rl_replace_line("", 0); // Clear the current input line
         // rl_redisplay(); // Update the display of the input line
         free(line); // Free the memory allocated by readline
 		line = readline("minishell>");
 	}
-	return (parser_exit_code);
+	return (EXIT_SUCCESS);
 }
