@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:07:45 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 21:55:53 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:52:04 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ t_token_cleaner del, char *err_message)
 {
 	struct s_token_list	*tmp_token_lst;
 
-	printf("%s\n", err_message);
+	if (err_message)
+		printf("%s\n", err_message);
 	if (!lexer->start || !del)
 		return ;
 	while (lexer->start)
