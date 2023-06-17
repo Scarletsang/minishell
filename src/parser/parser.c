@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/17 17:41:32 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:02:45 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,18 @@ t_token_cleaner del, char *err_message)
 struct s_ast_node	*ast_parser_clear_when_failed(struct s_parser *parser, \
 	char *err_message)
 {
-	printf("%s at '%.*s'\n", err_message, parser->current_token->token.length, \
-		parser->current_token->token.start);
+	if (ft_strcmp(err_message, "malloc fail") == 0)
+		printf("%s\n", err_message);
+	else
+	{
+		parser_token_advance(parser);
+		if (parser->current_token->token.type == TOKEN_EOF)
+			printf("%s near unexpected token EOF\n", err_message);
+		else
+			printf("%s near unexpected token '%.*s'\n", err_message, \
+			parser->current_token->token.length, \
+			parser->current_token->token.start);
+	}
 	parser_free(parser);
 	return (NULL);
 }
