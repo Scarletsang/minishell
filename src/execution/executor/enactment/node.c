@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 17:49:36 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:22:20 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ struct s_ms_executor *executor, t_sb_vector *assignment, struct s_ms *ms)
 	vector_iterator_init(&iterator, assignment);
 	while (!vector_iterator_is_end(&iterator))
 	{
-		if (ms_executor_envp_set(executor, &ms->vars, \
+		if (ms_executor_envp_set(executor, \
 			((t_sb *) vector_iterator_current(&iterator))->buffer))
 			return (EXECUTION_ERROR);
 		vector_iterator_next(&iterator);

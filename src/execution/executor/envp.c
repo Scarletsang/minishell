@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:10:15 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 15:43:31 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:21:52 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static bool	ms_strcmp_till(const char *s1, const char *s2, char c)
 }
 
 t_executor_exit_code	ms_executor_envp_set(struct s_ms_executor *executor, \
-struct s_ms_vars *vars, char *pair)
+char *pair)
 {
 	t_vector_iterator	iterator;
 

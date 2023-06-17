@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:06:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/17 18:21:59 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_executor_exit_code	ms_executor_write_to_fd(int fd);
 ////////////////////////////////////////////
 
 t_executor_exit_code	ms_executor_envp_set(struct s_ms_executor *executor, \
-struct s_ms_vars *vars, char *pair);
+char *pair);
 
 char					**ms_executor_envp_get(struct s_ms_executor *executor);
 
