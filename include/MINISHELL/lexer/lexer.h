@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/02 16:11:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:13:43 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ struct s_lexer
 {
 	struct s_token_list	*start;
 	struct s_token_list	*end;
-	// struct s_scanner	scanner;
 };
 
 typedef void	(*t_token_cleaner)(void *);
