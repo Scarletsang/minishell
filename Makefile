@@ -11,7 +11,8 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
-	include
+	include \
+	lib/libft/include
 
 ###################################
 ######     Source files     #######
@@ -20,30 +21,6 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-VECTOR_SRC:= \
-	vector/vector.c \
-	vector/buffer.c \
-	vector/setters.c \
-	vector/iterator.c \
-	vector/action.c
-HASHTABLE_SRC:= \
-	hashtable/hashtable.c \
-	hashtable/mutation.c \
-	hashtable/printer.c \
-	hashtable/getters.c \
-	hashtable/entry.c \
-	hashtable/hash/hash.c \
-	hashtable/hash/rehash.c
-STRINGBUILDER_SRC:= \
-	stringbuilder/stringbuilder.c \
-	stringbuilder/iterator/iterator.c \
-	stringbuilder/iterator/manipulation.c \
-	stringbuilder/clipper/clipper.c \
-	stringbuilder/clipper/area.c \
-	stringbuilder/action/action.c \
-	stringbuilder/action/delete.c \
-	stringbuilder/action/insert.c \
-	stringbuilder/action/field_validator.c
 VARS_SRC:=\
 	execution/vars/vars.c \
 	execution/vars/database.c \
@@ -52,7 +29,11 @@ EXPANDER_SRC:=\
 	execution/expander/expander.c \
 	execution/expander/expander_dollar.c \
 	execution/expander/match.c
-EXECUTION_SRC:=\
+PIPER_SRC:=\
+	execution/piper/internal.c \
+	execution/piper/piper.c \
+	execution/piper/transmission.c
+EXECUTOR_SRC:=\
 	execution/execution.c \
 	execution/executor/executor.c \
 	execution/executor/action.c \
@@ -61,13 +42,10 @@ EXECUTION_SRC:=\
 	execution/executor/enactment/expand_node.c \
 	execution/executor/enactment/node.c \
 	execution/executor/enactment/redirection.c \
-	execution/executor/piper/internal.c \
-	execution/executor/piper/piper.c \
-	execution/executor/piper/transmission.c \
 	execution/executor/builtins/builtins.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(EXECUTION_SRC) $(MAIN_SRC)
+SRC:= $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -196,4 +174,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: clean fclean re bonus paco unpack repack
+.PHONY: clean fclean re bonus unpack repack

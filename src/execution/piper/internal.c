@@ -6,11 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:55:35 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/11 16:43:50 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:57:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/execution/executor/piper.h"
+#include <stdlib.h>
+#include <unistd.h>
+#include "MINISHELL/execution/piper.h"
 
 int	*ms_piper_get_sender_pipe(struct s_ms_piper *piper)
 {

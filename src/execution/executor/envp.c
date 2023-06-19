@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:10:15 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:21:52 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:46:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	**ms_executor_envp_get(struct s_ms_executor *executor)
 t_executor_exit_code	ms_executor_envp_import_from_environment(\
 struct s_ms_executor *executor, struct s_ms_vars *vars)
 {
-	size_t				i;
-	struct s_ht_entry	*ht_entry;
+	size_t					i;
+	struct s_ft_ht_entry	*ht_entry;
 
 	if (vars->environnement_changed)
 	{
@@ -31,15 +31,15 @@ struct s_ms_executor *executor, struct s_ms_vars *vars)
 		i = 0;
 		while ((i < vars->environment.capacity))
 		{
-			ht_entry = vector_get(&vars->environment, i);
+			ht_entry = ft_vector_get(&vars->environment, i);
 			if (ht_entry->key)
 			{
-				if (!vector_append(&executor->envp, ht_entry->value))
+				if (!ft_vector_append(&executor->envp, ht_entry->value))
 					return (EXECUTION_ERROR);
 			}
 			i++;
 		}
-		if (!vector_append(&executor->envp, NULL))
+		if (!ft_vector_append(&executor->envp, NULL))
 			return (EXECUTION_ERROR);
 	}
 	return (EXECUTION_SUCCESS);
@@ -48,7 +48,7 @@ struct s_ms_executor *executor, struct s_ms_vars *vars)
 void	ms_executor_envp_reset(struct s_ms_executor *executor)
 {
 	executor->envp.size = 0;
-	vector_append(&executor->envp, NULL);
+	ft_vector_append(&executor->envp, NULL);
 }
 
 static bool	ms_strcmp_till(const char *s1, const char *s2, char c)
@@ -66,21 +66,21 @@ static bool	ms_strcmp_till(const char *s1, const char *s2, char c)
 t_executor_exit_code	ms_executor_envp_set(struct s_ms_executor *executor, \
 char *pair)
 {
-	t_vector_iterator	iterator;
+	t_ft_vector_iterator	iterator;
 
 	if (!pair)
 		return (EXECUTION_FAILURE);
-	vector_iterator_init(&iterator, &executor->envp);
-	while (vector_iterator_is_end(&iterator))
+	ft_vector_iterator_init(&iterator, &executor->envp);
+	while (ft_vector_iterator_is_end(&iterator))
 	{
-		if (ms_strcmp_till(pair, vector_iterator_current(&iterator), '='))
+		if (ms_strcmp_till(pair, ft_vector_iterator_current(&iterator), '='))
 		{
-			vector_set(&executor->envp, iterator.index, pair);
+			ft_vector_set(&executor->envp, iterator.index, pair);
 			return (EXECUTION_SUCCESS);
 		}
-		vector_iterator_next(&iterator);
+		ft_vector_iterator_next(&iterator);
 	}
-	if (!vector_append(&executor->envp, pair))
+	if (!ft_vector_append(&executor->envp, pair))
 		return (EXECUTION_ERROR);
 	return (EXECUTION_SUCCESS);
 }

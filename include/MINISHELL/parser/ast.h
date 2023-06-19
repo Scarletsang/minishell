@@ -6,18 +6,17 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/15 19:33:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:25:03 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef AST_H
 # define AST_H
 
-# include "MINISHELL/vector.h"
-# include "MINISHELL/stringbuilder.h"
+# include "LIBFT/vector.h"
 # include "MINISHELL/parser/redirection.h"
 
-typedef t_vector	t_sb_vector;
+typedef t_ft_vector	t_sb_vector;
 
 struct s_ast_node_content
 {

@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   slice.c                                            :+:      :+:    :+:   */
+/*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 22:09:57 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 22:19:24 by htsang           ###   ########.fr       */
+/*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
+/*   Updated: 2023/06/19 15:29:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
-#include "MINISHELL/slice.h"
+#ifndef PARSER_H
+# define PARSER_H
 
-char	*string_slice_to_cstring(t_string_slice slice)
+# include "MINISHELL/parser/ast.h"
+# include "MINISHELL/lexer.h"
+
+struct s_parser
 {
-	char	*cstring;
+	struct s_ast_node	*head;
+	struct s_ast_node	*current;
+	struct s_token_list	*current_token;
+};
 
-	cstring = malloc(slice.size + 1);
-	if (!cstring)
-		return (NULL);
-	ft_memcpy(cstring, slice.content, slice.size);
-	cstring[slice.size] = '\0';
-	return (cstring);
-}
+// TODO: interface for parser
 
-char	*string_slice_content(t_string_slice *slice)
-{
-	return (slice->content);
-}
+#endif

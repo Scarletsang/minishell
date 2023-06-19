@@ -6,14 +6,17 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:05:38 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:10:04 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:49:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENACTMENT_H
 # define ENACTMENT_H
 
-#include "MINISHELL/execution/executor.h"
+# include "MINISHELL/minishell.h"
+# include "MINISHELL/parser/ast.h"
+# include "MINISHELL/execution/vars.h"
+# include "MINISHELL/execution/executor.h"
 
 /**
  * @brief structural execution

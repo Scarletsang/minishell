@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:42:09 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/11 16:44:32 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:32:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 # define PIPER_H
 
 # include <stdbool.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 /////////////////////////////////////////////
 ////////////   piper interface   ////////////

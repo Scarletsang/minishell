@@ -3,19 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/02 16:11:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:27:38 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-# include "libft.h"
 # include <stdbool.h>
-# include <stdio.h>
 
 typedef enum e_lexer_exit_code
 {

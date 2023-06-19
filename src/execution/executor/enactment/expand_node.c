@@ -6,22 +6,23 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:28:06 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:06:37 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:03:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/executor/enactment.h"
+#include "MINISHELL/execution/expander.h"
 
 static t_executor_exit_code	ms_executor_expand_ast_redirection_vector(\
 t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
 {
-	t_vector_iterator			iterator;
-	struct s_ast_redirection	*redirection;
+	t_ft_vector_iterator			iterator;
+	struct s_ast_redirection		*redirection;
 
-	vector_iterator_init(&iterator, redirection_vector);
-	while (!vector_iterator_is_end(&iterator))
+	ft_vector_iterator_init(&iterator, redirection_vector);
+	while (!ft_vector_iterator_is_end(&iterator))
 	{
-		redirection = vector_iterator_current(&iterator);
+		redirection = ft_vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_HEREDOC)
 		{
 			if (ms_expander_remove_quotes(&redirection->content))
@@ -33,7 +34,7 @@ t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
 				(const struct s_ms_vars *) &ms->vars))
 				return (EXECUTION_ERROR);
 		}
-		vector_iterator_next(&iterator);
+		ft_vector_iterator_next(&iterator);
 	}
 	return (EXECUTION_SUCCESS);
 }
@@ -41,16 +42,16 @@ t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
 static t_executor_exit_code	ms_executor_expand_sb_vector(\
 t_sb_vector *sb_vector, struct s_ms *ms)
 {
-	t_vector_iterator	iterator;
-	t_sb				*sb;
+	t_ft_vector_iterator	iterator;
+	t_ft_sb					*sb;
 
-	vector_iterator_init(&iterator, sb_vector);
-	while (!vector_iterator_is_end(&iterator))
+	ft_vector_iterator_init(&iterator, sb_vector);
+	while (!ft_vector_iterator_is_end(&iterator))
 	{
-		sb = vector_iterator_current(&iterator);
+		sb = ft_vector_iterator_current(&iterator);
 		if (ms_expander(sb, (const struct s_ms_vars *) &ms->vars))
 			return (EXECUTION_ERROR);
-		vector_iterator_next(&iterator);
+		ft_vector_iterator_next(&iterator);
 	}
 	return (EXECUTION_SUCCESS);
 }

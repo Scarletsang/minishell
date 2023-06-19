@@ -6,10 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/10 18:41:25 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:23:32 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 17:02:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/string.h"
+#include "MINISHELL/execution/executor.h"
 #include "MINISHELL/execution/executor/enactment.h"
 #include "MINISHELL/execution/executor/builtins.h"
 
@@ -76,27 +78,27 @@ t_executor_exit_code	ms_executor_enact_builtin(\
 struct s_ms_executor *executor, struct s_ast_node_content *content, \
 struct s_ms *ms)
 {
-	t_sb	*name_sb;
+	t_ft_sb	*name_sb;
 	char	*name;
 
-	name_sb = vector_get(&content->command, 0);
+	name_sb = ft_vector_get(&content->command, 0);
 	if (!name_sb)
 		return (EXECUTION_FAILURE);
 	name = name_sb->buffer;
 	if (ft_strcmp(name, "echo") == 0)
-		return (ms_builtin_echo(&content->command, ms));
+		return (ms_builtin_echo(executor, &content->command, ms));
 	if (ft_strcmp(name, "cd") == 0)
-		return (ms_builtin_cd(&content->command, ms));
+		return (ms_builtin_cd(executor, &content->command, ms));
 	if (ft_strcmp(name, "pwd") == 0)
-		return (ms_builtin_pwd(&content->command, ms));
+		return (ms_builtin_pwd(executor, &content->command, ms));
 	if (ft_strcmp(name, "unset") == 0)
-		return (ms_builtin_unset(&content->command, ms));
+		return (ms_builtin_unset(executor, &content->command, ms));
 	if (ft_strcmp(name, "export") == 0)
-		return (ms_builtin_export(&content->command, ms));
+		return (ms_builtin_export(executor, &content->command, ms));
 	if (ft_strcmp(name, "env") == 0)
-		return (ms_builtin_env(&content->command, ms));
+		return (ms_builtin_env(executor, &content->command, ms));
 	if (ft_strcmp(name, "exit") == 0)
-		return (ms_builtin_exit(&content->command, ms));
+		return (ms_builtin_exit(executor, &content->command, ms));
 	return (EXECUTION_FAILURE);
 }
 
@@ -104,14 +106,15 @@ t_executor_return_value	ms_executor_enact_command(\
 struct s_ms_executor *executor, struct s_ast_node_content *content, \
 struct s_ms *ms)
 {
-	(ms_executor_enact_assignment(executor, \
+	if ((ms_executor_enact_assignment(executor, \
 		&content->assignment, ms) == EXECUTION_ERROR) || \
 	(ms_executor_enact_redirection_in(executor, \
 		&content->redirection_in, ms) == EXECUTION_ERROR) || \
 	(ms_executor_enact_redirection_out(executor, \
 		&content->redirection_out, ms) == EXECUTION_ERROR) || \
 	(ms_executor_enact_command_execution(executor, \
-		&content->command, ms) == EXECUTION_ERROR);
+		&content->command, ms) == EXECUTION_ERROR))
+		;
 	// TODO: executor cleanup
 	return (EXIT_FAILURE);
 }

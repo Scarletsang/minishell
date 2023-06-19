@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/16 16:00:51 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 15:39:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ const char *value)
 	entry_in_environment = ms_vars_database_get(&vars->environment, key);
 	if (entry_in_environment)
 	{
-		if (!ht_update(&vars->environment, key, value, NULL))
+		if (!ft_ht_update(&vars->environment, key, value, NULL))
 			return (EXIT_FAILURE);
 		vars->environnement_changed = true;
 	}
@@ -31,7 +31,7 @@ const char *value)
 
 int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 {
-	if (!ht_update(&vars->environment, key, \
+	if (!ft_ht_update(&vars->environment, key, \
 		ms_vars_database_get(&vars->shell, key), NULL))
 		return (EXIT_FAILURE);
 	vars->environnement_changed = true;
@@ -40,8 +40,8 @@ int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 
 void	ms_vars_unset(struct s_ms_vars *vars, const char *key)
 {
-	ht_del(&vars->shell, key);
-	ht_del(&vars->environment, key);
+	ft_ht_delete(&vars->shell, key);
+	ft_ht_delete(&vars->environment, key);
 }
 
 const char	*ms_vars_echo(const struct s_ms_vars *vars, \

@@ -6,19 +6,18 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 18:21:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:46:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include <stdlib.h>
+# include <stdbool.h>
 # include <unistd.h>
-# include "MINISHELL/minishell.h"
-# include "MINISHELL/parser/ast.h"
-# include "MINISHELL/execution/expander.h"
-# include "MINISHELL/execution/executor/piper.h"
+# include "LIBFT/vector.h"
+# include "MINISHELL/execution/piper.h"
+# include "MINISHELL/execution/vars.h"
 
 # ifndef HEREDOC_FILENAME
 #  define HEREDOC_FILENAME "./.minishell_heredoc.tmp"
@@ -40,7 +39,7 @@ typedef int	t_executor_return_value;
 struct s_ms_executor
 {
 	struct s_ms_piper	piper;
-	t_vector			envp;
+	t_ft_vector			envp;
 	int					stdin_fd;
 	int					heredoc_fd;
 	bool				heredoc_fd_opened;

@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:29:00 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/11 17:27:49 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:46:48 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/execution/executor/piper.h"
+#include <stdlib.h>
+#include "MINISHELL/execution/piper.h"
 
 void	ms_piper_init(struct s_ms_piper *piper)
 {
