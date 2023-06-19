@@ -52,9 +52,32 @@ EXPANDER_SRC:=\
 	execution/expander/expander.c \
 	execution/expander/expander_dollar.c \
 	execution/expander/match.c
+LEXER_SRC:=\
+	lexer/lexer.c \
+	lexer/scanner_checker.c \
+	lexer/scanner_maniputalor.c \
+	lexer/token_maker.c \
+	lexer/token_lst_utils.c \
+	lexer/token_assignword_updater.c
+PARSER_SRC:=\
+	parser/node_content/ast_node_content.c \
+	parser/node_content/content_vector.c \
+	parser/node_content/content_vector_utils.c \
+	parser/node_content/redirection.c \
+	parser/ast/ast_node.c \
+	parser/parser.c \
+	parser/parser_cmd.c \
+	parser/parser_cmd_prefix.c \
+	parser/parser_cmd_suffix.c \
+	parser/parser_complete_command.c \
+	parser/parser_free.c \
+	parser/parser_ioredirect.c \
+	parser/parser_scanner_utils.c \
+	parser/parser_tree_inserter.c
 MAIN_SRC:= \
-	main.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(MAIN_SRC)
+	parser/parser_tester.c \
+	parser/parser_tester_printer.c
+SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(LEXER_SRC) $(PARSER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -174,7 +197,7 @@ repack: unpack clean
 ######     Cleaning     #######
 ###############################
 
-clean: 
+clean:
 	@rm -f $(OBJ)
 
 fclean: clean
