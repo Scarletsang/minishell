@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/02 16:11:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:11:48 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
 	struct s_token		token;
 	struct s_token_list	*token_lst;
 
-	if (!line)
+	if (*line == '\0')
 		return (NO_LINE);
 	scanner_init(&scanner, line);
 	while (1)
