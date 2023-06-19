@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 19:47:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:11:14 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:29:53 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include "MINISHELL/parser/content.h"
 
 int	ast_redirect_type_set(t_token_type token_type, \
@@ -28,12 +29,12 @@ int	ast_redirect_type_set(t_token_type token_type, \
 	return (EXIT_SUCCESS);
 }
 
-int	ast_node_str_set(t_sb *content_str, const char *str, \
+int	ast_node_str_set(t_ft_sb *content_str, const char *str, \
 const size_t str_len)
 {
-	if ((sb_init(content_str, 10) == EXIT_FAILURE) || \
-		(sb_perform(content_str, \
-			sb_action_append_len(str, str_len)) == EXIT_FAILURE))
+	if ((ft_sb_init(content_str, 10) == EXIT_FAILURE) || \
+		(ft_sb_perform(content_str, \
+			ft_sb_action_append_len(str, str_len)) == EXIT_FAILURE))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

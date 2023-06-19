@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tester.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 14:46:39 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:24:48 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 // #include <stdio.h>
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
 
@@ -20,28 +20,28 @@ void	print_ast(struct s_ast_node *root);
 
 static void	print_content_redirection(t_ast_redirection_vector *redirection)
 {
-	struct s_vector_iterator	vec_itr;
+	struct s_ft_vector_iterator	vec_itr;
 
-	vector_iterator_init(&vec_itr, (t_vector *)redirection);
-	while (!vector_iterator_is_end(&vec_itr))
+	ft_vector_iterator_init(&vec_itr, (t_ft_vector *)redirection);
+	while (!ft_vector_iterator_is_end(&vec_itr))
 	{
 		printf("[type:%d ", \
-		((struct s_ast_redirection *)vector_iterator_current(&vec_itr))->type);
+		((struct s_ast_redirection *)ft_vector_iterator_current(&vec_itr))->type);
 		printf("content:%s ]", \
-		((struct s_ast_redirection *)vector_iterator_current(&vec_itr))->content.buffer);
-		vector_iterator_next(&vec_itr);
+		((struct s_ast_redirection *)ft_vector_iterator_current(&vec_itr))->content.buffer);
+		ft_vector_iterator_next(&vec_itr);
 	}
 }
 
 static void	print_content_sb_vector(t_sb_vector *sb_vector)
 {
-	t_vector_iterator	vec_itr;
+	t_ft_vector_iterator	vec_itr;
 
-	vector_iterator_init(&vec_itr, sb_vector);
-	while (!vector_iterator_is_end(&vec_itr))
+	ft_vector_iterator_init(&vec_itr, sb_vector);
+	while (!ft_vector_iterator_is_end(&vec_itr))
 	{
-		printf("[%s] ", (char *) ((t_sb *)vector_iterator_current(&vec_itr))->buffer);
-		vector_iterator_next(&vec_itr);
+		printf("[%s] ", (char *) ((t_ft_sb *)ft_vector_iterator_current(&vec_itr))->buffer);
+		ft_vector_iterator_next(&vec_itr);
 	}
 }
 

@@ -18,7 +18,7 @@ SRC := \
 LIBFT = ../../lib/libft/libft.a
 
 LIB_INCLUDE_DIR += -I $(shell brew --prefix readline)/include
-LIB_INCLUDE_DIR += -I ../../lib/libft
+LIB_INCLUDE_DIR += -I ../../lib/libft/include
 
 LDFLAGS+= -lreadline -L $(shell brew --prefix readline)/lib/
 LDFLAGS+= $(LIBFT)

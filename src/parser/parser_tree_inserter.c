@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tree_inserter.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:25:25 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:25:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:22:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 
 void	parser_ast_cmd_insert(struct s_parser *parser, \
 struct s_ast_node *new_node)

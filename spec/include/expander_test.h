@@ -5,8 +5,8 @@
 # include "MINISHELL/execution/expander.h"
 
 
-struct s_minishell_vars	*expander_shell_init(void);
+struct s_ms_vars	*expander_shell_init(void);
 
-t_tshell_status			expander_shell(struct s_minishell_vars *vars, struct s_tparser *tparser);
+t_tshell_status			expander_shell(struct s_ms_vars *vars, struct s_tparser *tparser);
 
 #endif

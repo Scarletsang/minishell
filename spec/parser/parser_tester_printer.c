@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tester_printer.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:06:53 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 17:59:51 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:23:59 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include <stdio.h>
+#include "MINISHELL/parser.h"
 
 void	print_ast_content(struct s_ast_node_content *content);
 

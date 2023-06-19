@@ -11,7 +11,8 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
-	include
+	include \
+	lib/libft/include
 
 ###################################
 ######     Source files     #######
@@ -20,38 +21,6 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 
-VECTOR_SRC:= \
-	vector/vector.c \
-	vector/buffer.c \
-	vector/setters.c \
-	vector/iterator.c \
-	vector/action.c
-HASHTABLE_SRC:= \
-	hashtable/hashtable.c \
-	hashtable/mutation.c \
-	hashtable/printer.c \
-	hashtable/getters.c \
-	hashtable/entry.c \
-	hashtable/hash/hash.c \
-	hashtable/hash/rehash.c
-STRINGBUILDER_SRC:= \
-	stringbuilder/stringbuilder.c \
-	stringbuilder/iterator/iterator.c \
-	stringbuilder/iterator/manipulation.c \
-	stringbuilder/clipper/clipper.c \
-	stringbuilder/clipper/area.c \
-	stringbuilder/action/action.c \
-	stringbuilder/action/delete.c \
-	stringbuilder/action/insert.c \
-	stringbuilder/action/field_validator.c
-VARS_SRC:=\
-	execution/vars/vars.c \
-	execution/vars/database.c \
-	execution/vars/action.c
-EXPANDER_SRC:=\
-	execution/expander/expander.c \
-	execution/expander/expander_dollar.c \
-	execution/expander/match.c
 LEXER_SRC:=\
 	lexer/lexer.c \
 	lexer/scanner_checker.c \
@@ -74,10 +43,39 @@ PARSER_SRC:=\
 	parser/parser_ioredirect.c \
 	parser/parser_scanner_utils.c \
 	parser/parser_tree_inserter.c
+VARS_SRC:=\
+	execution/vars/vars.c \
+	execution/vars/database.c \
+	execution/vars/action.c
+EXPANDER_SRC:=\
+	execution/expander/expander.c \
+	execution/expander/expander_dollar.c \
+	execution/expander/match.c
+PIPER_SRC:=\
+	execution/piper/internal.c \
+	execution/piper/piper.c \
+	execution/piper/transmission.c
+EXECUTOR_SRC:=\
+	execution/execution.c \
+	execution/executor/executor.c \
+	execution/executor/action.c \
+	execution/executor/envp.c \
+	execution/executor/enactment/enactment.c \
+	execution/executor/enactment/expand_node.c \
+	execution/executor/enactment/node.c \
+	execution/executor/enactment/redirection.c
+EXECUTOR_BUILTINS_SRC:=\
+	execution/executor/builtins/builtins.c \
+	execution/executor/builtins/echo.c \
+	execution/executor/builtins/cd.c \
+	execution/executor/builtins/pwd.c \
+	execution/executor/builtins/export.c \
+	execution/executor/builtins/unset.c \
+	execution/executor/builtins/env.c \
+	execution/executor/builtins/exit.c
 MAIN_SRC:= \
-	parser/parser_tester.c \
-	parser/parser_tester_printer.c
-SRC:= $(VECTOR_SRC) $(HASHTABLE_SRC) $(STRINGBUILDER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(LEXER_SRC) $(PARSER_SRC) $(MAIN_SRC)
+	main.c
+SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -135,7 +133,7 @@ bonus: re
 # $(LIBRARY_NAME):
 # 	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/LIBRARY_NAME
 $(LIBFT):
-	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) -C lib/libft
+	@${MAKE} $(if $(FSANITIZE),FSANITIZE=yes,) USE="hashtable stringbuilder iostream" -C lib/libft
 
 #########################################
 ######     Object compilation     #######
@@ -201,9 +199,10 @@ clean:
 	@rm -f $(OBJ)
 
 fclean: clean
+	@$(MAKE) fclean -C lib/libft
 	@rm -rf $(OBJ_DIR)
 	@rm -f $(NAME)
 
 re: fclean all
 
-.PHONY: clean fclean re bonus paco unpack repack
+.PHONY: clean fclean re bonus unpack repack

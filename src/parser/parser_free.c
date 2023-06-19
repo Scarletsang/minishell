@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:27:14 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/17 16:55:30 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:22:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 
 void	parser_free(struct s_parser *parser)
 {

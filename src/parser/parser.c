@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:07:29 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:26:16 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "LIBFT/string.h"
+#include "MINISHELL/parser.h"
 
 bool	parser_check_before_run(struct s_lexer *lexer, \
 	t_lexer_exit_code lexer_exit_code)

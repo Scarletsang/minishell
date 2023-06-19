@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:10:43 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/01 02:18:27 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/07 16:28:39 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,28 @@
 
 extern char **environ;
 
-struct s_minishell_vars	*expander_shell_init(void)
+struct s_ms_vars	*expander_shell_init(void)
 {
-	struct s_minishell_vars	*vars;
+	struct s_ms_vars	*vars;
 
-	vars = malloc(sizeof(struct s_minishell_vars));
+	vars = malloc(sizeof(struct s_ms_vars));
 	if (!vars)
 		return (NULL);
-	if (minishell_vars_init(vars))
+	if (ms_vars_init(vars))
 	{
 		free(vars);
 		return (NULL);
 	}
-	if (minishell_vars_import(vars, environ))
+	if (ms_vars_import(vars, environ))
 	{
-		minishell_vars_free(vars);
+		ms_vars_free(vars);
 		free(vars);
 		return (NULL);
 	}
 	return (vars);
 }
 
-t_tshell_status	expander_shell(struct s_minishell_vars *vars, \
+t_tshell_status	expander_shell(struct s_ms_vars *vars, \
 struct s_tparser *tparser)
 {
 	t_sb	sb;
@@ -43,7 +43,7 @@ struct s_tparser *tparser)
 	if (sb_init(&sb, TSHELL_MAX_INPUT_SIZE / 16))
 		return (TSHELL_FAILURE);
 	if (sb_perform(&sb, sb_action_append(tparser->line)) || \
-		minishell_expander(&sb, vars))
+		ms_expander(&sb, vars))
 	{
 		sb_free(&sb);
 		return (TSHELL_FAILURE);
@@ -58,5 +58,5 @@ int	main(void)
 	return (interact(\
 		(t_init_func) expander_shell_init, \
 		(t_program_func) expander_shell, \
-		(t_free_func) minishell_vars_free));
+		(t_free_func) ms_vars_free));
 }

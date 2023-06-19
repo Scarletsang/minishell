@@ -6,12 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:00:59 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/05 21:56:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:22:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/parser/ast.h"
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 #include "MINISHELL/lexer/lexer.h"
 
 int	parser_run(struct s_parser *parser)

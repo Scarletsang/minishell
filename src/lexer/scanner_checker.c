@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scanner_checker.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:03:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/31 19:43:01 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:21:35 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/lexer/lexer.h"
+#include "MINISHELL/lexer.h"
 
 bool	is_white_space(char c)
 {

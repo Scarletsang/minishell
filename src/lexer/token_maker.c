@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_maker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 22:04:53 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/01 14:39:27 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:34:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/lexer/lexer.h"
+#include "LIBFT/string.h"
+#include "MINISHELL/lexer.h"
 
 struct s_token	token_make(t_token_type type, struct s_scanner scanner)
 {

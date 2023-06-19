@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_complete_command.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:13:19 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:06:34 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:22:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 
 t_parser_exit_code	parse_pipe(struct s_parser *parser)
 {

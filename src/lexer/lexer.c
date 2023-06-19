@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:15:41 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:33:51 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/lexer/lexer.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include "MINISHELL/lexer.h"
 
 void	lexer_init(struct s_lexer *lexer)
 {

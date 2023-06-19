@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   token_assignword_updater.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:50:22 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:14:36 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:34:31 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/lexer/lexer.h"
+#include "LIBFT/ctype.h"
+#include "MINISHELL/lexer.h"
 
 void	token_update(struct s_token *token)
 {

@@ -3,13 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ast_node.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 20:20:44 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/17 17:47:36 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:23:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include "LIBFT/general.h"
 #include "MINISHELL/parser/ast.h"
 
 struct s_ast_node	*ast_node_cmd_create(void)

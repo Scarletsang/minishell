@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd_suffix.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:10:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 15:51:57 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:29:12 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include <stdlib.h>
+#include "MINISHELL/parser.h"
 
 t_parser_exit_code	parse_cmd_parameter(struct s_parser *parser)
 {
-	t_sb	cmd_parameter;
+	t_ft_sb	cmd_parameter;
 
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
@@ -23,9 +24,9 @@ t_parser_exit_code	parse_cmd_parameter(struct s_parser *parser)
 		return (PARSER_FAILURE);
 	if (ast_node_str_set(&cmd_parameter, parser->current_token->token.start, \
 		parser->current_token->token.length) == EXIT_FAILURE || \
-		!vector_append(&parser->current->content->command, &cmd_parameter))
+		!ft_vector_append(&parser->current->content->command, &cmd_parameter))
 	{
-		sb_free(&cmd_parameter);
+		ft_sb_free(&cmd_parameter);
 		parser->malloc_fail = true;
 		return (PARSER_FAILURE);
 	}

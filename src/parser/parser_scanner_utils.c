@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_scanner_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:56:54 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/07 18:46:09 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:22:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/parser/parser.h"
+#include "MINISHELL/parser.h"
 
 void	parser_token_advance(struct s_parser *parser)
 {

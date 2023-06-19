@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   scanner_maniputalor.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:44:07 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:30:38 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 18:21:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/lexer/lexer.h"
+#include "MINISHELL/lexer.h"
 
 void	scanner_init(struct s_scanner *scanner, char *line)
 {
