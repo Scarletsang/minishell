@@ -6,12 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:24:48 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/19 19:30:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include "MINISHELL/parser.h"
 #include <readline/readline.h>
 #include <readline/history.h>
