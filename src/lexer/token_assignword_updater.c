@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 14:50:22 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 21:39:48 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:14:36 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,6 @@ t_token_updater token_update)
 		tmp_token_node = tmp_token_node->next;
 	}
 }
-
-// bool	token_is_assignmentword(struct s_token token)
-// {
-// 	int	i;
-// 	int	j;
-
-// 	if (!ft_isalpha(token.start[0]) && token.start[0] != '_')
-// 		return (false);
-// 	i = 0;
-// 	while (i < token.length && token.start[i] != '=')
-// 		i++;
-// 	j = 0;
-// 	while (token.start[i] && j < i)
-// 	{
-// 		if (!((ft_isalnum(token.start[j])) || token.start[j] == '_'))
-// 			return (false);
-// 		j++;
-// 	}
-// 	return (true);
-// }
 
 bool	token_is_assignmentword(struct s_token token)
 {

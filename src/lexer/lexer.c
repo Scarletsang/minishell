@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/02 16:11:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:15:41 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ void	lexer_init(struct s_lexer *lexer)
 {
 	lexer->start = NULL;
 	lexer->end = NULL;
-	// lexer->scanner.start = line;
-	// lexer->scanner.current = line;
 }
 
 t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
@@ -26,17 +24,12 @@ t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
 	struct s_token		token;
 	struct s_token_list	*token_lst;
 
-	if (!line)
+	if (*line == '\0')
 		return (NO_LINE);
 	scanner_init(&scanner, line);
 	while (1)
 	{
 		token = token_scan(&scanner);
-		// if (token.type == TOKEN_ERROR)
-		// 	return (token_clear_when_lexer_failed(lexer, \
-		// 	(t_token_cleaner)del, token.start), ERROR_WHEN_LEX);
-		// if (token.type == TOKEN_EOF)
-		// 	break ;
 		token_lst = token_new(token);
 		if (!token_lst)
 			return (token_clear_when_lexer_failed(lexer, \
@@ -45,7 +38,7 @@ t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
 		if (token.type == TOKEN_ERROR)
 			return (printf("%s\n", token.start), ERROR_WHEN_LEX);
 		if (token.type == TOKEN_EOF)
-		 	break ;
+			break ;
 	}
 	token_lstitr_update_assignmentword(lexer->start, \
 		(t_token_updater)token_update);
