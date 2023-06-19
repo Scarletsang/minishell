@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:13:19 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/16 20:17:30 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/19 16:06:34 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_parser_exit_code	parse_pipe(struct s_parser *parser)
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
 	if (parser->current_token->token.type != TOKEN_PIPE)
-		return (PARSER_FAILURE); //syntax error
+		return (PARSER_FAILURE);
 	new_node = ast_node_pipe_create();
 	if (!new_node)
 	{
@@ -36,7 +36,7 @@ t_parser_exit_code	parse_eof(struct s_parser *parser)
 	if (parser->malloc_fail == true)
 		return (PARSER_FAILURE);
 	if (parser->current_token->token.type != TOKEN_EOF)
-		return (PARSER_FAILURE); //syntax error
+		return (PARSER_FAILURE);
 	return (PARSER_SUCCESS);
 }
 
@@ -52,6 +52,6 @@ t_parser_exit_code	parse_complete_command(struct s_parser *parser)
 	if (parse_pipe(parser) == PARSER_FAILURE)
 		return (PARSER_FAILURE);
 	if (parse_complete_command(parser) == PARSER_FAILURE)
-		return (PARSER_FAILURE); //syntax error
-	return (PARSER_SUCCESS); //no single token to parse, only eof
+		return (PARSER_FAILURE);
+	return (PARSER_SUCCESS);
 }

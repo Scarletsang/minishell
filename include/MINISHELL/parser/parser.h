@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/17 17:47:02 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/17 19:24:56 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ bool				parser_check_before_run(struct s_lexer *lexer, \
 struct s_ast_node	*parser_run(char *line);
 struct s_ast_node	*ast_parser_clear_when_failed(struct s_parser *parser, \
 	char *err_message);
+void				token_clear_when_parser_finished(struct s_lexer *lexer, \
+t_token_cleaner del, char *err_message);
 
 // TODO: interface for parser
 t_parser_exit_code	parse_io_redirect(struct s_parser *parser);
@@ -67,6 +69,6 @@ void				parser_token_advance(struct s_parser *parser);
 struct s_token_list	parser_token_peek_next(struct s_parser *parser);
 struct s_token_list	parser_token_peek(struct s_parser *parser);
 
-//parser printer
+//parser printer for testing
 
 #endif
