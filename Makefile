@@ -75,7 +75,16 @@ EXECUTOR_BUILTINS_SRC:=\
 	execution/executor/builtins/exit.c
 MAIN_SRC:= \
 	main.c
-SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC) $(MAIN_SRC)
+TEST_SRC:= \
+	../spec/parser/parser_tester_printer.c \
+	../spec/parser/parser_tester.c
+
+SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
+ifdef TEST
+	SRC+= $(TEST_SRC)
+else
+	SRC+= $(MAIN_SRC)
+endif
 
 ####################################
 ######     Library files     #######
