@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_cmd_suffix.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 15:10:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:29:12 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/20 15:26:40 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_parser_exit_code	parse_cmd_suffix(struct s_parser *parser)
 		parse_cmd_suffix(parser);
 		return (PARSER_SUCCESS);
 	}
-	if (parse_cmd_word(parser) == PARSER_SUCCESS)
+	if (parse_cmd_parameter(parser) == PARSER_SUCCESS)
 	{
 		parse_cmd_suffix(parser);
 		return (PARSER_SUCCESS);
