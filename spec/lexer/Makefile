@@ -12,7 +12,8 @@ SRC := \
 	scanner_maniputalor.c \
 	token_maker.c \
 	token_lst_utils.c \
-	token_assignword_updater.c \
+	token_assignword_updater.c
+TEST_SRC := \
 	lexer_tester.c
 
 LIBFT = ../../lib/libft/libft.a
@@ -27,10 +28,10 @@ all:
 	$(MAKE) $(NAME)
 
 $(NAME): $(LIBFT)
-	$(CC) $(SRC) $(LIB_INCLUDE_DIR) -I $(INCLUDE_DIR) $(LDFLAGS) -o $(NAME)
+	$(CC) $(addprefix ../../src/lexer/, $(SRC)) $(TEST_SRC) $(LIB_INCLUDE_DIR) -I $(INCLUDE_DIR) $(LDFLAGS) -o $(NAME)
 
 $(LIBFT):
-	$(MAKE) bonus -C ../../lib/libft
+	$(MAKE) -C ../../lib/libft
 
 clean:
 	rm -f $(NAME)
