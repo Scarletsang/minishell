@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_tester.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 21:58:30 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:25:00 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/20 15:20:07 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-// #include <stdio.h>
+#include <stdio.h>
 #include "MINISHELL/lexer.h"
 #include <readline/readline.h>
 #include <readline/history.h>
