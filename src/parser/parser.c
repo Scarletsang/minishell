@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:26:16 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/20 14:22:30 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,19 @@ struct s_ast_node	*ast_parser_clear_when_failed(struct s_parser *parser, \
 		printf("%s\n", err_message);
 	else
 	{
-		parser_token_advance(parser);
 		if (parser->current_token->token.type == TOKEN_EOF)
 			printf("%s near unexpected token EOF\n", err_message);
 		else
+		{
+			if (parser->current_token->token.type == TOKEN_GREAT || \
+			parser->current_token->token.type == TOKEN_DGREAT || \
+			parser->current_token->token.type == TOKEN_LESS || \
+			parser->current_token->token.type == TOKEN_DLESS)
+				parser_token_advance(parser);
 			printf("%s near unexpected token '%.*s'\n", err_message, \
 			parser->current_token->token.length, \
 			parser->current_token->token.start);
+		}
 	}
 	parser_free(parser);
 	return (NULL);
