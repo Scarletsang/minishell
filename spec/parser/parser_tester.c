@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:30:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/20 11:54:45 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	print_content_redirection(t_ast_redirection_vector *redirection)
 	{
 		printf("[type:%d ", \
 		((struct s_ast_redirection *)ft_vector_iterator_current(&vec_itr))->type);
-		printf("content:%s ]", \
+		printf("content:%s ]", (char *) \
 		((struct s_ast_redirection *)ft_vector_iterator_current(&vec_itr))->content.buffer);
 		ft_vector_iterator_next(&vec_itr);
 	}
