@@ -76,9 +76,7 @@ EXECUTOR_BUILTINS_SRC:=\
 MAIN_SRC:= \
 	main.c
 TEST_SRC:= \
-	../spec/parser/parser_tester.c \
-	../spec/parser/parser_tester_printer.c
-
+	
 SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
 ifdef TEST
 	SRC+= $(TEST_SRC)
