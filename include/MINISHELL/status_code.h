@@ -1,33 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   status_code.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/21 14:22:26 by sawang           ###   ########.fr       */
+/*   Created: 2023/06/21 14:23:01 by sawang            #+#    #+#             */
+/*   Updated: 2023/06/21 14:25:58 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef STATUS_CODE_H
+# define STATUS_CODE_H
 
-# include <stdlib.h>
-# include "MINISHELL/execution/vars.h"
-
-struct s_ms
+typedef enum e_ms_status
 {
-	int					ipc[2];
-	struct s_ms_vars	vars;
-};
-
-int		ms_init(struct s_ms *ms);
-
-int		ms_free(struct s_ms *ms);
-
-void	ms_ipc_send(struct s_ms *ms, char byte);
-
-char	ms_ipc_receive(struct s_ms *ms);
+	PROGRAM_SUCCESS,
+	PROGRAM_FAILURE,
+	PROGRAM_ERROR
+}			t_ms_status;
 
 #endif

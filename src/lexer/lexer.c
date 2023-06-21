@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:33:51 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 14:35:43 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	lexer_init(struct s_lexer *lexer)
 	lexer->end = NULL;
 }
 
-t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
+t_lexer_exit_code	lexer_run(struct s_lexer *lexer, char *line)
 {
 	struct s_scanner	scanner;
 	struct s_token		token;
@@ -34,15 +34,33 @@ t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line)
 		token = token_scan(&scanner);
 		token_lst = token_new(token);
 		if (!token_lst)
-			return (token_clear_when_lexer_failed(lexer, \
-			(t_token_cleaner)del, "malloc failed"), MALLOC_FAIL);
+			return (MALLOC_FAIL);
 		token_add_back(lexer, token_lst);
 		if (token.type == TOKEN_ERROR)
-			return (printf("%s\n", token.start), ERROR_WHEN_LEX);
+			return (ERROR_WHEN_LEX);
 		if (token.type == TOKEN_EOF)
 			break ;
 	}
 	token_lstitr_update_assignmentword(lexer->start, \
 		(t_token_updater)token_update);
 	return (LEXER_SUCCESS);
+}
+
+t_ms_status	lexer_check_validation(struct s_lexer *lexer, \
+	t_lexer_exit_code lexer_exit_code)
+{
+	if (lexer_exit_code == ERROR_WHEN_LEX)
+	{
+		printf("%s\n", lexer->end->token.start);
+		printf("syntax error: unexpected end of file\n");
+		lexer_free(lexer, (t_token_cleaner)del);
+		return (PROGRAM_FAILURE);
+	}
+	if (lexer_exit_code == MALLOC_FAIL)
+	{
+		lexer_free(lexer, (t_token_cleaner)del);
+		printf("malloc failed\n");
+		return (PROGRAM_ERROR);
+	}
+	return (PROGRAM_SUCCESS);
 }
