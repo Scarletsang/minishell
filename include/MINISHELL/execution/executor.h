@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/21 15:20:44 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:46:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdbool.h>
 # include <unistd.h>
+# include "LIBFT/iostream.h"
 # include "LIBFT/vector.h"
 # include "MINISHELL/execution/piper.h"
 # include "MINISHELL/execution/vars.h"
