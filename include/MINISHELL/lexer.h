@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:08:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 14:36:00 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEXER_H
 
 # include <stdbool.h>
+# include "MINISHELL/status_code.h"
 
 typedef enum e_lexer_exit_code
 {
@@ -68,7 +69,7 @@ typedef void	(*t_token_printer)(void *);
 lexer
 */
 void				lexer_init(struct s_lexer *lexer);
-t_lexer_exit_code	token_list_get(struct s_lexer *lexer, char *line);
+t_lexer_exit_code	lexer_run(struct s_lexer *lexer, char *line);
 
 /**
 scanner
@@ -96,8 +97,8 @@ struct s_token		token_scan(struct s_scanner *scanner);
 struct s_token_list	*token_new(struct s_token token);
 void				token_add_back(struct s_lexer *lexer, \
 				struct s_token_list *token_lst);
-void				token_clear_when_lexer_failed(struct s_lexer *lexer, \
-t_token_cleaner del, char *err_message);
+void				lexer_free(struct s_lexer *lexer, \
+t_token_cleaner del);
 void				token_delone(struct s_token_list *token_lst, \
 				t_token_cleaner del);
 void				del(struct s_token *token_content);
@@ -106,8 +107,8 @@ void				token_update(struct s_token *token);
 void				token_lstitr_update_assignmentword(\
 				struct s_token_list *token_lst, t_token_updater token_update);
 bool				token_is_assignmentword(struct s_token token);
-/**lexer tester
-*/
-
+// checking validation
+t_ms_status			lexer_check_validation(struct s_lexer *lexer, \
+	t_lexer_exit_code lexer_exit_code);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tester.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/20 11:54:45 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:09:29 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,15 @@ int	main(void)
 {
 	char				*line;
 	struct s_ast_node	*ast_root;
+	t_ms_status			prog_stats;
 
 	line = readline("minishell>");
 	while (line)
 	{
-		ast_root = parser_run(line);
-		if (ast_root)
+		ast_root = NULL;
+		prog_stats = parser_run(&ast_root, line);
+		printf("prog_stats: %d\n", prog_stats);
+		if (prog_stats == PROGRAM_SUCCESS)
 			print_ast(ast_root);
 		ast_node_free(ast_root);
 		// rl_replace_line("", 0); // Clear the current input line

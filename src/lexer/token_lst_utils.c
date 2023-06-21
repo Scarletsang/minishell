@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:07:45 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:32:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 14:34:45 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,11 @@ void	token_add_back(struct s_lexer *lexer, struct s_token_list *token_lst)
 	}
 }
 
-void	token_clear_when_lexer_failed(struct s_lexer *lexer, \
-t_token_cleaner del, char *err_message)
+void	lexer_free(struct s_lexer *lexer, \
+t_token_cleaner del)
 {
 	struct s_token_list	*tmp_token_lst;
 
-	if (err_message)
-		printf("%s\n", err_message);
 	if (!lexer->start || !del)
 		return ;
 	while (lexer->start)

@@ -68,16 +68,16 @@ EXECUTOR_BUILTINS_SRC:=\
 	execution/executor/builtins/builtins.c \
 	execution/executor/builtins/echo.c \
 	execution/executor/builtins/cd.c \
-	execution/executor/builtins/pwd.c \
 	execution/executor/builtins/export.c \
+	execution/executor/builtins/pwd.c \
 	execution/executor/builtins/unset.c \
 	execution/executor/builtins/env.c \
 	execution/executor/builtins/exit.c
 MAIN_SRC:= \
 	main.c
 TEST_SRC:= \
-	../spec/parser/parser_tester_printer.c \
-	../spec/parser/parser_tester.c
+	../spec/parser/parser_tester.c \
+	../spec/parser/parser_tester_printer.c
 
 SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
 ifdef TEST

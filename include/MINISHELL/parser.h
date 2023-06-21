@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:27:01 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:10:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdbool.h>
 # include "MINISHELL/parser/ast.h"
 # include "MINISHELL/parser/content.h"
+# include "MINISHELL/status_code.h"
 
 //if there is syntax error or malloc fail, free and exit right away
 //PARSER_FAILURE means nothing to parse,
@@ -39,13 +40,11 @@ void				parser_init(struct s_parser *parser, \
 void				parser_free(struct s_parser *parser);
 
 //parser main
-bool				parser_check_before_run(struct s_lexer *lexer, \
-	t_lexer_exit_code lexer_exit_code);
-struct s_ast_node	*parser_run(char *line);
-struct s_ast_node	*ast_parser_clear_when_failed(struct s_parser *parser, \
+t_ms_status			parser_run(struct s_ast_node **ast_root, char *line);
+t_ms_status			ast_parser_clear_when_failed(struct s_parser *parser, \
 	char *err_message);
 void				token_clear_when_parser_finished(struct s_lexer *lexer, \
-t_token_cleaner del, char *err_message);
+t_token_cleaner del);
 
 // TODO: interface for parser
 t_parser_exit_code	parse_io_redirect(struct s_parser *parser);
