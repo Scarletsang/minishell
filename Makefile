@@ -11,8 +11,7 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
-	include \
-	lib/libft/include
+	include
 
 ###################################
 ######     Source files     #######
@@ -95,7 +94,7 @@ endif
 LIBFT=lib/libft/libft.a
 
 # To add a library, add the library header file like this:
-LIB_INCLUDE_DIR+= lib/libft
+LIB_INCLUDE_DIR+= lib/libft/include
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
