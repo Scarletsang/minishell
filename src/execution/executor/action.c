@@ -1,24 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   in_child.c                                         :+:      :+:    :+:   */
+/*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 16:40:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 14:58:07 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "MINISHELL/execution/executor.h"
 
-t_executor_exit_code	ms_executor_read_from_fd(int fd)
+t_executor_exit_code	ms_executor_redirect_from_file(const char *filename, \
+int flags)
 {
 	t_executor_exit_code	exit_code;
+	int						fd;
 
-	exit_code = EXECUTION_SUCCESS;
+	if (close(STDIN_FILENO) == -1)
+		return (EXECUTION_ERROR);
+	fd = open(filename, flags, 0644);
 	if (fd == -1)
 		return (EXECUTION_ERROR);
+	exit_code = EXECUTION_SUCCESS;
 	if (dup2(fd, STDIN_FILENO) == -1)
 		exit_code = EXECUTION_ERROR;
 	if (close(fd) == -1)
@@ -26,14 +32,37 @@ t_executor_exit_code	ms_executor_read_from_fd(int fd)
 	return (exit_code);
 }
 
-t_executor_exit_code	ms_executor_write_to_fd(int fd)
+t_executor_exit_code	ms_executor_redirect_to_file(const char *filename, \
+int flags)
 {
 	t_executor_exit_code	exit_code;
+	int						fd;
 
-	exit_code = EXECUTION_SUCCESS;
+	if (close(STDOUT_FILENO) == -1)
+		return (EXECUTION_ERROR);
+	fd = open(filename, flags, 0644);
 	if (fd == -1)
 		return (EXECUTION_ERROR);
+	exit_code = EXECUTION_SUCCESS;
 	if (dup2(fd, STDOUT_FILENO) == -1)
+		exit_code = EXECUTION_ERROR;
+	if (close(fd) == -1)
+		exit_code = EXECUTION_ERROR;
+	return (exit_code);
+}
+
+t_executor_exit_code	ms_executor_redirect_from_heredoc(void)
+{
+	t_executor_exit_code	exit_code;
+	int						fd;
+
+	if (close(STDIN_FILENO) == -1)
+		return (EXECUTION_ERROR);
+	fd = open(HEREDOC_FILENAME, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+		return (EXECUTION_ERROR);
+	exit_code = EXECUTION_SUCCESS;
+	if (dup2(fd, STDIN_FILENO) == -1)
 		exit_code = EXECUTION_ERROR;
 	if (close(fd) == -1)
 		exit_code = EXECUTION_ERROR;

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:46:25 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/21 15:20:44 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,18 +38,16 @@ typedef int	t_executor_return_value;
 
 struct s_ms_executor
 {
-	struct s_ms_piper	piper;
-	t_ft_vector			envp;
-	int					stdin_fd;
-	int					heredoc_fd;
-	bool				heredoc_fd_opened;
-	pid_t				last_child_pid;
+	struct s_ms_piper		piper;
+	struct s_ft_iostream	iostream;
+	t_ft_vector				envp;
+	int						stdin_fd;
+	pid_t					last_child_pid;
 };
 
 t_executor_exit_code	ms_executor_init(struct s_ms_executor *executor);
 
-t_executor_exit_code	ms_executor_close_heredoc_fd(\
-struct s_ms_executor *executor);
+t_executor_exit_code	ms_executor_reset(struct s_ms_executor *executor);
 
 t_executor_exit_code	ms_executor_destroy(struct s_ms_executor *executor);
 
@@ -61,9 +59,13 @@ pid_t					ms_executor_fork(struct s_ms_executor *executor);
 
 t_executor_return_value	ms_executor_wait(struct s_ms_executor *executor);
 
-t_executor_exit_code	ms_executor_read_from_fd(int fd);
+t_executor_exit_code	ms_executor_redirect_from_file(const char *filename, \
+int flags);
 
-t_executor_exit_code	ms_executor_write_to_fd(int fd);
+t_executor_exit_code	ms_executor_redirect_to_file(const char *filename, \
+int flags);
+
+t_executor_exit_code	ms_executor_redirect_from_heredoc(void);
 
 ////////////////////////////////////////////
 ////////////   envp interface   ////////////
