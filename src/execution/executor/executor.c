@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 19:28:19 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/23 22:45:37 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ t_ms_status	ms_executor_init(struct s_ms_executor *executor)
 	ms_piper_init(&executor->piper);
 	executor->last_child_pid = -1;
 	return (PROGRAM_SUCCESS);
+}
+
+t_ms_status	ms_executor_reset(struct s_ms_executor *executor)
+{
+	ms_piper_init(&executor->piper);
+	ft_iostream_reset(&executor->iostream);
+	executor->last_child_pid = -1;
 }
 
 t_ms_status	ms_executor_destroy(struct s_ms_executor *executor)
