@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 17:54:11 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/23 19:32:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 //should builtin pwd use getcwd() or environment variable PWD?
 // how large should the size be?
-int		ms_execute_builtin_pwd(struct s_ms *ms, t_sb_vector *command)
+int	ms_execute_builtin_pwd(struct s_ms *ms, t_sb_vector *command)
 {
 	long	size;
 	char	*buf;

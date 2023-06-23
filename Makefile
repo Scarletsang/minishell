@@ -19,7 +19,8 @@ INCLUDE_DIR= \
 
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
-
+COMMON_SRC:=\
+	status_code.c
 LEXER_SRC:=\
 	lexer/lexer.c \
 	lexer/scanner_checker.c \
@@ -86,7 +87,7 @@ TEST_SRC:= \
 	../spec/parser/parser_tester.c \
 	../spec/parser/parser_tester_printer.c
 
-SRC:= $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC)
+SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC)
 ifdef TEST
 	SRC+= $(TEST_SRC)
 else

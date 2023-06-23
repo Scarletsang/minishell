@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   status_code.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 19:32:11 by htsang           ###   ########.fr       */
+/*   Created: 2023/06/23 21:32:57 by htsang            #+#    #+#             */
+/*   Updated: 2023/06/23 21:36:31 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "MINISHELL/execution/builtins.h"
+#include "MINISHELL/status_code.h"
 
-int	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command)
+enum e_ms_exit_code	ms_status_to_exit_code(t_ms_status status)
 {
-	(void) command;
-	(void) ms;
-	return (EXIT_SUCCESS);
+	if (status == PROGRAM_SUCCESS)
+		return (EC_SUCCESS);
+	return (EC_FAILURE);
+}
+
+enum e_ms_exit_code	ms_exit_code_from_signal(int signal)
+{
+	return (EC_SIGNAL_INTERRUPT_BASE + signal);
 }
