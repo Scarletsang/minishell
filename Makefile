@@ -42,6 +42,9 @@ PARSER_SRC:=\
 	parser/parser_ioredirect.c \
 	parser/parser_scanner_utils.c \
 	parser/parser_tree_inserter.c
+ERROR_PERINTER_SRC:=\
+	error_printer/error_printer.c \
+	error_printer/parser_error.c
 VARS_SRC:=\
 	execution/vars/vars.c \
 	execution/vars/database.c \
@@ -78,7 +81,7 @@ TEST_SRC:= \
 	../spec/parser/parser_tester.c \
 	../spec/parser/parser_tester_printer.c
 
-SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
+SRC:= $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
 ifdef TEST
 	SRC+= $(TEST_SRC)
 else

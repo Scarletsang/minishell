@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 21:16:43 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/21 15:10:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/23 02:16:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,6 @@ void				parser_free(struct s_parser *parser);
 
 //parser main
 t_ms_status			parser_run(struct s_ast_node **ast_root, char *line);
-t_ms_status			ast_parser_clear_when_failed(struct s_parser *parser, \
-	char *err_message);
-void				token_clear_when_parser_finished(struct s_lexer *lexer, \
-t_token_cleaner del);
 
 // TODO: interface for parser
 t_parser_exit_code	parse_io_redirect(struct s_parser *parser);

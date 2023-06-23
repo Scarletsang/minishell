@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 14:35:43 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/23 02:15:31 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "MINISHELL/lexer.h"
+#include "MINISHELL/error_printer.h"
 
 void	lexer_init(struct s_lexer *lexer)
 {
@@ -51,15 +52,14 @@ t_ms_status	lexer_check_validation(struct s_lexer *lexer, \
 {
 	if (lexer_exit_code == ERROR_WHEN_LEX)
 	{
-		printf("%s\n", lexer->end->token.start);
-		printf("syntax error: unexpected end of file\n");
+		ms_error_printer_lexer(lexer->end->token.start);
 		lexer_free(lexer, (t_token_cleaner)del);
 		return (PROGRAM_FAILURE);
 	}
 	if (lexer_exit_code == MALLOC_FAIL)
 	{
 		lexer_free(lexer, (t_token_cleaner)del);
-		printf("malloc failed\n");
+		ms_error_printer_malloc_fails();
 		return (PROGRAM_ERROR);
 	}
 	return (PROGRAM_SUCCESS);

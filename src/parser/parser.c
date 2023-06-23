@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 15:09:58 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/23 02:16:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "LIBFT/string.h"
 #include "MINISHELL/parser.h"
+#include "MINISHELL/error_printer.h"
 
 void	parser_init(struct s_parser *parser, struct s_token_list *start)
 {
@@ -23,19 +24,19 @@ void	parser_init(struct s_parser *parser, struct s_token_list *start)
 	parser->malloc_fail = false;
 }
 
-void	token_clear_when_parser_finished(struct s_lexer *lexer, \
+static void	token_clear_when_parser_finished(struct s_lexer *lexer, \
 t_token_cleaner del)
 {
 	lexer_free(lexer, del);
 }
 
-t_ms_status	ast_parser_clear_when_failed(struct s_parser *parser, \
-	char *err_message)
+static t_ms_status	ast_parser_clear_when_failed(struct s_parser *parser, \
+	t_ms_status failure_status)
 {
-	if (ft_strcmp(err_message, "malloc fail") == 0)
-		return (printf("%s\n", err_message), PROGRAM_ERROR);
+	if (failure_status == PROGRAM_ERROR)
+		return (ms_error_printer_malloc_fails(), PROGRAM_ERROR);
 	if (parser->current_token->token.type == TOKEN_EOF)
-		printf("%s near unexpected token EOF\n", err_message);
+		ms_error_printer_parser(&parser->current_token->token);
 	else
 	{
 		if (parser->current_token->token.type == TOKEN_GREAT || \
@@ -43,12 +44,7 @@ t_ms_status	ast_parser_clear_when_failed(struct s_parser *parser, \
 		parser->current_token->token.type == TOKEN_LESS || \
 		parser->current_token->token.type == TOKEN_DLESS)
 			parser_token_advance(parser);
-		if (parser->current_token->token.type == TOKEN_EOF)
-			printf("%s near unexpected token EOF\n", err_message);
-		else
-			printf("%s near unexpected token '%.*s'\n", err_message, \
-			parser->current_token->token.length, \
-			parser->current_token->token.start);
+		ms_error_printer_parser(&parser->current_token->token);
 	}
 	parser_free(parser);
 	return (PROGRAM_FAILURE);
@@ -71,9 +67,9 @@ t_ms_status	parser_run(struct s_ast_node **ast_root, char *line)
 	parser_init(&parser, lexer.start);
 	parser_exit_code = parse_complete_command(&parser);
 	if (parser.malloc_fail == true)
-		prog_status = ast_parser_clear_when_failed(&parser, "malloc fail");
+		prog_status = ast_parser_clear_when_failed(&parser, PROGRAM_ERROR);
 	else if (parser_exit_code == PARSER_FAILURE)
-		prog_status = ast_parser_clear_when_failed(&parser, "syntax error");
+		prog_status = ast_parser_clear_when_failed(&parser, PROGRAM_FAILURE);
 	else
 	{
 		*ast_root = parser.head;
