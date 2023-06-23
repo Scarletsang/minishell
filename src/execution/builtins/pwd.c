@@ -3,27 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/20 21:45:51 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/23 17:54:11 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "MINISHELL/execution/executor/builtins.h"
+#include "MINISHELL/execution/builtins.h"
 #include <stdio.h>
 
 //should builtin pwd use getcwd() or environment variable PWD?
 // how large should the size be?
-int	ms_builtin_pwd(struct s_ms_executor *executor, t_sb_vector *command, \
-struct s_ms *ms)
+int		ms_execute_builtin_pwd(struct s_ms *ms, t_sb_vector *command)
 {
 	long	size;
 	char	*buf;
 	char	*cwd;
 
-	(void) executor;
 	(void) command;
 	(void) ms;
 	size = 128;

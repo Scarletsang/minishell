@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_node.c                                      :+:      :+:    :+:   */
+/*   expansion.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:28:06 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 17:03:21 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/23 17:46:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/execution/executor/enactment.h"
+#include "MINISHELL/execution.h"
 #include "MINISHELL/execution/expander.h"
 
 static t_executor_exit_code	ms_executor_expand_ast_redirection_vector(\
@@ -56,7 +56,7 @@ t_sb_vector *sb_vector, struct s_ms *ms)
 	return (EXECUTION_SUCCESS);
 }
 
-t_executor_exit_code	ms_executor_expand_content(\
+t_executor_exit_code	ms_ast_node_content_expand(\
 struct s_ast_node_content *content, struct s_ms *ms)
 {
 	if ((ms_executor_expand_ast_redirection_vector(\

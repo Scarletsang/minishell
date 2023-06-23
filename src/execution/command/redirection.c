@@ -6,16 +6,16 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/21 15:24:52 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/23 17:36:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "MINISHELL/execution/executor/enactment.h"
+#include "MINISHELL/execution.h"
 #include "LIBFT/string.h"
 #include "LIBFT/iostream.h"
 
-static t_executor_exit_code	ms_executor_enact_heredoc(\
+static t_executor_exit_code	ms_execute_heredoc(\
 struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 {
 	int					read_status;
@@ -41,7 +41,7 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 	return (EXECUTION_SUCCESS);
 }
 
-t_executor_exit_code	ms_executor_enact_redirection_in(\
+t_executor_exit_code	ms_execute_redirection_in(\
 struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 {
 	t_ft_vector_iterator		iterator;
@@ -53,7 +53,7 @@ struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 		redirection = ft_vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_HEREDOC)
 		{
-			if (ms_executor_enact_heredoc(executor, redirection) \
+			if (ms_execute_heredoc(executor, redirection) \
 				== EXECUTION_ERROR)
 				return (EXECUTION_ERROR);
 		}
@@ -68,7 +68,7 @@ struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 	return (EXECUTION_SUCCESS);
 }
 
-t_executor_exit_code	ms_executor_enact_redirection_out(\
+t_executor_exit_code	ms_execute_redirection_out(\
 t_ast_redirection_vector *redirection_out)
 {
 	t_ft_vector_iterator		iterator;

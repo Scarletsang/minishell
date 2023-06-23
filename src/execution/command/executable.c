@@ -1,23 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   executable.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:22:03 by htsang           ###   ########.fr       */
+/*   Created: 2023/06/23 17:04:28 by htsang            #+#    #+#             */
+/*   Updated: 2023/06/23 17:35:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "MINISHELL/execution/executor/builtins.h"
+#include "MINISHELL/execution.h"
 
-int		ms_builtin_exit(struct s_ms_executor *executor, t_sb_vector *command, \
-struct s_ms *ms)
+t_executor_exit_code	ms_execute_executable(struct s_ms *ms, \
+t_sb_vector *command)
 {
-	(void) executor;
-	(void) command;
-	(void) ms;
-	return (EXIT_SUCCESS);
+	(void)command;
+	(void)ms;
+	return (EXECUTION_SUCCESS);
 }

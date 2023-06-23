@@ -45,6 +45,7 @@ PARSER_SRC:=\
 ERROR_PERINTER_SRC:=\
 	error_printer/error_printer.c \
 	error_printer/parser_error.c
+
 VARS_SRC:=\
 	execution/vars/vars.c \
 	execution/vars/database.c \
@@ -58,30 +59,34 @@ PIPER_SRC:=\
 	execution/piper/piper.c \
 	execution/piper/transmission.c
 EXECUTOR_SRC:=\
-	execution/execution.c \
 	execution/executor/executor.c \
 	execution/executor/action.c \
-	execution/executor/envp.c \
-	execution/executor/enactment/enactment.c \
-	execution/executor/enactment/expand_node.c \
-	execution/executor/enactment/node.c \
-	execution/executor/enactment/redirection.c
-EXECUTOR_BUILTINS_SRC:=\
-	execution/executor/builtins/builtins.c \
-	execution/executor/builtins/echo.c \
-	execution/executor/builtins/cd.c \
-	execution/executor/builtins/export.c \
-	execution/executor/builtins/pwd.c \
-	execution/executor/builtins/unset.c \
-	execution/executor/builtins/env.c \
-	execution/executor/builtins/exit.c
+	execution/executor/envp.c
+BUILTINS_SRC:=\
+	execution/builtins/builtins.c \
+	execution/builtins/echo.c \
+	execution/builtins/cd.c \
+	execution/builtins/export.c \
+	execution/builtins/pwd.c \
+	execution/builtins/unset.c \
+	execution/builtins/env.c \
+	execution/builtins/exit.c
+EXECUTION_SRC:=\
+	execution/execution.c \
+	execution/pipe.c \
+	execution/expansion.c \
+	execution/builtin.c \
+	execution/command.c \
+	execution/command/assignment.c \
+	execution/command/redirection.c \
+	execution/command/executable.c
 MAIN_SRC:= \
 	main.c
 TEST_SRC:= \
 	../spec/parser/parser_tester.c \
 	../spec/parser/parser_tester_printer.c
 
-SRC:= $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
+SRC:= $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC)
 ifdef TEST
 	SRC+= $(TEST_SRC)
 else
