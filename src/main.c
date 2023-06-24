@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/01 15:24:12 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:34:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,43 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "MINISHELL/minishell.h"
+#include "MINISHELL/parser.h"
+#include "MINISHELL/execution.h"
+#include "parser_tester.h"
+
+extern char	**environ;
 
 int	main(void)
 {
-	char	*line;
+	struct s_ms		ms;
+	t_ms_exit_code	exit_code;
 
-	line = readline("minishell>");
-	while (line) {
-		// TODO: Parsing + lexing
-		// TODO: expander + execution here
-		printf("You entered: %s\n", line);
-		add_history(line);
-		 // Clear the current input line
-		rl_replace_line("", 0);
-		// Update the display of the input line
-		rl_redisplay();
-		// Free the memory allocated by readline
-		free(line);
-		line = readline("minishell>");
+	if (ms_init(&ms) || \
+		ms_vars_import(&ms.vars, environ))
+	{
+		ms_free(&ms);
+		return (EXIT_FAILURE);
 	}
-	return 0;
+	ms.line = readline("minishell$ ");
+	exit_code = EC_SUCCESS;
+	while (ms.line)
+	{
+		if (parser_run(&ms.ast_root, ms.line) == PROGRAM_SUCCESS)
+		{
+			add_history(ms.line);
+			if (ms.ast_root)
+			{
+				exit_code = ms_execute_ast(&ms, ms.ast_root);
+				print_ast(ms.ast_root);
+			}
+		}
+		else
+			exit_code = EC_SYNTAX_ERROR;
+		// set exit code to special hashtable
+		ms_reset(&ms);
+		ms.line = readline("minishell$ ");
+	}
+	ms_free(&ms);
+	return (exit_code);
 }
