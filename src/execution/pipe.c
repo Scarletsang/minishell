@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:19:54 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 22:04:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 01:33:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ struct s_ast_node *node)
 	if (ms_piper_use_receiver(&ms->executor.piper) || \
 		ms_piper_use_sender(&ms->executor.piper))
 	{
-		// TODO: executor cleanup
+		ms_free(ms);
 		exit(EC_FAILURE);
 	}
 	mode = ms_execution_mode(&node->content->command);
@@ -38,7 +38,7 @@ struct s_ast_node *node)
 			ms_execute_assignment_and_redirection(ms, node->content));
 	else
 		exit_code = ms_execute_builtin(ms, mode, node->content);
-	// TODO: executor cleanup
+	ms_free(ms);
 	exit(exit_code);
 }
 

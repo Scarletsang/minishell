@@ -51,18 +51,18 @@ struct s_ast_node *root)
 		if (ms->executor.last_child_pid == 0)
 		{
 			exit_code = ms_execute_command(ms, root->content);
-			// TODO: executor cleanup
+			ms_free(ms);
 			exit(exit_code);
 		}
 		return (EC_SUCCESS);
 	}
-	// dup stdout
 	if (mode == MODE_NO_COMMAND)
 		exit_code = ms_status_to_exit_code(\
 			ms_execute_assignment_and_redirection(ms, root->content));
 	else
 		exit_code = ms_execute_builtin(ms, mode, root->content);
-	// dup stdin and stdout
+	dup2(ms->executor.stdin_fd, STDIN_FILENO);
+	dup2(ms->executor.stdout_fd, STDOUT_FILENO);
 	return (exit_code);
 }
 
