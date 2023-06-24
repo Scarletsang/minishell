@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/19 16:56:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 02:24:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ const struct s_ms_vars *vars)
 
 	ft_sb_clipper_init(&clipper, it->vector);
 	clipper.lbound = from + 1;
-	clipper.rbound = it->index;
+	clipper.rbound = it->index + 1;
 	key = ft_sb_clipper_run(&clipper);
 	if (!key)
 		return (EXIT_FAILURE);
@@ -31,11 +31,11 @@ const struct s_ms_vars *vars)
 	free(key);
 	it->index = from;
 	if (!key_value)
-		return (ft_sb_iterator_mut_delete(it, clipper.rbound - from + 1));
+		return (ft_sb_iterator_mut_delete(it, clipper.rbound - from));
 	while (*key_value && *key_value++ != '=')
 		;
 	return (ft_sb_iterator_mut_replace(it, key_value, \
-		clipper.rbound - from + 1));
+		clipper.rbound - from));
 }
 
 static int	ms_expander_substite_special(t_ft_sb_iterator *it, \
