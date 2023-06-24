@@ -3,22 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_tester.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 15:09:29 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/24 01:18:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
-#include "MINISHELL/parser.h"
-#include <readline/readline.h>
-#include <readline/history.h>
+#include "parser_tester.h"
 
-void	print_ast(struct s_ast_node *root);
-
-static void	print_content_redirection(t_ast_redirection_vector *redirection)
+void	print_content_redirection(t_ast_redirection_vector *redirection)
 {
 	struct s_ft_vector_iterator	vec_itr;
 
@@ -33,7 +27,7 @@ static void	print_content_redirection(t_ast_redirection_vector *redirection)
 	}
 }
 
-static void	print_content_sb_vector(t_sb_vector *sb_vector)
+void	print_content_sb_vector(t_sb_vector *sb_vector)
 {
 	t_ft_vector_iterator	vec_itr;
 
@@ -59,25 +53,3 @@ void	print_ast_content(struct s_ast_node_content *content)
 	print_content_sb_vector(&content->command);
 }
 
-int	main(void)
-{
-	char				*line;
-	struct s_ast_node	*ast_root;
-	t_ms_status			prog_stats;
-
-	line = readline("minishell>");
-	while (line)
-	{
-		ast_root = NULL;
-		prog_stats = parser_run(&ast_root, line);
-		printf("prog_stats: %d\n", prog_stats);
-		if (prog_stats == PROGRAM_SUCCESS)
-			print_ast(ast_root);
-		ast_node_free(ast_root);
-		// rl_replace_line("", 0); // Clear the current input line
-        // rl_redisplay(); // Update the display of the input line
-        free(line); // Free the memory allocated by readline
-		line = readline("minishell>");
-	}
-	return (EXIT_SUCCESS);
-}
