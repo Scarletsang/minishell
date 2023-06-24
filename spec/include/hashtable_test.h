@@ -2,9 +2,9 @@
 # define HASHTABLE_TEST_H
 
 # include "tshell.h"
-# include "MINISHELL/hashtable.h"
+# include "LIBFT/hashtable.h"
 
-t_ht			*hashtable_shell_init(void);
-t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser);
+t_ft_ht			*hashtable_shell_init(void);
+t_tshell_status	hashtable_shell(t_ft_ht *ht, struct s_tparser *tparser);
 
 #endif

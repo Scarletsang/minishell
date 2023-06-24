@@ -12,7 +12,7 @@ SRC_DIR:=shells
 INCLUDE_DIR= \
 	include \
 	../include \
-	../lib/libft
+	../lib/libft/include
 
 ###################################
 ######     Source files     #######
@@ -31,6 +31,7 @@ SRC:= $(MAIN_SRC)
 # To compile a library, store a variable for their library file like this
 # and add a rule for it after the main rules:
 # LIBRARY_NAME=lib/LIBRARY_NAME/LIBRARY_NAME.a
+LIBFT= ../lib/libft/libft.a
 MINISHELL= $(CURDIR)/../libminishell.so
 TSHELL= $(CURDIR)/tshell/libtshell.so
 
@@ -40,6 +41,7 @@ TSHELL= $(CURDIR)/tshell/libtshell.so
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME
 # LDFLAGS+= lib/LIBRARY_NAME/libLIBRARY_NAME.a
+LDFLAGS+= -lft -L$(CURDIR)/../lib/libft -Wl,-rpath,$(CURDIR)/../lib/libft
 LDFLAGS+= -lminishell -L$(CURDIR)/.. -Wl,-rpath,$(CURDIR)/..
 LDFLAGS+= -ltshell -L$(CURDIR)/tshell -Wl,-rpath,$(CURDIR)/tshell
 

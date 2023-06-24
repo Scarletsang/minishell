@@ -6,20 +6,20 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/05/31 22:23:53 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 02:05:02 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "hashtable_test.h"
 
-t_ht	*hashtable_shell_init(void)
+t_ft_ht	*hashtable_shell_init(void)
 {
-	t_ht	*ht;
+	t_ft_ht	*ht;
 
-	ht = malloc(sizeof(t_ht));
+	ht = malloc(sizeof(t_ft_ht));
 	if (!ht)
 		return (NULL);
-	if (ht_init(ht, 5))
+	if (ft_ht_init(ht, 5))
 	{
 		free(ht);
 		return (NULL);
@@ -27,8 +27,8 @@ t_ht	*hashtable_shell_init(void)
 	return (ht);
 }
 
-t_tshell_status	hashtable_shell_execute_func2(t_ht *ht, struct s_tparser *tparser, \
-const struct s_ht_entry	*(*func2)(t_ht *ht, const char *key, const void *value, t_ht_entry_cleaner func))
+t_tshell_status	hashtable_shell_execute_func2(t_ft_ht *ht, struct s_tparser *tparser, \
+const struct s_ft_ht_entry	*(*func2)(t_ft_ht *ht, const char *key, const void *value, t_ft_ht_entry_cleaner func))
 {
 	char	*param[2];
 
@@ -40,24 +40,24 @@ const struct s_ht_entry	*(*func2)(t_ht *ht, const char *key, const void *value, 
 	{
 		return (TSHELL_FAILURE);
 	}
-	ht_print(ht);
+	ft_ht_print(ht);
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	hashtable_shell_execute_get(t_ht *ht, struct s_tparser *tparser)
+t_tshell_status	hashtable_shell_execute_get(t_ft_ht *ht, struct s_tparser *tparser)
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 		return (TSHELL_FAILURE);
-	printf("got: %s\n", (char *) ht_get(ht, tparser_read(tparser)));
+	printf("got: %s\n", (char *) ft_ht_get(ht, tparser_read(tparser)));
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	hashtable_shell_execute_del(t_ht *ht, struct s_tparser *tparser)
+t_tshell_status	hashtable_shell_execute_del(t_ft_ht *ht, struct s_tparser *tparser)
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 		return (TSHELL_FAILURE);
-	ht_del(ht, tparser_read(tparser));
-	ht_print(ht);
+	ft_ht_delete(ht, tparser_read(tparser));
+	ft_ht_print(ht);
 	return (TSHELL_SUCCESS);
 }
 
@@ -71,7 +71,7 @@ t_tshell_status	hashtable_shell_print_mannual(void)
 	return (TSHELL_SUCCESS);
 }
 
-t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser)
+t_tshell_status	hashtable_shell(t_ft_ht *ht, struct s_tparser *tparser)
 {
 	if (!tparser_match_string(tparser, "help"))
 	{
@@ -79,15 +79,15 @@ t_tshell_status	hashtable_shell(t_ht *ht, struct s_tparser *tparser)
 	}
 	if (!tparser_match_string(tparser, "print"))
 	{
-		return (tshell_execute_printer(ht, tparser, (t_printer_func) ht_print));
+		return (tshell_execute_printer(ht, tparser, (t_printer_func) ft_ht_print));
 	}
 	if (!tparser_match_string(tparser, "add"))
 	{
-		return (hashtable_shell_execute_func2(ht, tparser, ht_set));
+		return (hashtable_shell_execute_func2(ht, tparser, ft_ht_set));
 	}
 	if (!tparser_match_string(tparser, "update"))
 	{
-		return (hashtable_shell_execute_func2(ht, tparser, ht_update));
+		return (hashtable_shell_execute_func2(ht, tparser, ft_ht_update));
 	}
 	if (!tparser_match_string(tparser, "get"))
 	{
@@ -105,5 +105,5 @@ int	main(void)
 	return (interact(\
 		(t_init_func) hashtable_shell_init, \
 		(t_program_func) hashtable_shell, \
-		(t_free_func) ht_free));
+		(t_free_func) ft_ht_free));
 }

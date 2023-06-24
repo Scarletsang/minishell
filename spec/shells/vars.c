@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 19:27:13 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/07 16:29:15 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 02:01:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct s_tparser *tparser)
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 	{
-		ht_print(&vars->environment);
+		ft_ht_print(&vars->environment);
 		return (TSHELL_SUCCESS);
 	}
 	if (ms_vars_export(vars, tparser_read(tparser)))
@@ -86,7 +86,7 @@ t_tshell_status	vars_shell_execute_env(struct s_ms_vars *vars, \
 struct s_tparser *tparser)
 {
 	(void) tparser;
-	ht_print(&vars->shell);
+	ft_ht_print(&vars->shell);
 	return (TSHELL_SUCCESS);
 }
 
