@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:27:50 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 11:47:51 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ struct s_ast_node *root)
 	}
 	if (mode == MODE_NO_COMMAND)
 		exit_code = ms_status_to_exit_code(\
-			ms_execute_assignment_and_redirection(ms, root->content));
+			ms_execute_declares_and_redirections(ms, root->content));
 	else
 		exit_code = ms_execute_builtin(ms, mode, root->content);
 	dup2(ms->executor.stdin_fd, STDIN_FILENO);

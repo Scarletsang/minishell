@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:28:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 10:50:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 11:45:38 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_ms_exit_code	ms_execute_builtin(struct s_ms *ms, \
 enum e_ms_execution_mode mode, struct s_ast_node_content *content)
 {
-	if ((ms_execute_assignment_and_redirection(ms, content) == PROGRAM_ERROR))
+	if ((ms_execute_assignments_and_redirections(ms, content) == PROGRAM_ERROR))
 		return (EC_FAILURE);
 	if (mode == MODE_BUILTIN_ECHO)
 		return (ms_execute_builtin_echo(ms, &content->command));

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:21:44 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:11:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 11:47:45 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,14 @@ struct s_ast_node_content *content);
 t_ms_status					ms_ast_node_content_expand(\
 struct s_ast_node_content *content, struct s_ms *ms);
 
-t_ms_status					ms_execute_assignment_and_redirection(\
+t_ms_status					ms_execute_declares_and_redirections(\
 struct s_ms *ms, struct s_ast_node_content *content);
+
+t_ms_status					ms_execute_assignments_and_redirections(\
+struct s_ms *ms, struct s_ast_node_content *content);
+
+t_ms_status					ms_execute_declares(struct s_ms *ms, \
+t_sb_vector *assignments);
 
 t_ms_status					ms_execute_assignments(struct s_ms *ms, \
 t_sb_vector *assignment);
