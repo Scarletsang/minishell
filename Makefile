@@ -65,7 +65,6 @@ EXECUTOR_SRC:=\
 	execution/executor/action.c \
 	execution/executor/envp.c
 BUILTINS_SRC:=\
-	execution/builtins/builtins.c \
 	execution/builtins/echo.c \
 	execution/builtins/cd.c \
 	execution/builtins/export.c \
