@@ -6,20 +6,21 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 20:26:10 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:20:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "MINISHELL/execution/executor.h"
+#include "LIBFT/io.h"
 
-t_ms_status	ms_executor_redirect_from_file(const char *filename, \
-int flags)
+t_ms_status	ms_executor_redirect_from_file(struct s_ms_executor *executor, \
+const char *filename, int flags)
 {
 	t_ms_status	exit_code;
 	int			fd;
 
-	if (close(STDIN_FILENO) == -1)
+	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
 		return (PROGRAM_ERROR);
 	fd = open(filename, flags, 0644);
 	if (fd == -1)
@@ -32,13 +33,13 @@ int flags)
 	return (exit_code);
 }
 
-t_ms_status	ms_executor_redirect_to_file(const char *filename, \
-int flags)
+t_ms_status	ms_executor_redirect_to_file(struct s_ms_executor *executor, \
+const char *filename, int flags)
 {
 	t_ms_status	exit_code;
 	int			fd;
 
-	if (close(STDOUT_FILENO) == -1)
+	if (dup2(executor->stdout_fd, STDOUT_FILENO) == -1)
 		return (PROGRAM_ERROR);
 	fd = open(filename, flags, 0644);
 	if (fd == -1)
@@ -51,14 +52,15 @@ int flags)
 	return (exit_code);
 }
 
-t_ms_status	ms_executor_redirect_from_heredoc(void)
+t_ms_status	ms_executor_redirect_from_heredoc(struct s_ms_executor *executor)
 {
 	t_ms_status	exit_code;
 	int			fd;
 
-	if (close(STDIN_FILENO) == -1)
+	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
 		return (PROGRAM_ERROR);
-	fd = open(HEREDOC_FILENAME, O_RDONLY | O_CREAT | O_TRUNC, 0644);
+	fd = open(HEREDOC_FILENAME, \
+		O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (fd == -1)
 		return (PROGRAM_ERROR);
 	exit_code = PROGRAM_SUCCESS;

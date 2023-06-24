@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 19:34:51 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:19:47 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,15 @@ struct s_ms_executor
 	struct s_ft_iostream	iostream;
 	t_ft_vector				envp;
 	int						stdin_fd;
+	int						stdout_fd;
 	pid_t					last_child_pid;
-
 };
 
 t_ms_status		ms_executor_init(struct s_ms_executor *executor);
 
-t_ms_status		ms_executor_reset(struct s_ms_executor *executor);
+void			ms_executor_reset(struct s_ms_executor *executor);
 
-t_ms_status		ms_executor_destroy(struct s_ms_executor *executor);
+t_ms_status		ms_executor_free(struct s_ms_executor *executor);
 
 //////////////////////////////////////////////////////////
 ////////////   interface used by ms_execute   ////////////
@@ -53,13 +53,13 @@ pid_t			ms_executor_fork(struct s_ms_executor *executor);
 
 t_ms_exit_code	ms_executor_wait(struct s_ms_executor *executor);
 
-t_ms_status		ms_executor_redirect_from_file(const char *filename, \
-int flags);
+t_ms_status		ms_executor_redirect_from_file(struct s_ms_executor *executor, \
+const char *filename, int flags);
 
-t_ms_status		ms_executor_redirect_to_file(const char *filename, \
-int flags);
+t_ms_status		ms_executor_redirect_to_file(struct s_ms_executor *executor, \
+const char *filename, int flags);
 
-t_ms_status		ms_executor_redirect_from_heredoc(void);
+t_ms_status		ms_executor_redirect_from_heredoc(struct s_ms_executor *executor);
 
 ////////////////////////////////////////////
 ////////////   envp interface   ////////////

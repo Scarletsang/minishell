@@ -19,7 +19,7 @@ struct s_ast_node_content *content)
 		== PROGRAM_ERROR) || \
 	(ms_execute_redirection_in(&ms->executor, &content->redirection_in) \
 		== PROGRAM_ERROR) || \
-	(ms_execute_redirection_out(&content->redirection_out) \
+	(ms_execute_redirection_out(&ms->executor, &content->redirection_out) \
 		== PROGRAM_ERROR))
 		return (PROGRAM_ERROR);
 	return (PROGRAM_SUCCESS);
