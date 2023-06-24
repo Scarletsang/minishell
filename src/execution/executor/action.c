@@ -6,13 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:20:21 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 17:51:00 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "MINISHELL/execution/executor.h"
-#include "LIBFT/io.h"
 
 t_ms_status	ms_executor_redirect_from_file(struct s_ms_executor *executor, \
 const char *filename, int flags)
@@ -46,25 +45,6 @@ const char *filename, int flags)
 		return (PROGRAM_ERROR);
 	exit_code = PROGRAM_SUCCESS;
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		exit_code = PROGRAM_ERROR;
-	if (close(fd) == -1)
-		exit_code = PROGRAM_ERROR;
-	return (exit_code);
-}
-
-t_ms_status	ms_executor_redirect_from_heredoc(struct s_ms_executor *executor)
-{
-	t_ms_status	exit_code;
-	int			fd;
-
-	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
-		return (PROGRAM_ERROR);
-	fd = open(HEREDOC_FILENAME, \
-		O_RDWR | O_CREAT | O_TRUNC, 0644);
-	if (fd == -1)
-		return (PROGRAM_ERROR);
-	exit_code = PROGRAM_SUCCESS;
-	if (dup2(fd, STDIN_FILENO) == -1)
 		exit_code = PROGRAM_ERROR;
 	if (close(fd) == -1)
 		exit_code = PROGRAM_ERROR;

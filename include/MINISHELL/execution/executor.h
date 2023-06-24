@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 11:00:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 18:02:45 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,10 @@ const char *filename, int flags);
 t_ms_status		ms_executor_redirect_to_file(struct s_ms_executor *executor, \
 const char *filename, int flags);
 
-t_ms_status		ms_executor_redirect_from_heredoc(\
-struct s_ms_executor *executor);
+t_ms_status		ms_executor_open_heredoc(\
+struct s_ms_executor *executor, int *fd);
+
+t_ms_status		ms_executor_redirect_from_heredoc(int opened_heredoc_fd);
 
 ////////////////////////////////////////////
 ////////////   envp interface   ////////////

@@ -6,13 +6,14 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:11:37 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 18:16:11 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "MINISHELL/execution.h"
 #include "LIBFT/string.h"
+#include "LIBFT/io.h"
 #include "LIBFT/iostream.h"
 
 static t_ms_status	ms_execute_heredoc(\
@@ -20,25 +21,27 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 {
 	int					read_status;
 	t_ft_string_slice	slice;
+	int					heredoc_fd;
 
-	if ((ms_executor_redirect_from_heredoc(executor) == PROGRAM_ERROR))
+	if ((ms_executor_open_heredoc(executor, &heredoc_fd) == PROGRAM_ERROR))
 		return (PROGRAM_ERROR);
-	ft_iostream_reset(&executor->iostream);
-	read_status = ft_iostream_read_until(&executor->iostream, \
-		executor->stdin_fd, "\n");
+	read_status = 1;
 	while (read_status != -1)
 	{
+		ft_iostream_reset(&executor->iostream);
+		ft_putstr_fd("> ", executor->stdout_fd);
+		read_status = ft_iostream_read_until(&executor->iostream, \
+			executor->stdin_fd, "\n");
 		slice = ft_iostream_to_slice(&executor->iostream);
 		if (ft_strncmp(ft_string_slice_content(&slice), \
 			redirection->content.buffer, slice.size) == 0)
-			return (PROGRAM_SUCCESS);
-		ft_string_slice_print(slice, STDIN_FILENO);
-		write(STDIN_FILENO, "\n", 1);
-		ft_iostream_reset(&executor->iostream);
-		read_status = ft_iostream_read_until(&executor->iostream, \
-			executor->stdin_fd, "\n");
+			return (ms_executor_redirect_from_heredoc(heredoc_fd));
+		ft_string_slice_print(slice, heredoc_fd);
+		ft_putchar_fd('\n', heredoc_fd);
 	}
-	return (PROGRAM_ERROR);
+	if (ms_executor_redirect_from_heredoc(heredoc_fd) == PROGRAM_ERROR)
+		return (PROGRAM_ERROR);
+	return (PROGRAM_FAILURE);
 }
 
 t_ms_status	ms_execute_redirection_in(\
@@ -57,7 +60,7 @@ struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 				== PROGRAM_ERROR)
 				return (PROGRAM_ERROR);
 		}
-		else if (redirection->type == REDIRCT_STDIN)
+		if (redirection->type == REDIRCT_STDIN)
 		{
 			if (ms_executor_redirect_from_file(executor, \
 				redirection->content.buffer, O_RDONLY) == PROGRAM_ERROR)

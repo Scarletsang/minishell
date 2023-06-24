@@ -63,6 +63,7 @@ PIPER_SRC:=\
 EXECUTOR_SRC:=\
 	execution/executor/executor.c \
 	execution/executor/action.c \
+	execution/executor/heredoc.c \
 	execution/executor/envp.c
 BUILTINS_SRC:=\
 	execution/builtins/echo.c \
