@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/19 16:56:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 00:41:59 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 int	ms_vars_init(struct s_ms_vars *vars)
 {
 	if (ft_ht_init(&vars->environment, 20) || \
-		ft_ht_init(&vars->shell, 10))
+		ft_ht_init(&vars->shell, 10) || \
+		ft_ht_init(&vars->special, 3))
 	{
 		ms_vars_free(vars);
 		return (EXIT_FAILURE);
@@ -29,6 +30,7 @@ void	ms_vars_free(struct s_ms_vars *vars)
 {
 	ft_ht_free(&vars->environment);
 	ft_ht_free(&vars->shell);
+	ft_ht_free(&vars->special);
 }
 
 /**
