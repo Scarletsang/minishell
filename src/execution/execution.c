@@ -6,10 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 22:04:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:27:50 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/string.h"
 #include "MINISHELL/execution.h"
 
 enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
@@ -18,7 +19,7 @@ enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
 
 	if (command->size == 0)
 		return (MODE_NO_COMMAND);
-	name = command->buffer;
+	name = ((t_ft_sb *) command->buffer)->buffer;
 	if (ft_strcmp(name, "echo") == 0)
 		return (MODE_BUILTIN_ECHO);
 	if (ft_strcmp(name, "cd") == 0)
@@ -34,11 +35,6 @@ enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
 	if (ft_strcmp(name, "exit") == 0)
 		return (MODE_BUILTIN_EXIT);
 	return (MODE_EXECUTABLE);
-}
-
-bool	ms_execution_mode_is_builtin(enum e_ms_execution_mode mode)
-{
-	return (mode <= 6 && mode >= 0);
 }
 
 static t_ms_exit_code	ms_execute_ast_node_cmd_single(struct s_ms *ms, \
