@@ -6,11 +6,10 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:28:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 20:53:13 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 01:02:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "LIBFT/string.h"
 #include "MINISHELL/execution.h"
 #include "MINISHELL/execution/builtins.h"
 

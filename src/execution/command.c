@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:28:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 21:17:38 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:12:13 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ struct s_ast_node_content *content)
 t_ms_exit_code	ms_execute_command(struct s_ms *ms, \
 struct s_ast_node_content *content)
 {
-	if ((ms_execute_assignment_and_redirection(ms, \
-			&content->command) == PROGRAM_ERROR))
+	if ((ms_execute_assignment_and_redirection(ms, content) == PROGRAM_ERROR))
 		return (EC_FAILURE);
 	return (ms_execute_executable(ms, &content->command));
 }
