@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/24 02:24:08 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 13:32:11 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,21 @@ const struct s_ms_vars *vars)
 	return (EXIT_FAILURE);
 }
 
-int	ms_expander_dquote_dollar(t_ft_sb_iterator *it, \
-const struct s_ms_vars *vars)
+int	ms_expander_dollar(t_ft_sb_iterator *it, \
+const struct s_ms_vars *vars, const char *match_end)
 {
 	size_t	dollar;
 
 	dollar = it->index;
 	if (ft_sb_iterator_next(it))
 		return (EXIT_FAILURE);
-	if (!ms_expander_match_any(it, " \""))
-		return (EXIT_SUCCESS);
 	if (!ms_expander_substite_special(it, vars))
+		return (EXIT_SUCCESS);
+	if (!ms_expander_match_any(it, match_end))
 		return (EXIT_SUCCESS);
 	while (!ft_sb_iterator_is_end(it))
 	{
-		if (!ms_expander_match_any(it, " \"$"))
+		if (!ms_expander_match_any(it, match_end))
 		{
 			ft_sb_iterator_prev(it);
 			break ;
