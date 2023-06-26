@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 02:24:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 22:55:39 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 		read_status = ft_iostream_read_until(&executor->iostream, \
 			executor->stdin_fd, (t_ft_string_slice){"\n", 1});
 		slice = ft_iostream_to_slice(&executor->iostream);
+		if (slice.content == NULL)
+			continue ;
 		if (ft_strncmp(ft_string_slice_content(&slice), \
 			redirection->content.buffer, slice.size - 1) == 0)
 			return (ms_executor_redirect_from_heredoc(heredoc_fd));
