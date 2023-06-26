@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/13 14:45:26 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 02:00:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 18:59:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_ft_sb	*stringbuilder_shell_init(void)
 
 void	ft_sb_print(t_ft_sb *sb)
 {
-	printf("%s\n", (char *) sb->buffer);
+	printf("[%.*s](%zu)\n", (int) sb->size, (char *) sb->buffer, sb->size);
 }
 
 t_tshell_status	stringbuilder_shell_execute_append(t_ft_sb *sb, \
