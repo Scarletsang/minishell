@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:34:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 02:37:32 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,74 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "MINISHELL/minishell.h"
-#include "MINISHELL/parser.h"
-#include "MINISHELL/execution.h"
-#include "parser_tester.h"
 
-extern char	**environ;
+int	ms_non_interactive_mode(int fd)
+{
+	struct s_ms				ms;
+	struct s_ft_iostream	iostream;
+	t_ms_exit_code			exit_code;
+	int						iostream_read_status;
 
-int	main(void)
+	if (ms_init(&ms) || ft_iostream_init(&iostream))
+		return (ms_free(&ms), EXIT_FAILURE);
+	exit_code = EC_SUCCESS;
+	iostream_read_status = EXIT_SUCCESS;
+	while (iostream_read_status == EXIT_SUCCESS)
+	{
+		iostream_read_status = ft_iostream_read_until_delimiter(&iostream, fd, \
+			(t_ft_string_slice){"\n", 1});
+		ms.line = ft_string_slice_to_cstring(ft_iostream_to_slice(&iostream));
+		if ((ms.line != NULL) && !ms_line_is_empty(ms.line))
+		{
+			exit_code = ms_interpret(&ms, ms.line);
+			ms_exit_code_save(&ms, exit_code);
+		}
+		ft_iostream_reset(&iostream);
+		ms_reset(&ms);
+	}
+	ms_free(&ms);
+	ft_iostream_free(&iostream);
+	return (exit_code);
+}
+
+int	ms_interactive_mode(char *prompt)
 {
 	struct s_ms		ms;
 	t_ms_exit_code	exit_code;
 
-	if (ms_init(&ms) || \
-		ms_vars_import(&ms.vars, environ))
-	{
-		ms_free(&ms);
-		return (EXIT_FAILURE);
-	}
-	ms.line = readline("minishell$ ");
+	if (ms_init(&ms))
+		return (ms_free(&ms), EXIT_FAILURE);
+	ms.line = readline(prompt);
 	exit_code = EC_SUCCESS;
 	while (ms.line)
 	{
-		if (parser_run(&ms.ast_root, ms.line) == PROGRAM_SUCCESS)
+		if (ms.line[0] != '\0')
 		{
 			add_history(ms.line);
-			if (ms.ast_root)
+			if (!ms_line_is_empty(ms.line))
 			{
-				exit_code = ms_execute_ast(&ms, ms.ast_root);
-				print_ast(ms.ast_root);
+				exit_code = ms_interpret(&ms, ms.line);
+				ms_exit_code_save(&ms, exit_code);
 			}
 		}
-		else
-			exit_code = EC_SYNTAX_ERROR;
-		// set exit code to special hashtable
 		ms_reset(&ms);
-		ms.line = readline("minishell$ ");
+		ms.line = readline(prompt);
 	}
 	ms_free(&ms);
+	return (exit_code);
+}
+
+int	main(void)
+{
+	t_ms_exit_code	exit_code;
+
+	if (isatty(STDIN_FILENO))
+	{
+		ms_terminal_settings_change();
+		exit_code = ms_interactive_mode("minishell$ ");
+		ms_terminal_settings_restore();
+	}
+	else
+		exit_code = ms_non_interactive_mode(STDIN_FILENO);
 	return (exit_code);
 }
