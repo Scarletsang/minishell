@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 14:36:00 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:25:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ typedef enum e_lexer_exit_code
 {
 	LEXER_SUCCESS,
 	ERROR_WHEN_LEX,
-	NO_LINE,
 	MALLOC_FAIL
 }			t_lexer_exit_code;
 

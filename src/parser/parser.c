@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/23 02:16:49 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:42:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static t_ms_status	ast_parser_clear_when_failed(struct s_parser *parser, \
 	t_ms_status failure_status)
 {
 	if (failure_status == PROGRAM_ERROR)
-		return (ms_error_printer_malloc_fails(), PROGRAM_ERROR);
+		return (ms_error_printer_internal_error(), PROGRAM_ERROR);
 	if (parser->current_token->token.type == TOKEN_EOF)
 		ms_error_printer_parser(&parser->current_token->token);
 	else
@@ -60,8 +60,6 @@ t_ms_status	parser_run(struct s_ast_node **ast_root, char *line)
 
 	lexer_init(&lexer);
 	lexer_exit_code = lexer_run(&lexer, line);
-	if (lexer_exit_code == NO_LINE)
-		return (EXIT_SUCCESS);
 	if (lexer_exit_code != LEXER_SUCCESS)
 		return (lexer_check_validation(&lexer, lexer_exit_code));
 	parser_init(&parser, lexer.start);

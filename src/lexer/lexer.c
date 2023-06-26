@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:11:34 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/23 02:15:31 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:42:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ t_lexer_exit_code	lexer_run(struct s_lexer *lexer, char *line)
 	struct s_token		token;
 	struct s_token_list	*token_lst;
 
-	if (*line == '\0')
-		return (NO_LINE);
 	scanner_init(&scanner, line);
 	while (1)
 	{
@@ -59,7 +57,7 @@ t_ms_status	lexer_check_validation(struct s_lexer *lexer, \
 	if (lexer_exit_code == MALLOC_FAIL)
 	{
 		lexer_free(lexer, (t_token_cleaner)del);
-		ms_error_printer_malloc_fails();
+		ms_error_printer_internal_error();
 		return (PROGRAM_ERROR);
 	}
 	return (PROGRAM_SUCCESS);
