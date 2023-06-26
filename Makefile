@@ -54,8 +54,7 @@ VARS_SRC:=\
 	execution/vars/action.c
 EXPANDER_SRC:=\
 	execution/expander/expander.c \
-	execution/expander/expander_dollar.c \
-	execution/expander/match.c
+	execution/expander/expander_dollar.c
 PIPER_SRC:=\
 	execution/piper/internal.c \
 	execution/piper/piper.c \
