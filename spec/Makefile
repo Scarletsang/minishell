@@ -93,11 +93,13 @@ $(TSHELL):
 ######     Cleaning     #######
 ###############################
 
-clean: 
+clean:
+	@$(MAKE) -C ../lib/libft clean
 	@$(MAKE) -C .. clean
 	@$(MAKE) -C tshell clean
 
 fclean: clean
+	@$(MAKE) -C ../lib/libft fclean
 	@$(MAKE) -C .. unpack
 	@$(MAKE) -C tshell fclean
 	@rm -f $(SHELLS)
