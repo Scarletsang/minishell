@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:19:54 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 11:48:08 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:55:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution.h"
+#include "MINISHELL/error_printer.h"
 
 static t_ms_status	ms_execute_ast_node_cmd(struct s_ms *ms, \
 struct s_ast_node *node)
@@ -21,7 +22,7 @@ struct s_ast_node *node)
 	ms_piper_create_receiver(&ms->executor.piper);
 	if ((ms_piper_create_sender(&ms->executor.piper)) || \
 		(ms_executor_fork(&ms->executor) < 0))
-		return (PROGRAM_ERROR);
+		return (ms_error_printer_internal_error(), PROGRAM_ERROR);
 	if (ms->executor.last_child_pid != 0)
 		return (PROGRAM_SUCCESS);
 	if (ms_piper_use_receiver(&ms->executor.piper) || \
@@ -50,7 +51,7 @@ struct s_ast_node *node)
 	else if (node->type == AST_NODE_CMD)
 	{
 		if (ms_ast_node_content_expand(node->content, ms) == PROGRAM_ERROR)
-			return (PROGRAM_ERROR);
+			return (ms_error_printer_internal_error(), PROGRAM_ERROR);
 		return (ms_execute_ast_node_cmd(ms, node));
 	}
 	return (PROGRAM_FAILURE);

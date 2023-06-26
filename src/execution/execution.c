@@ -6,12 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 11:47:51 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:51:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/string.h"
 #include "MINISHELL/execution.h"
+#include "MINISHELL/error_printer.h"
 
 enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
 {
@@ -47,7 +48,7 @@ struct s_ast_node *root)
 	if (mode == MODE_EXECUTABLE)
 	{
 		if (ms_executor_fork(&ms->executor) < 0)
-			return (EC_FAILURE);
+			return (ms_error_printer_internal_error(), EC_FAILURE);
 		if (ms->executor.last_child_pid == 0)
 		{
 			exit_code = ms_execute_command(ms, root->content);
@@ -73,13 +74,13 @@ t_ms_exit_code	ms_execute_ast(struct s_ms *ms, struct s_ast_node *root)
 		if (ms_execute_pipe(ms, root) == PROGRAM_ERROR)
 		{
 			ms_executor_wait(&ms->executor);
-			return (EC_FAILURE);
+			return (ms_error_printer_internal_error(), EC_FAILURE);
 		}
 	}
 	else if (root->type == AST_NODE_CMD)
 	{
 		if (ms_ast_node_content_expand(root->content, ms) == PROGRAM_ERROR)
-			return (EC_FAILURE);
+			return (ms_error_printer_internal_error(), EC_FAILURE);
 		if (ms_execute_ast_node_cmd_single(ms, root) == EC_FAILURE)
 			return (EC_FAILURE);
 	}

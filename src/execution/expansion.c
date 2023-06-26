@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:28:06 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 12:24:31 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:42:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ struct s_ast_node_content *content, struct s_ms *ms)
 		(ms_executor_expand_sb_vector(\
 			&content->command, ms) == PROGRAM_ERROR))
 	{
-		ms_error_printer_malloc_fails();
+		ms_error_printer_internal_error();
 		return (PROGRAM_ERROR);
 	}
 	return (PROGRAM_SUCCESS);

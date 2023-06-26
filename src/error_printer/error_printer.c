@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 01:16:59 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/23 02:07:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:42:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ms_error_printer_builtin(char *cmd_name, char *arg, char *msg)
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
-void	ms_error_printer_malloc_fails(void)
+void	ms_error_printer_internal_error(void)
 {
 	ft_putstr_fd("minishell: internal error\n", STDERR_FILENO);
 }
