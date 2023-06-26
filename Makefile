@@ -86,7 +86,9 @@ DEBUGGER_SRC:= \
 	../spec/parser/parser_tester.c \
 	../spec/parser/parser_tester_printer.c
 MAIN_SRC:= \
-	minishell.c \
+	control/control.c \
+	control/action.c \
+	control/terminal.c \
 	main.c
 
 SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(DEBUGGER_SRC) $(MAIN_SRC)

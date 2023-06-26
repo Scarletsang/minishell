@@ -1,21 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   control.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 00:17:27 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 01:47:42 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 02:38:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/ctype.h"
 #include "MINISHELL/minishell.h"
+
+extern char	**environ;
 
 int	ms_init(struct s_ms *ms)
 {
-	if (ms_vars_init(&ms->vars) || \
-		(ms_executor_init(&ms->executor) == PROGRAM_ERROR))
+	if ((ms_executor_init(&ms->executor) == PROGRAM_ERROR) || \
+		ms_vars_init(&ms->vars) || \
+		ms_vars_import(&ms->vars, environ))
 	{
 		ms_vars_free(&ms->vars);
 		return (EXIT_FAILURE);
@@ -38,6 +42,17 @@ void	ms_reset(struct s_ms *ms)
 		free(ms->line);
 		ms->line = NULL;
 	}
+}
+
+bool	ms_line_is_empty(char *line)
+{
+	while (*line)
+	{
+		if (!ft_isspace(*line))
+			return (false);
+		line++;
+	}
+	return (true);
 }
 
 void	ms_free(struct s_ms *ms)
