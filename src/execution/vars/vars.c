@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 14:32:33 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/24 00:41:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:50:23 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,22 @@ int	ms_vars_import(struct s_ms_vars *vars, char **envp)
 		free(key);
 		envp++;
 	}
+	return (EXIT_SUCCESS);
+}
+
+int	ms_vars_import_default_special(struct s_ms_vars *vars)
+{
+	if (ms_vars_database_set(&vars->special, "?", "0") || \
+		ms_vars_database_set(&vars->special, "0", "bash") || \
+		ms_vars_database_set(&vars->special, "1", NULL) || \
+		ms_vars_database_set(&vars->special, "2", NULL) || \
+		ms_vars_database_set(&vars->special, "3", NULL) || \
+		ms_vars_database_set(&vars->special, "4", NULL) || \
+		ms_vars_database_set(&vars->special, "5", NULL) || \
+		ms_vars_database_set(&vars->special, "6", NULL) || \
+		ms_vars_database_set(&vars->special, "7", NULL) || \
+		ms_vars_database_set(&vars->special, "8", NULL) || \
+		ms_vars_database_set(&vars->special, "9", NULL))
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

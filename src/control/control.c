@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 00:17:27 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 03:27:58 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:50:23 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	ms_init(struct s_ms *ms)
 	if ((ms_executor_init(&ms->executor) == PROGRAM_ERROR) || \
 		ms_vars_init(&ms->vars) || \
 		ms_vars_import(&ms->vars, environ) || \
-		ms_vars_database_set(&ms->vars.special, "?", "0"))
+		ms_vars_import_default_special(&ms->vars))
 	{
 		ms_vars_free(&ms->vars);
 		return (EXIT_FAILURE);

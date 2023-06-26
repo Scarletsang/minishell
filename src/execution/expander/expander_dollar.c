@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/26 03:20:57 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:49:00 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,17 @@ const struct s_ms_vars *vars)
 static int	ms_expander_substite_special(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
-	size_t	i;
-	char	special[sizeof(SUPPORTED_SPECIAL_VARS)];
+	char	current;
+	char	key[2];
 
-	ft_memcpy(special, SUPPORTED_SPECIAL_VARS, sizeof(SUPPORTED_SPECIAL_VARS));
-	i = 0;
-	while (i < sizeof(SUPPORTED_SPECIAL_VARS))
+	current = ft_sb_iterator_current(it);
+	if (current == '?' || ft_isdigit(current))
 	{
-		if (ft_sb_iterator_current(it) == special[i])
-		{
-			ft_sb_iterator_prev(it);
-			return (ft_sb_iterator_mut_replace(it, \
-				ms_vars_database_get(&vars->special, special + i), 2));
-		}
-		i += 2;
+		ft_sb_iterator_prev(it);
+		key[0] = current;
+		key[1] = '\0';
+		return (ft_sb_iterator_mut_replace(it, \
+			ms_vars_database_get(&vars->special, key), 2));
 	}
 	return (EXIT_FAILURE);
 }
