@@ -62,8 +62,8 @@ struct s_ast_node *root)
 			ms_execute_declares_and_redirections(ms, root->content));
 	else
 		exit_code = ms_execute_builtin(ms, mode, root->content);
-	dup2(ms->executor.stdin_fd, STDIN_FILENO);
-	dup2(ms->executor.stdout_fd, STDOUT_FILENO);
+	if (ms_executor_reset_stdin_stdout(&ms->executor) == PROGRAM_ERROR)
+		return (ms_error_printer_internal_error(), EC_FAILURE);
 	return (exit_code);
 }
 

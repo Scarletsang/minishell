@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 17:51:00 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:51:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@ const char *filename, int flags)
 	if (dup2(fd, STDOUT_FILENO) == -1)
 		exit_code = PROGRAM_ERROR;
 	if (close(fd) == -1)
+		exit_code = PROGRAM_ERROR;
+	return (exit_code);
+}
+
+t_ms_status	ms_executor_reset_stdin_stdout(struct s_ms_executor *executor)
+{
+	t_ms_status	exit_code;
+
+	exit_code = PROGRAM_SUCCESS;
+	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
+		exit_code = PROGRAM_ERROR;
+	if (dup2(executor->stdout_fd, STDOUT_FILENO) == -1)
 		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }

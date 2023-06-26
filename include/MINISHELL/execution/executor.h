@@ -6,20 +6,18 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 18:02:45 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 06:04:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
 
-# include <stdbool.h>
-# include <unistd.h>
 # include "LIBFT/iostream.h"
 # include "LIBFT/vector.h"
+# include "MINISHELL/execution/vars.h"
 # include "MINISHELL/status_code.h"
 # include "MINISHELL/execution/piper.h"
-# include "MINISHELL/execution/vars.h"
 
 # ifndef HEREDOC_FILENAME
 #  define HEREDOC_FILENAME "./.minishell_heredoc.tmp"
@@ -58,6 +56,8 @@ const char *filename, int flags);
 
 t_ms_status		ms_executor_redirect_to_file(struct s_ms_executor *executor, \
 const char *filename, int flags);
+
+t_ms_status		ms_executor_reset_stdin_stdout(struct s_ms_executor *executor);
 
 t_ms_status		ms_executor_open_heredoc(\
 struct s_ms_executor *executor, int *fd);
