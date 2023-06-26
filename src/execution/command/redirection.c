@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 18:16:11 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 02:24:18 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 
 	if ((ms_executor_open_heredoc(executor, &heredoc_fd) == PROGRAM_ERROR))
 		return (PROGRAM_ERROR);
-	read_status = 1;
-	while (read_status != -1)
+	read_status = EXIT_SUCCESS;
+	while (read_status == EXIT_SUCCESS)
 	{
 		ft_iostream_reset(&executor->iostream);
 		ft_putstr_fd("> ", executor->stdout_fd);
 		read_status = ft_iostream_read_until(&executor->iostream, \
-			executor->stdin_fd, "\n");
+			executor->stdin_fd, (t_ft_string_slice){"\n", 1});
 		slice = ft_iostream_to_slice(&executor->iostream);
 		if (ft_strncmp(ft_string_slice_content(&slice), \
-			redirection->content.buffer, slice.size) == 0)
+			redirection->content.buffer, slice.size - 1) == 0)
 			return (ms_executor_redirect_from_heredoc(heredoc_fd));
 		ft_string_slice_print(slice, heredoc_fd);
-		ft_putchar_fd('\n', heredoc_fd);
 	}
 	if (ms_executor_redirect_from_heredoc(heredoc_fd) == PROGRAM_ERROR)
 		return (PROGRAM_ERROR);
