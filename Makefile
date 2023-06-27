@@ -12,7 +12,7 @@ ifdef FSANITIZE
 endif
 INCLUDE_DIR= \
 	include \
-	lib/libft/include
+	spec/parser
 
 ###################################
 ######     Source files     #######
@@ -20,7 +20,8 @@ INCLUDE_DIR= \
 
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
-
+COMMON_SRC:=\
+	status_code.c
 LEXER_SRC:=\
 	lexer/lexer.c \
 	lexer/scanner_checker.c \
@@ -43,46 +44,53 @@ PARSER_SRC:=\
 	parser/parser_ioredirect.c \
 	parser/parser_scanner_utils.c \
 	parser/parser_tree_inserter.c
+ERROR_PERINTER_SRC:=\
+	error_printer/error_printer.c \
+	error_printer/parser_error.c
+
 VARS_SRC:=\
 	execution/vars/vars.c \
 	execution/vars/database.c \
 	execution/vars/action.c
 EXPANDER_SRC:=\
 	execution/expander/expander.c \
-	execution/expander/expander_dollar.c \
-	execution/expander/match.c
+	execution/expander/expander_dollar.c
 PIPER_SRC:=\
 	execution/piper/internal.c \
 	execution/piper/piper.c \
 	execution/piper/transmission.c
 EXECUTOR_SRC:=\
-	execution/execution.c \
 	execution/executor/executor.c \
 	execution/executor/action.c \
-	execution/executor/envp.c \
-	execution/executor/enactment/enactment.c \
-	execution/executor/enactment/expand_node.c \
-	execution/executor/enactment/node.c \
-	execution/executor/enactment/redirection.c
-EXECUTOR_BUILTINS_SRC:=\
-	execution/executor/builtins/builtins.c \
-	execution/executor/builtins/echo.c \
-	execution/executor/builtins/cd.c \
-	execution/executor/builtins/export.c \
-	execution/executor/builtins/pwd.c \
-	execution/executor/builtins/unset.c \
-	execution/executor/builtins/env.c \
-	execution/executor/builtins/exit.c
+	execution/executor/heredoc.c \
+	execution/executor/envp.c
+BUILTINS_SRC:=\
+	execution/builtins/echo.c \
+	execution/builtins/cd.c \
+	execution/builtins/export.c \
+	execution/builtins/pwd.c \
+	execution/builtins/unset.c \
+	execution/builtins/env.c \
+	execution/builtins/exit.c
+EXECUTION_SRC:=\
+	execution/execution.c \
+	execution/pipe.c \
+	execution/expansion.c \
+	execution/builtin.c \
+	execution/command.c \
+	execution/command/assignment.c \
+	execution/command/redirection.c \
+	execution/command/executable.c
+DEBUGGER_SRC:= \
+	../spec/parser/parser_tester.c \
+	../spec/parser/parser_tester_printer.c
 MAIN_SRC:= \
+	control/control.c \
+	control/action.c \
+	control/terminal.c \
 	main.c
-TEST_SRC:= \
-	
-SRC:= $(LEXER_SRC) $(PARSER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(EXECUTOR_BUILTINS_SRC)
-ifdef TEST
-	SRC+= $(TEST_SRC)
-else
-	SRC+= $(MAIN_SRC)
-endif
+
+SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(DEBUGGER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######
@@ -93,7 +101,7 @@ endif
 LIBFT=lib/libft/libft.a
 
 # To add a library, add the library header file like this:
-LIB_INCLUDE_DIR+= lib/libft
+LIB_INCLUDE_DIR+= lib/libft/include
 
 # Then add the library to the linking process in one of the following ways:
 # LDFLAGS+= -Llib/LIBRARY_NAME -lLIBRARY_NAME

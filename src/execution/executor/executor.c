@@ -6,57 +6,51 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 15:45:22 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 03:19:57 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/executor.h"
 
-t_executor_exit_code	ms_executor_init(struct s_ms_executor *executor)
+t_ms_status	ms_executor_init(struct s_ms_executor *executor)
 {
 	if (ft_vector_init(&executor->envp, sizeof(char *), 20, \
-		ft_vector_copy_string))
-		return (EXECUTION_ERROR);
+		ft_vector_copy_string) || \
+		ft_iostream_init(&executor->iostream))
+		return (PROGRAM_ERROR);
 	executor->stdin_fd = dup(STDIN_FILENO);
-	if (executor->stdin_fd == -1)
+	executor->stdout_fd = dup(STDOUT_FILENO);
+	if (executor->stdin_fd == -1 || executor->stdout_fd == -1)
 	{
 		ft_vector_free(&executor->envp);
-		return (EXECUTION_ERROR);
+		return (PROGRAM_ERROR);
 	}
 	ft_vector_append(&executor->envp, NULL);
 	ms_piper_init(&executor->piper);
-	executor->heredoc_fd_opened = false;
 	executor->last_child_pid = -1;
-	return (EXECUTION_SUCCESS);
+	return (PROGRAM_SUCCESS);
 }
 
-t_executor_exit_code	ms_executor_close_heredoc_fd(\
-struct s_ms_executor *executor)
+void	ms_executor_reset(struct s_ms_executor *executor)
 {
-	t_executor_exit_code	exit_code;
-
-	exit_code = EXECUTION_SUCCESS;
-	if (executor->heredoc_fd_opened)
-	{
-		if (unlink(HEREDOC_FILENAME) == -1)
-			exit_code = EXECUTION_ERROR;
-		if (close(executor->heredoc_fd) == -1)
-			exit_code = EXECUTION_ERROR;
-		executor->heredoc_fd_opened = false;
-	}
-	return (exit_code);
+	ms_piper_init(&executor->piper);
+	ft_iostream_reset(&executor->iostream);
+	executor->last_child_pid = -1;
 }
 
-t_executor_exit_code	ms_executor_destroy(struct s_ms_executor *executor)
+t_ms_status	ms_executor_free(struct s_ms_executor *executor)
 {
-	t_executor_exit_code	exit_code;
+	t_ms_status	exit_code;
 
 	executor->last_child_pid = -1;
 	ft_vector_free(&executor->envp);
-	exit_code = EXECUTION_SUCCESS;
+	ft_iostream_free(&executor->iostream);
+	exit_code = PROGRAM_SUCCESS;
 	if (close(executor->stdin_fd) == -1)
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
+	if (close(executor->stdout_fd) == -1)
+		exit_code = PROGRAM_ERROR;
 	if (ms_piper_destroy(&executor->piper))
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }

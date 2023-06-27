@@ -1,50 +1,73 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   in_child.c                                         :+:      :+:    :+:   */
+/*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/16 16:40:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/25 04:51:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fcntl.h>
 #include "MINISHELL/execution/executor.h"
 
-t_executor_exit_code	ms_executor_read_from_fd(int fd)
+t_ms_status	ms_executor_redirect_from_file(struct s_ms_executor *executor, \
+const char *filename, int flags)
 {
-	t_executor_exit_code	exit_code;
+	t_ms_status	exit_code;
+	int			fd;
 
-	exit_code = EXECUTION_SUCCESS;
+	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
+		return (PROGRAM_ERROR);
+	fd = open(filename, flags, 0644);
 	if (fd == -1)
-		return (EXECUTION_ERROR);
+		return (PROGRAM_ERROR);
+	exit_code = PROGRAM_SUCCESS;
 	if (dup2(fd, STDIN_FILENO) == -1)
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
 	if (close(fd) == -1)
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }
 
-t_executor_exit_code	ms_executor_write_to_fd(int fd)
+t_ms_status	ms_executor_redirect_to_file(struct s_ms_executor *executor, \
+const char *filename, int flags)
 {
-	t_executor_exit_code	exit_code;
+	t_ms_status	exit_code;
+	int			fd;
 
-	exit_code = EXECUTION_SUCCESS;
+	if (dup2(executor->stdout_fd, STDOUT_FILENO) == -1)
+		return (PROGRAM_ERROR);
+	fd = open(filename, flags, 0644);
 	if (fd == -1)
-		return (EXECUTION_ERROR);
+		return (PROGRAM_ERROR);
+	exit_code = PROGRAM_SUCCESS;
 	if (dup2(fd, STDOUT_FILENO) == -1)
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
 	if (close(fd) == -1)
-		exit_code = EXECUTION_ERROR;
+		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }
 
-t_executor_return_value	ms_executor_wait(struct s_ms_executor *executor)
+t_ms_status	ms_executor_reset_stdin_stdout(struct s_ms_executor *executor)
 {
-	int						wstatus;
-	t_executor_return_value	exit_code;
-	pid_t					pid;
+	t_ms_status	exit_code;
+
+	exit_code = PROGRAM_SUCCESS;
+	if (dup2(executor->stdin_fd, STDIN_FILENO) == -1)
+		exit_code = PROGRAM_ERROR;
+	if (dup2(executor->stdout_fd, STDOUT_FILENO) == -1)
+		exit_code = PROGRAM_ERROR;
+	return (exit_code);
+}
+
+t_ms_exit_code	ms_executor_wait(struct s_ms_executor *executor)
+{
+	int				wstatus;
+	t_ms_exit_code	exit_code;
+	pid_t			pid;
 
 	pid = 1;
 	while (pid != -1)

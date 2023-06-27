@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:10:15 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 15:46:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/23 19:28:19 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**ms_executor_envp_get(struct s_ms_executor *executor)
 	return (executor->envp.buffer);
 }
 
-t_executor_exit_code	ms_executor_envp_import_from_environment(\
+t_ms_status	ms_executor_envp_import_from_environment(\
 struct s_ms_executor *executor, struct s_ms_vars *vars)
 {
 	size_t					i;
@@ -35,14 +35,14 @@ struct s_ms_executor *executor, struct s_ms_vars *vars)
 			if (ht_entry->key)
 			{
 				if (!ft_vector_append(&executor->envp, ht_entry->value))
-					return (EXECUTION_ERROR);
+					return (PROGRAM_ERROR);
 			}
 			i++;
 		}
 		if (!ft_vector_append(&executor->envp, NULL))
-			return (EXECUTION_ERROR);
+			return (PROGRAM_ERROR);
 	}
-	return (EXECUTION_SUCCESS);
+	return (PROGRAM_SUCCESS);
 }
 
 void	ms_executor_envp_reset(struct s_ms_executor *executor)
@@ -63,24 +63,24 @@ static bool	ms_strcmp_till(const char *s1, const char *s2, char c)
 	return (false);
 }
 
-t_executor_exit_code	ms_executor_envp_set(struct s_ms_executor *executor, \
+t_ms_status	ms_executor_envp_set(struct s_ms_executor *executor, \
 char *pair)
 {
 	t_ft_vector_iterator	iterator;
 
 	if (!pair)
-		return (EXECUTION_FAILURE);
+		return (PROGRAM_FAILURE);
 	ft_vector_iterator_init(&iterator, &executor->envp);
 	while (ft_vector_iterator_is_end(&iterator))
 	{
 		if (ms_strcmp_till(pair, ft_vector_iterator_current(&iterator), '='))
 		{
 			ft_vector_set(&executor->envp, iterator.index, pair);
-			return (EXECUTION_SUCCESS);
+			return (PROGRAM_SUCCESS);
 		}
 		ft_vector_iterator_next(&iterator);
 	}
 	if (!ft_vector_append(&executor->envp, pair))
-		return (EXECUTION_ERROR);
-	return (EXECUTION_SUCCESS);
+		return (PROGRAM_ERROR);
+	return (PROGRAM_SUCCESS);
 }

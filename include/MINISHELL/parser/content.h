@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 17:16:42 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 18:31:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/24 11:00:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	free_sb_vector(t_sb_vector *sb_vector);
 //vector utils
 void	vector_copy_io_redirect(void	*buffer, void *io_redirect);
 void	vector_copy_sb(void	*buffer, void *sb);
-
 
 typedef enum e_ast_redirection_type
 {

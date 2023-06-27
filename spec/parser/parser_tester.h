@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   parser_tester.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:21:51 by htsang           ###   ########.fr       */
+/*   Created: 2023/06/24 01:16:50 by htsang            #+#    #+#             */
+/*   Updated: 2023/06/24 01:19:35 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include "MINISHELL/execution/executor/builtins.h"
+#ifndef PARSER_TESTER_H
+# define PARSER_TESTER_H
 
-int		ms_builtin_echo(struct s_ms_executor *executor, t_sb_vector *command, \
-struct s_ms *ms)
-{
-	(void) executor;
-	(void) command;
-	(void) ms;
-	return (EXIT_SUCCESS);
-}
+# include <stdlib.h>
+# include <stdio.h>
+# include "MINISHELL/parser.h"
+
+void	print_ast(struct s_ast_node *root);
+void	print_ast_content(struct s_ast_node_content *content);
+void	print_content_redirection(t_ast_redirection_vector *redirection);
+void	print_content_sb_vector(t_sb_vector *sb_vector);
+
+#endif

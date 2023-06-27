@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:47:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/19 15:21:20 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:44:35 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 # include "MINISHELL/execution/vars.h"
 # include "LIBFT/stringbuilder.h"
 # include "LIBFT/stringbuilder/sb_iterator.h"
-
-# define SUPPORTED_SPECIAL_VARS "?\0$"
 
 ///////////////////////////////////////
 ///////////    expander    ////////////
@@ -31,9 +29,7 @@ int	ms_expander_remove_quotes(t_ft_sb *sb);
 ///////////    private interface    ////////////
 ////////////////////////////////////////////////
 
-int	ms_expander_match_any(t_ft_sb_iterator *it, const char *set);
-
-int	ms_expander_dquote_dollar(t_ft_sb_iterator *it, \
+int	ms_expander_dollar(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars);
 
 #endif

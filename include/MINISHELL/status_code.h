@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   status_code.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:23:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 14:25:58 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/23 21:36:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,33 @@ typedef enum e_ms_status
 	PROGRAM_FAILURE,
 	PROGRAM_ERROR
 }			t_ms_status;
+
+/**
+ * @brief All possible exit codes from a command. This is accessible in the $?
+ * variable.
+ * 
+ * Signal interruptions are handled by adding 128 to the signal number. These
+ * are some common signals:
+ * 
+ * SIGINT (Ctrl + C) has signal number 2.
+ * SIGQUIT (Ctrl + \\) has signal number 3.
+ * SIGTERM (kill) has signal number 15.
+ * SIGKILL (kill -s KILL) has signal number 9.
+ * SIGSTP (Ctrl + Z) has signal number 18.
+*/
+typedef enum e_ms_exit_code
+{
+	EC_SUCCESS = 0,
+	EC_FAILURE = 1,
+	EC_BUILTIN_BADUSAGE = 2,
+	EC_COMMAND_NO_PERMISSION = 126,
+	EC_COMMAND_NOT_FOUND = 127,
+	EC_SIGNAL_INTERRUPT_BASE = 128,
+	EC_SYNTAX_ERROR = 258,
+}				t_ms_exit_code;
+
+enum e_ms_exit_code	ms_status_to_exit_code(t_ms_status status);
+
+enum e_ms_exit_code	ms_exit_code_from_signal(int signal);
 
 #endif

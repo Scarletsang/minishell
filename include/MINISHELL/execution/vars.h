@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/19 15:31:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:50:24 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ void		ms_vars_free(struct s_ms_vars *vars);
  * will not be freed when the database is freed.
 */
 int			ms_vars_import(struct s_ms_vars *vars, char **envp);
+
+int			ms_vars_import_default_special(struct s_ms_vars *vars);
 
 /**
  * @brief Add an entry to the given database. If the entry already exists, it

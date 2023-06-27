@@ -6,13 +6,22 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/19 16:56:54 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 04:49:00 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/execution/expander.h"
-#include "LIBFT/stringbuilder/clipper.h"
+#include "LIBFT/ctype.h"
 #include "LIBFT/string.h"
+#include "LIBFT/stringbuilder/clipper.h"
+#include "MINISHELL/execution/expander.h"
+
+static bool	ms_expander_is_variable_char(t_ft_sb_iterator *it)
+{
+	char	current;
+
+	current = ft_sb_iterator_current(it);
+	return (ft_isalnum(current) || current == '_');
+}
 
 static int	ms_expander_substitute(t_ft_sb_iterator *it, const size_t from, \
 const struct s_ms_vars *vars)
@@ -23,7 +32,7 @@ const struct s_ms_vars *vars)
 
 	ft_sb_clipper_init(&clipper, it->vector);
 	clipper.lbound = from + 1;
-	clipper.rbound = it->index;
+	clipper.rbound = it->index + 1;
 	key = ft_sb_clipper_run(&clipper);
 	if (!key)
 		return (EXIT_FAILURE);
@@ -31,35 +40,32 @@ const struct s_ms_vars *vars)
 	free(key);
 	it->index = from;
 	if (!key_value)
-		return (ft_sb_iterator_mut_delete(it, clipper.rbound - from + 1));
+		return (ft_sb_iterator_mut_delete(it, clipper.rbound - from));
 	while (*key_value && *key_value++ != '=')
 		;
 	return (ft_sb_iterator_mut_replace(it, key_value, \
-		clipper.rbound - from + 1));
+		clipper.rbound - from));
 }
 
 static int	ms_expander_substite_special(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
-	size_t	i;
-	char	special[sizeof(SUPPORTED_SPECIAL_VARS)];
+	char	current;
+	char	key[2];
 
-	ft_memcpy(special, SUPPORTED_SPECIAL_VARS, sizeof(SUPPORTED_SPECIAL_VARS));
-	i = 0;
-	while (i < sizeof(SUPPORTED_SPECIAL_VARS))
+	current = ft_sb_iterator_current(it);
+	if (current == '?' || ft_isdigit(current))
 	{
-		if (ft_sb_iterator_current(it) == special[i])
-		{
-			ft_sb_iterator_prev(it);
-			return (ft_sb_iterator_mut_replace(it, \
-				ms_vars_database_get(&vars->special, special + i), 2));
-		}
-		i += 2;
+		ft_sb_iterator_prev(it);
+		key[0] = current;
+		key[1] = '\0';
+		return (ft_sb_iterator_mut_replace(it, \
+			ms_vars_database_get(&vars->special, key), 2));
 	}
 	return (EXIT_FAILURE);
 }
 
-int	ms_expander_dquote_dollar(t_ft_sb_iterator *it, \
+int	ms_expander_dollar(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
 	size_t	dollar;
@@ -67,13 +73,13 @@ const struct s_ms_vars *vars)
 	dollar = it->index;
 	if (ft_sb_iterator_next(it))
 		return (EXIT_FAILURE);
-	if (!ms_expander_match_any(it, " \""))
-		return (EXIT_SUCCESS);
 	if (!ms_expander_substite_special(it, vars))
+		return (EXIT_SUCCESS);
+	if (!ms_expander_is_variable_char(it))
 		return (EXIT_SUCCESS);
 	while (!ft_sb_iterator_is_end(it))
 	{
-		if (!ms_expander_match_any(it, " \"$"))
+		if (!ms_expander_is_variable_char(it))
 		{
 			ft_sb_iterator_prev(it);
 			break ;

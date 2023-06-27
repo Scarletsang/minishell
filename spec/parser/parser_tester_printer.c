@@ -6,14 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/14 15:06:53 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/19 19:23:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/26 15:50:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include "MINISHELL/parser.h"
-
-void	print_ast_content(struct s_ast_node_content *content);
+#include "parser_tester.h"
 
 typedef enum e_printing_branch {
 	LEFT,
@@ -52,6 +49,7 @@ static void	print_ast_recursive(struct s_ast_node *node, int level, t_printing_b
 
 void	print_ast(struct s_ast_node *root)
 {
+    printf("--------------------------------------------------\n");
     print_ast_recursive(root, 0, LEFT);
-    printf("--------\n");
+    printf("--------------------------------------------------\n");
 }
