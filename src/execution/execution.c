@@ -6,12 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:51:09 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 10:44:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/string.h"
 #include "MINISHELL/execution.h"
+#include "MINISHELL/execution/command.h"
 #include "MINISHELL/error_printer.h"
 
 enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
@@ -51,7 +52,7 @@ struct s_ast_node *root)
 			return (ms_error_printer_internal_error(), EC_FAILURE);
 		if (ms->executor.last_child_pid == 0)
 		{
-			exit_code = ms_execute_command(ms, root->content);
+			exit_code = ms_execute_external(ms, root->content);
 			ms_free(ms);
 			exit(exit_code);
 		}

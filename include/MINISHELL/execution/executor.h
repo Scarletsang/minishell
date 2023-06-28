@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 06:04:09 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 09:55:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 struct s_ms_executor
 {
 	struct s_ms_piper		piper;
-	struct s_ft_iostream	iostream;
+	struct s_ft_iostream	heredoc;
 	t_ft_vector				envp;
 	int						stdin_fd;
 	int						stdout_fd;

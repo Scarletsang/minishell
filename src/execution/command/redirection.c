@@ -6,12 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 22:55:39 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 10:43:16 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
-#include "MINISHELL/execution.h"
+#include "MINISHELL/execution/command.h"
 #include "LIBFT/string.h"
 #include "LIBFT/io.h"
 #include "LIBFT/iostream.h"
@@ -28,11 +28,11 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 	read_status = EXIT_SUCCESS;
 	while (read_status == EXIT_SUCCESS)
 	{
-		ft_iostream_reset(&executor->iostream);
+		ft_iostream_reset(&executor->heredoc);
 		ft_putstr_fd("> ", executor->stdout_fd);
-		read_status = ft_iostream_read_until(&executor->iostream, \
+		read_status = ft_iostream_read_until(&executor->heredoc, \
 			executor->stdin_fd, (t_ft_string_slice){"\n", 1});
-		slice = ft_iostream_to_slice(&executor->iostream);
+		slice = ft_iostream_to_slice(&executor->heredoc);
 		if (slice.content == NULL)
 			continue ;
 		if (ft_strncmp(ft_string_slice_content(&slice), \

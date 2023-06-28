@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:19:54 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:55:21 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 10:44:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution.h"
+#include "MINISHELL/execution/command.h"
 #include "MINISHELL/error_printer.h"
 
 static t_ms_status	ms_execute_ast_node_cmd(struct s_ms *ms, \
@@ -33,7 +34,7 @@ struct s_ast_node *node)
 	}
 	mode = ms_execution_mode(&node->content->command);
 	if (mode == MODE_EXECUTABLE)
-		exit_code = ms_execute_command(ms, node->content);
+		exit_code = ms_execute_external(ms, node->content);
 	else if (mode == MODE_NO_COMMAND)
 		exit_code = ms_status_to_exit_code(\
 			ms_execute_declares_and_redirections(ms, node->content));
