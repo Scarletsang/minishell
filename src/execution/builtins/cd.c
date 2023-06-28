@@ -6,12 +6,17 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/27 22:57:29 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/28 22:48:35 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <limits.h>
 #include "MINISHELL/execution/builtins.h"
+#include "MINISHELL/error_printer.h"
+#include "LIBFT/string.h"
+
+#include <stdio.h>
 
 //if no arguments after cd, use $HOME, which is in vars.environment, if no $HOME, use getcwd()
 //if directory starts with '/', set curdir = directory. || if directory starts with '.' or '..', set curdir = directory
@@ -31,45 +36,49 @@
 // if success, set PWD = curdir before converted into relative path
 // if no permission of directory or parent directory, do not update PWD
 
+t_ms_exit_code	update_pwd(struct s_ms *ms);
+t_ms_exit_code	buildin_cd_no_arg(struct s_ms *ms);
+
 t_ms_exit_code	ms_execute_builtin_cd(struct s_ms *ms, t_sb_vector *command)
 {
-	// (void) command;
-	// (void) ms;
-	t_ft_sb	*dir;
-	char	dir_first;
-	t_ft_sb	*curdir;
+	t_ft_sb	*dir_sb;
+	char	*dir;
 
 	if (command->size == 1)
 		return (buildin_cd_no_arg(ms));
-	dir = ft_vector_get(command, 1);
-	dir_first = ft_sb_get(dir, 0);
-	// dir_first = dir->buffer[0];
-	if (dir_first == '.')
-		curdir = dir;
-	else if (dir_first == '/')
-		curdir = dir;
-	else
-		curdir = get_curdir_from_pwd(ms->vars.environment, dir); //inside use ft_sb_perform to append, transfer PWD value into ft_sb
-	update_curdir(&curdir);
-	return (EXIT_SUCCESS);
+	dir_sb = ft_vector_get(command, 1);
+	dir = dir_sb->buffer;
+	if (chdir(dir) == -1)
+	{
+		ms_error_printer_builtin("cd", dir, strerror(errno));
+		return (EC_FAILURE);
+	}
+	return (update_pwd(ms));
 }
 
-//should I get pwd from PWD or getcwd()? if PWD, should use t_ft_sb, if not use char*
-t_ft_sb	*get_curdir_from_pwd(t_ft_ht environment, t_ft_sb *dir)
+t_ms_exit_code	update_pwd(struct s_ms *ms)
 {
-	t_ft_sb	*curdir;
-	t_ft_sb	*pwd;
+	char	buf[PATH_MAX + 4];
 
+	if (!getcwd(buf + 4, PATH_MAX))
+		return (EC_FAILURE);
+	ft_memcpy(buf, "PWD=", 4);
+	if (ms_vars_declare(&ms->vars, "PWD", buf))
+		return (EC_FAILURE);
+	return (EC_SUCCESS);
 }
 
-int	update_curdir(t_ft_sb **curdir)
+t_ms_exit_code	buildin_cd_no_arg(struct s_ms *ms)
 {
+	char	*home;
 
+	home = (char *)ms_vars_database_get(&ms->vars.environment, "HOME");
+	if (!home)
+		return (EC_SUCCESS);
+	if (chdir(home + 5) == -1)
+	{
+		ms_error_printer_builtin("cd", home, strerror(errno));
+		return (EC_FAILURE);
+	}
+	return (update_pwd(ms));
 }
-
-t_ms_exit_code	ms_cd_no_args(struct s_ms *ms)
-{
-
-}
-
-
