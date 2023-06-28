@@ -70,6 +70,7 @@ COMMAND_SRC:=\
 	execution/command/redirection.c \
 	execution/command/external/executable.c \
 	execution/command/external/execve_builder.c \
+	execution/command/external/exit_code.c \
 	execution/command/builtins/echo.c \
 	execution/command/builtins/cd.c \
 	execution/command/builtins/export.c \

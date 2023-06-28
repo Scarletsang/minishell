@@ -6,78 +6,78 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 11:47:34 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 21:55:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/command/external.h"
 
-t_ms_status	ms_execve_builder_init(struct s_ms_execve_builder *executable)
+t_ms_status	ms_execve_builder_init(struct s_ms_execve_builder *builder, \
+struct s_ms *ms, t_sb_vector *command)
 {
-	executable->argv = NULL;
-	return (ft_sb_init(&executable->path, 20));
+	builder->argv = NULL;
+	builder->path_env = ms_vars_echo(&ms->vars, "PATH");
+	while (*builder->path_env && (*builder->path_env != '='))
+		builder->path_env++;
+	builder->command_name = ft_vector_get(command, 0);
+	builder->exit_code = EC_SUCCESS;
+	return (ft_sb_init(&builder->command_path, 20));
 }
 
-void	ms_execve_builder_free(struct s_ms_execve_builder *executable)
+void	ms_execve_builder_free(struct s_ms_execve_builder *builder)
 {
-	if (executable->argv)
-		free(executable->argv);
-	ft_sb_free(&executable->path);
+	if (builder->argv)
+		free(builder->argv);
+	ft_sb_free(&builder->command_path);
 }
 
-t_ms_status	ms_execve_builder_path_build(\
-struct s_ms_execve_builder *executable, struct s_ms *ms, t_ft_sb *command_name)
+t_ms_status	ms_execve_builder_path_build(struct s_ms_execve_builder *builder)
 {
-	// if (ms_is_comamnd())
-	// {
-	// 	if (ms_find_path() == PROGRAM_ERROR)
-	// 	{
-	// 		// command not foudn error
-	// 		return (EC_COMMAND_NOT_FOUND);
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (!ms_path_exist())
-	// 	{
-	// 		// No such file or directory
-	// 		return (EC_COMMAND_NOT_FOUND);
-	// 	}
-	// }
-}
+	const char		*path;
+	size_t			path_len;
 
-bool	ms_execve_builder_path_is_executable(\
-struct s_ms_execve_builder *executable)
-{
-	// if (ms_is_directory())
-	// {
-	// 	// is a directory
-	// 	return (EC_COMMAND_NO_PERMISSION);
-	// }
-	// if (!ms_has_permission())
-	// {
-	// 	// Permission denied
-	// 	return (EC_COMMAND_NO_PERMISSION);
-	// }
+	path = builder->path_env;
+	while (*path)
+	{
+		path++;
+		ft_sb_reset(&builder->command_path);
+		path_len = 0;
+		while (path[path_len] && (path[path_len] != ':'))
+			path_len++;
+		if (ft_sb_perform(&builder->command_path, \
+				ft_sb_action_append_len(path, path_len)) || \
+			ft_sb_perform(&builder->command_path, \
+				ft_sb_action_append("/")) || \
+			ft_sb_perform(&builder->command_path, \
+				ft_sb_action_append_len(builder->command_name->buffer, \
+				builder->command_name->size)))
+			return (PROGRAM_ERROR);
+		ms_execve_builder_command_path_exit_code_get(builder);
+		if (builder->exit_code == EC_SUCCESS)
+			return (PROGRAM_SUCCESS);
+		path += path_len;
+	}
+	return (PROGRAM_FAILURE);
 }
 
 t_ms_status	ms_execve_builder_argv_build(\
-struct s_ms_execve_builder *executable, t_sb_vector *command)
+struct s_ms_execve_builder *builder, t_sb_vector *command)
 {
 	t_ft_vector_iterator	iterator;
 	size_t					i;
 
-	executable->argv = malloc(sizeof(char *) * command->size + 1);
-	if (!executable)
+	builder->argv = malloc(sizeof(char *) * (command->size + 1));
+	if (!builder)
 		return (PROGRAM_ERROR);
-	executable->argv[command->size] = NULL;
+	(builder->argv)[command->size] = NULL;
 	i = 0;
 	ft_vector_iterator_init(&iterator, command);
 	while (!ft_vector_iterator_is_end(&iterator))
 	{
-		executable->argv[i] = (char *) \
+		builder->argv[i] = (char *) \
 			((t_ft_sb *) ft_vector_iterator_current(&iterator))->buffer;
 		ft_vector_iterator_next(&iterator);
+		i++;
 	}
 	return (PROGRAM_SUCCESS);
 }
