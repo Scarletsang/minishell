@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:04:28 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 11:43:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 12:56:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_sb_vector *command)
 		ms_execve_builder_free(&builder);
 		return (EC_FAILURE);
 	}
-	execve(builder.path.buffer, builder.argv, ms_executor_envp_get(ms));
+	execve(builder.path.buffer, builder.argv, \
+		ms_executor_envp_get(&ms->executor));
 	ms_execve_builder_free(&builder);
 	return (EC_COMMAND_NOT_FOUND);
 }
