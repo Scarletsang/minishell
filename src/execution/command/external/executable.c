@@ -6,44 +6,36 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:04:28 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:40:03 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/28 11:43:43 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MINISHELL/execution.h"
+#include "MINISHELL/execution/command/external.h"
 
-t_ms_exit_code	ms_execute_executable(struct s_ms *ms, \
+t_ms_exit_code	ms_execute_external_executable(struct s_ms *ms, \
 t_sb_vector *command)
 {
-	(void)command;
-	(void)ms;
-	// if (ms_is_comamnd())
-	// {
-	// 	if (ms_find_path() == PROGRAM_ERROR)
-	// 	{
-	// 		// command not foudn error
-	// 		return (EC_COMMAND_NOT_FOUND);
-	// 	}
-	// }
-	// else
-	// {
-	// 	if (!ms_path_exist())
-	// 	{
-	// 		// No such file or directory
-	// 		return (EC_COMMAND_NOT_FOUND);
-	// 	}
-	// }
-	// if (ms_is_directory())
-	// {
-	// 	// is a directory
-	// 	return (EC_COMMAND_NO_PERMISSION);
-	// }
-	// if (!ms_has_permission())
-	// {
-	// 	// Permission denied
-	// 	return (EC_COMMAND_NO_PERMISSION);
-	// }
-	// // execve
-	// // execute as shell script
+	struct s_ms_execve_builder	builder;
+
+	if (ms_execve_builder_init(&builder))
+		return (EC_FAILURE);
+	if (ms_execve_builder_path_build(&builder, ms, \
+		(t_ft_sb *) ft_vector_get(command, 0)) != PROGRAM_SUCCESS)
+	{
+		ms_execve_builder_free(&builder);
+		return (EC_COMMAND_NOT_FOUND);
+	}
+	if (!ms_execve_builder_path_is_executable(&builder))
+	{
+		ms_execve_builder_free(&builder);
+		return (EC_COMMAND_NO_PERMISSION);
+	}
+	if (ms_execve_builder_argv_build(&builder, command) != PROGRAM_SUCCESS)
+	{
+		ms_execve_builder_free(&builder);
+		return (EC_FAILURE);
+	}
+	execve(builder.path.buffer, builder.argv, ms_executor_envp_get(ms));
+	ms_execve_builder_free(&builder);
 	return (EC_COMMAND_NOT_FOUND);
 }
