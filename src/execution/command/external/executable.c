@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:04:28 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 15:03:00 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 15:18:07 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static t_ms_exit_code	ms_execve_builder_path_build_and_validate(\
 struct s_ms_execve_builder *builder)
 {
 	t_ms_exit_code	exit_code;
+
 	if ((builder->path_env == NULL) || \
 		ft_strchr(builder->command_name->buffer, '/'))
 	{
