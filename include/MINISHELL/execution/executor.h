@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 09:55:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 13:37:07 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,15 @@ t_ms_status		ms_executor_redirect_from_heredoc(int opened_heredoc_fd);
 ////////////   envp interface   ////////////
 ////////////////////////////////////////////
 
+char			**ms_executor_envp(struct s_ms_executor *executor);
+
+void			ms_executor_envp_reset(struct s_ms_executor *executor);
+
 t_ms_status		ms_executor_envp_set(struct s_ms_executor *executor, \
 char *pair);
 
-char			**ms_executor_envp_get(struct s_ms_executor *executor);
+const char		*ms_executor_envp_get(struct s_ms_executor *executor, \
+const char *key);
 
 /**
  * @brief Copy all entries from the environment database to the executor's
@@ -81,7 +86,5 @@ char			**ms_executor_envp_get(struct s_ms_executor *executor);
 */
 t_ms_status		ms_executor_envp_import_from_environment(\
 struct s_ms_executor *executor, struct s_ms_vars *vars);
-
-void			ms_executor_envp_reset(struct s_ms_executor *executor);
 
 #endif

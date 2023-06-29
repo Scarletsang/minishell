@@ -63,7 +63,8 @@ EXECUTOR_SRC:=\
 	execution/executor/executor.c \
 	execution/executor/action.c \
 	execution/executor/heredoc.c \
-	execution/executor/envp.c
+	execution/executor/envp_query.c \
+ 	execution/executor/envp.c
 COMMAND_SRC:=\
 	execution/command/command.c \
 	execution/command/assignment.c \
