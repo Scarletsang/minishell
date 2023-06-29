@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:42:09 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 21:13:02 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 21:48:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ struct s_ms_piper
 
 void	ms_piper_init(struct s_ms_piper *piper);
 
-int		ms_piper_destroy(struct s_ms_piper *piper);
+int		ms_piper_reset(struct s_ms_piper *piper);
 
 int		ms_piper_create_sender(struct s_ms_piper *piper);
 

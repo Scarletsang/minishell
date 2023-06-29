@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 09:55:12 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 21:48:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_ms_status	ms_executor_free(struct s_ms_executor *executor)
 		exit_code = PROGRAM_ERROR;
 	if (close(executor->stdout_fd) == -1)
 		exit_code = PROGRAM_ERROR;
-	if (ms_piper_destroy(&executor->piper))
+	if (ms_piper_reset(&executor->piper))
 		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }

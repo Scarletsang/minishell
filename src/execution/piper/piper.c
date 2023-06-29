@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 15:29:00 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/19 16:46:48 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 21:51:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,24 @@ void	ms_piper_init(struct s_ms_piper *piper)
 	piper->pipe2_opened = false;
 }
 
-int	ms_piper_destroy(struct s_ms_piper *piper)
+int	ms_piper_reset(struct s_ms_piper *piper)
 {
 	int	exit_code;
 
 	exit_code = EXIT_SUCCESS;
-	if (piper->pipe1_opened && (ms_piper_close_pipe(piper->pipe1) \
-		== EXIT_FAILURE))
-		exit_code = EXIT_FAILURE;
-	if (piper->pipe2_opened && (ms_piper_close_pipe(piper->pipe2) \
-		== EXIT_FAILURE))
-		exit_code = EXIT_FAILURE;
+	if (piper->pipe1_opened)
+	{
+		if (ms_piper_close_pipe(piper->pipe1) == EXIT_FAILURE)
+			exit_code = EXIT_FAILURE;
+		else
+			piper->pipe1_opened = false;
+	}
+	if (piper->pipe2_opened)
+	{
+		if (ms_piper_close_pipe(piper->pipe2) == EXIT_FAILURE)
+			exit_code = EXIT_FAILURE;
+		else
+			piper->pipe2_opened = false;
+	}
 	return (exit_code);
 }
