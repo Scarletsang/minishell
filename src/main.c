@@ -6,17 +6,21 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:10:27 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:38:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "MINISHELL/minishell.h"
+#include "MINISHELL/status_code.h"
+#include "MINISHELL/error_printer.h"
 
-int	ms_non_interactive_mode(int fd)
+static int	ms_non_interactive_mode(int fd)
 {
 	struct s_ms				ms;
 	struct s_ft_iostream	iostream;
@@ -45,7 +49,23 @@ int	ms_non_interactive_mode(int fd)
 	return (exit_code);
 }
 
-int	ms_interactive_mode(char *prompt)
+static int	ms_non_interactive_mode_from_path(const char *path)
+{
+	t_ms_exit_code	exit_code;
+	int				fd;
+
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (ms_exit_code_evaluate(path, true, true));
+	else
+	{
+		exit_code = ms_non_interactive_mode(fd);
+		close(fd);
+	}
+	return (exit_code);
+}
+
+static int	ms_interactive_mode(char *prompt)
 {
 	struct s_ms		ms;
 	t_ms_exit_code	exit_code;
@@ -73,11 +93,15 @@ int	ms_interactive_mode(char *prompt)
 	return (exit_code);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_ms_exit_code	exit_code;
 
-	if (isatty(STDIN_FILENO))
+	if (argc >= 2)
+	{
+		exit_code = ms_non_interactive_mode_from_path(argv[1]);
+	}
+	else if (isatty(STDIN_FILENO))
 	{
 		ms_terminal_settings_change();
 		ms_signal_handlers_set();

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:55:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 13:38:46 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:23:06 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,5 @@ struct s_ms_execve_builder *executable);
 
 t_ms_status		ms_execve_builder_argv_build(\
 struct s_ms_execve_builder *executable, t_sb_vector *command);
-
-/////////////////////////////////////////////////////////////
-////////////   executable exit code evaluation   ////////////
-/////////////////////////////////////////////////////////////
-
-t_ms_exit_code	ms_executable_exit_code_determine(char *command_name, \
-bool is_path);
-
-t_ms_exit_code	ms_executable_exit_code_print(t_ms_exit_code exit_code, \
-char *command_name);
-
-t_ms_exit_code	ms_executable_exit_code_output(t_ms_exit_code exit_code);
-
-t_ms_exit_code	ms_executable_exit_code_evaluate(char *command_name, \
-bool is_path, bool print);
 
 #endif

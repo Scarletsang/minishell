@@ -6,12 +6,15 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:23:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/29 12:30:04 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:34:10 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STATUS_CODE_H
 # define STATUS_CODE_H
+
+# include <errno.h>
+# include <stdbool.h>
 
 typedef enum e_ms_status
 {
@@ -50,5 +53,21 @@ typedef enum e_ms_exit_code
 enum e_ms_exit_code	ms_status_to_exit_code(t_ms_status status);
 
 enum e_ms_exit_code	ms_exit_code_from_signal(int signal);
+
+/**
+ * @brief These functions are used to determine the exit code of a string that
+ * represents a file name.
+*/
+
+t_ms_exit_code		ms_exit_code_determine(char *command_name, \
+bool is_path);
+
+t_ms_exit_code		ms_exit_code_print(t_ms_exit_code exit_code, \
+char *command_name);
+
+t_ms_exit_code		ms_exit_code_output(t_ms_exit_code exit_code);
+
+t_ms_exit_code		ms_exit_code_evaluate(char *command_name, \
+bool is_path, bool print);
 
 #endif

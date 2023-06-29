@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 15:04:43 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:25:34 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ struct s_ms_execve_builder *builder)
 			ft_sb_perform(&builder->command_path, ft_sb_action_append_len(\
 				builder->command_name->buffer, builder->command_name->size)))
 			return (__EC_INTERNAL_ERROR);
-		exit_code = ms_executable_exit_code_evaluate(\
+		exit_code = ms_exit_code_evaluate(\
 			builder->command_path.buffer, false, false);
 		if (exit_code == EC_SUCCESS)
 			return (EC_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 16:52:07 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:34:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include "MINISHELL/execution/vars.h"
 # include "MINISHELL/execution/executor.h"
 
-extern volatile t_ms_exit_code g_exit_code;
+extern volatile t_ms_exit_code	g_exit_code;
 
 struct s_ms
 {

@@ -21,6 +21,7 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 COMMON_SRC:=\
+	exit_code.c \
 	status_code.c
 LEXER_SRC:=\
 	lexer/lexer.c \
@@ -71,7 +72,6 @@ COMMAND_SRC:=\
 	execution/command/redirection.c \
 	execution/command/external/executable.c \
 	execution/command/external/execve_builder.c \
-	execution/command/external/exit_code.c \
 	execution/command/builtins/echo.c \
 	execution/command/builtins/cd.c \
 	execution/command/builtins/export.c \
