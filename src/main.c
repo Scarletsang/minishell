@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 02:37:32 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:10:27 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	ms_interactive_mode(char *prompt)
 	exit_code = EC_SUCCESS;
 	while (ms.line)
 	{
+		ms_exit_code_save_from_signal(&ms);
 		if (ms.line[0] != '\0')
 		{
 			add_history(ms.line);
@@ -79,6 +80,7 @@ int	main(void)
 	if (isatty(STDIN_FILENO))
 	{
 		ms_terminal_settings_change();
+		ms_signal_handlers_set();
 		exit_code = ms_interactive_mode("minishell$ ");
 		ms_terminal_settings_restore();
 	}

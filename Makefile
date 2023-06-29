@@ -89,6 +89,7 @@ DEBUGGER_SRC:= \
 MAIN_SRC:= \
 	control/control.c \
 	control/action.c \
+	control/signal.c \
 	control/terminal.c \
 	main.c
 
