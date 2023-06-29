@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 17:05:48 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:25:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:55:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "MINISHELL/status_code.h"
 #include "MINISHELL/error_printer.h"
 
-t_ms_exit_code	ms_exit_code_determine(char *command_name, \
+t_ms_exit_code	ms_exit_code_determine(const char *command_name, \
 bool is_path)
 {
 	struct stat		path_stat;
@@ -47,7 +47,7 @@ bool is_path)
 }
 
 t_ms_exit_code	ms_exit_code_print(t_ms_exit_code exit_code, \
-char *command_name)
+const char *command_name)
 {
 	if (exit_code == EC_COMMAND_NOT_FOUND)
 	{
@@ -89,7 +89,7 @@ t_ms_exit_code	ms_exit_code_output(t_ms_exit_code exit_code)
 	return (exit_code);
 }
 
-t_ms_exit_code	ms_exit_code_evaluate(char *command_name, \
+t_ms_exit_code	ms_exit_code_evaluate(const char *command_name, \
 bool is_path, bool print)
 {
 	t_ms_exit_code	exit_code;

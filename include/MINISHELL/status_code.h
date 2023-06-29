@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 14:23:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:34:10 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:55:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,15 @@ enum e_ms_exit_code	ms_exit_code_from_signal(int signal);
  * represents a file name.
 */
 
-t_ms_exit_code		ms_exit_code_determine(char *command_name, \
+t_ms_exit_code		ms_exit_code_determine(const char *command_name, \
 bool is_path);
 
 t_ms_exit_code		ms_exit_code_print(t_ms_exit_code exit_code, \
-char *command_name);
+const char *command_name);
 
 t_ms_exit_code		ms_exit_code_output(t_ms_exit_code exit_code);
 
-t_ms_exit_code		ms_exit_code_evaluate(char *command_name, \
+t_ms_exit_code		ms_exit_code_evaluate(const char *command_name, \
 bool is_path, bool print);
 
 #endif
