@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:55:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 18:55:55 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 13:38:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ struct s_ms_execve_builder
 {
 	t_ft_sb			command_path;
 	t_ft_sb			*command_name;
-	t_ms_exit_code	exit_code;
 	const char		*path_env;
 	char			**argv;
 };
@@ -42,22 +41,25 @@ struct s_ms *ms, t_sb_vector *command);
 
 void			ms_execve_builder_free(struct s_ms_execve_builder *executable);
 
-t_ms_status		ms_execve_builder_path_build(\
+t_ms_exit_code	ms_execve_builder_path_build(\
 struct s_ms_execve_builder *executable);
 
 t_ms_status		ms_execve_builder_argv_build(\
 struct s_ms_execve_builder *executable, t_sb_vector *command);
 
-t_ms_exit_code	ms_execve_builder_command_name_exit_code_get(\
-struct s_ms_execve_builder *builder);
+/////////////////////////////////////////////////////////////
+////////////   executable exit code evaluation   ////////////
+/////////////////////////////////////////////////////////////
 
-t_ms_exit_code	ms_execve_builder_command_path_exit_code_get(\
-struct s_ms_execve_builder *builder);
+t_ms_exit_code	ms_executable_exit_code_determine(char *command_name, \
+bool is_path);
 
-void			ms_execve_builder_command_path_error(\
-struct s_ms_execve_builder *builder);
+t_ms_exit_code	ms_executable_exit_code_print(t_ms_exit_code exit_code, \
+char *command_name);
 
-void			ms_execve_builder_command_name_error(\
-struct s_ms_execve_builder *builder, int error_num);
+t_ms_exit_code	ms_executable_exit_code_output(t_ms_exit_code exit_code);
+
+t_ms_exit_code	ms_executable_exit_code_evaluate(char *command_name, \
+bool is_path, bool print);
 
 #endif

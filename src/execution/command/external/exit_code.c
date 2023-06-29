@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 17:05:48 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 21:55:05 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 13:38:34 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,66 +16,85 @@
 #include "MINISHELL/error_printer.h"
 #include "MINISHELL/execution/command/external.h"
 
-t_ms_exit_code	ms_execve_builder_command_name_exit_code_get(\
-struct s_ms_execve_builder *builder)
+t_ms_exit_code	ms_executable_exit_code_determine(char *command_name, \
+bool is_path)
 {
-	struct stat	path_stat;
+	struct stat		path_stat;
+	t_ms_exit_code	exit_code;
 
-	if (access(builder->command_name->buffer, F_OK) == -1)
+	exit_code = EC_SUCCESS;
+	if (access(command_name, F_OK) == -1)
 	{
-		ms_execve_builder_command_name_error(builder, ENOENT);
-		builder->exit_code = EC_COMMAND_NOT_FOUND;
+		if (is_path)
+			exit_code = __EC_NO_SUCH_FILE;
+		else
+			exit_code = EC_COMMAND_NOT_FOUND;
 	}
-	else if (stat(builder->command_name->buffer, &path_stat) == -1)
+	else if (stat(command_name, &path_stat) == -1)
 	{
-		ms_error_printer_internal_error();
-		builder->exit_code = EC_FAILURE;
+		exit_code = __EC_INTERNAL_ERROR;
 	}
 	else if (S_ISDIR(path_stat.st_mode))
 	{
-		ms_execve_builder_command_name_error(builder, EISDIR);
-		builder->exit_code = EC_COMMAND_NO_PERMISSION;
+		exit_code = __EC_IS_A_DIR;
 	}
-	else if (access(builder->command_name->buffer, X_OK) == -1)
+	else if (access(command_name, X_OK) == -1)
 	{
-		ms_execve_builder_command_name_error(builder, EACCES);
-		builder->exit_code = EC_COMMAND_NO_PERMISSION;
+		exit_code = EC_COMMAND_NO_PERMISSION;
 	}
-	return (builder->exit_code);
+	return (exit_code);
 }
 
-t_ms_exit_code	ms_execve_builder_command_path_exit_code_get(\
-struct s_ms_execve_builder *builder)
+t_ms_exit_code	ms_executable_exit_code_print(t_ms_exit_code exit_code, \
+char *command_name)
 {
-	if (access(builder->command_path.buffer, F_OK) == -1)
+	if (exit_code == EC_COMMAND_NOT_FOUND)
 	{
-		builder->exit_code = EC_COMMAND_NOT_FOUND;
+		ms_error_printer_command(command_name, "command not found");
 	}
-	else if (access(builder->command_path.buffer, X_OK) == -1)
+	else if (exit_code == EC_COMMAND_NO_PERMISSION)
 	{
-		builder->exit_code = EC_COMMAND_NO_PERMISSION;
+		ms_error_printer_command(command_name, strerror(EACCES));
 	}
-	else
+	else if (exit_code == __EC_NO_SUCH_FILE)
 	{
-		builder->exit_code = EC_SUCCESS;
+		ms_error_printer_command(command_name, strerror(ENOENT));
 	}
-	return (builder->exit_code);
+	else if (exit_code == __EC_IS_A_DIR)
+	{
+		ms_error_printer_command(command_name, strerror(EISDIR));
+	}
+	else if (exit_code == __EC_INTERNAL_ERROR)
+	{
+		ms_error_printer_internal_error();
+	}
+	return (exit_code);
 }
 
-void	ms_execve_builder_command_path_error(\
-struct s_ms_execve_builder *builder)
+t_ms_exit_code	ms_executable_exit_code_output(t_ms_exit_code exit_code)
 {
-	if (builder->exit_code == EC_COMMAND_NOT_FOUND)
-		ms_error_printer_command(builder->command_name->buffer, \
-			"command not found");
-	else if (builder->exit_code == EC_COMMAND_NO_PERMISSION)
-		ms_error_printer_command(builder->command_name->buffer, \
-			strerror(EACCES));
+	if (exit_code == __EC_NO_SUCH_FILE)
+	{
+		exit_code = EC_COMMAND_NOT_FOUND;
+	}
+	else if (exit_code == __EC_IS_A_DIR)
+	{
+		exit_code = EC_COMMAND_NO_PERMISSION;
+	}
+	else if (exit_code == __EC_INTERNAL_ERROR)
+	{
+		exit_code = EC_FAILURE;
+	}
+	return (exit_code);
 }
 
-void	ms_execve_builder_command_name_error(\
-struct s_ms_execve_builder *builder, int error_num)
+t_ms_exit_code	ms_executable_exit_code_evaluate(char *command_name, \
+bool is_path, bool print)
 {
-	ms_error_printer_command(builder->command_name->buffer, \
-		strerror(error_num));
+	t_ms_exit_code	exit_code;
+
+	exit_code = ms_executable_exit_code_determine(command_name, is_path);
+	if (print)
+		ms_executable_exit_code_print(exit_code, command_name);
+	return (ms_executable_exit_code_output(exit_code));
 }
