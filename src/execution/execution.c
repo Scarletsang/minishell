@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 10:44:08 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:08:03 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ struct s_ast_node *root)
 
 t_ms_exit_code	ms_execute_ast(struct s_ms *ms, struct s_ast_node *root)
 {
+	t_ms_exit_code	exit_code;
+
+	exit_code = EC_FAILURE;
 	if (root->type == AST_NODE_PIPE)
 	{
 		if (ms_execute_pipe(ms, root) == PROGRAM_ERROR)
@@ -82,10 +85,11 @@ t_ms_exit_code	ms_execute_ast(struct s_ms *ms, struct s_ast_node *root)
 	{
 		if (ms_ast_node_content_expand(root->content, ms) == PROGRAM_ERROR)
 			return (ms_error_printer_internal_error(), EC_FAILURE);
-		if (ms_execute_ast_node_cmd_single(ms, root) == EC_FAILURE)
-			return (EC_FAILURE);
+		exit_code = ms_execute_ast_node_cmd_single(ms, root);
 	}
 	else
 		return (EC_FAILURE);
+	if (ms->executor.last_child_pid == -1)
+		return (exit_code);
 	return (ms_executor_wait(&ms->executor));
 }
