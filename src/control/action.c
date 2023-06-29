@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 02:33:24 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 16:53:25 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:52:14 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include "MINISHELL/parser.h"
 #include "MINISHELL/execution.h"
 #include "parser_tester.h"
+
+#ifdef DEBUG
 
 t_ms_exit_code	ms_interpret(struct s_ms *ms, char *line)
 {
@@ -29,6 +31,22 @@ t_ms_exit_code	ms_interpret(struct s_ms *ms, char *line)
 	else
 		return (EC_SYNTAX_ERROR);
 }
+#else
+
+t_ms_exit_code	ms_interpret(struct s_ms *ms, char *line)
+{
+	t_ms_exit_code	exit_code;
+
+	if (parser_run(&ms->ast_root, line) == PROGRAM_SUCCESS)
+	{
+		exit_code = ms_execute_ast(ms, ms->ast_root);
+		return (exit_code);
+	}
+	else
+		return (EC_SYNTAX_ERROR);
+}
+
+#endif
 
 int	ms_exit_code_save(struct s_ms *ms, t_ms_exit_code exit_code)
 {

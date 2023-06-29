@@ -8,6 +8,7 @@ CC:=cc
 CFLAGS:= -Wall -Wextra -Werror
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
+	CFLAGS+= -DDEBUG=yes
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
