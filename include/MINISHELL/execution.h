@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:21:44 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 10:33:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 10:40:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,18 @@ struct s_ast_node *root);
 
 t_ms_status					ms_execute_pipe(struct s_ms *ms, \
 struct s_ast_node *pipe);
+
+t_ms_status					ms_execute_pipe_last(struct s_ms *ms, \
+struct s_ast_node *pipe);
+
+/**
+ * @brief ast node execution
+*/
+
+t_ms_status					ms_execute_ast_node(struct s_ms *ms, \
+struct s_ast_node *node);
+
+t_ms_status					ms_execute_ast_node_last(struct s_ms *ms, \
+struct s_ast_node *node);
 
 #endif

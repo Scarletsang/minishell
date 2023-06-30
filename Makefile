@@ -84,6 +84,7 @@ COMMAND_SRC:=\
 EXECUTION_SRC:=\
 	execution/execution.c \
 	execution/pipe.c \
+	execution/node.c \
 	execution/expansion.c
 DEBUGGER_SRC:= \
 	../spec/parser/parser_tester.c \
