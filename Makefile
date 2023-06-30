@@ -83,6 +83,7 @@ COMMAND_SRC:=\
 	execution/command/builtins/exit.c
 EXECUTION_SRC:=\
 	execution/execution.c \
+	execution/mode.c \
 	execution/pipe.c \
 	execution/node.c \
 	execution/expansion.c

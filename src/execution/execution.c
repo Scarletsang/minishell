@@ -6,38 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 10:22:48 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 10:48:24 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "LIBFT/string.h"
 #include "MINISHELL/execution.h"
 #include "MINISHELL/execution/command.h"
 #include "MINISHELL/error_printer.h"
-
-enum e_ms_execution_mode	ms_execution_mode(t_sb_vector *command)
-{
-	char	*name;
-
-	if (command->size == 0)
-		return (MODE_NO_COMMAND);
-	name = ((t_ft_sb *) command->buffer)->buffer;
-	if (ft_strcmp(name, "echo") == 0)
-		return (MODE_BUILTIN_ECHO);
-	if (ft_strcmp(name, "cd") == 0)
-		return (MODE_BUILTIN_CD);
-	if (ft_strcmp(name, "pwd") == 0)
-		return (MODE_BUILTIN_PWD);
-	if (ft_strcmp(name, "unset") == 0)
-		return (MODE_BUILTIN_UNSET);
-	if (ft_strcmp(name, "export") == 0)
-		return (MODE_BUILTIN_EXPORT);
-	if (ft_strcmp(name, "env") == 0)
-		return (MODE_BUILTIN_ENV);
-	if (ft_strcmp(name, "exit") == 0)
-		return (MODE_BUILTIN_EXIT);
-	return (MODE_EXECUTABLE);
-}
 
 static t_ms_exit_code	ms_execute_ast_node_cmd_single(struct s_ms *ms, \
 struct s_ast_node *root)
