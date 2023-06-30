@@ -6,13 +6,14 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:04:28 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:25:34 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 12:13:09 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/string.h"
 #include "MINISHELL/execution/command/external.h"
 #include "MINISHELL/error_printer.h"
+#include <stdio.h>
 
 static t_ms_exit_code	ms_execve_builder_path_build_and_validate(\
 struct s_ms_execve_builder *builder)
@@ -24,10 +25,17 @@ struct s_ms_execve_builder *builder)
 	{
 		exit_code = ms_exit_code_evaluate(\
 			builder->command_name->buffer, true, true);
+		builder->command_path = *builder->command_name;
 	}
 	else
 	{
-		exit_code = ms_execve_builder_path_build(builder);
+		if (*((char *) builder->command_name->buffer) == '\0')
+		{
+			exit_code = ms_exit_code_evaluate(\
+				builder->command_name->buffer, false, false);
+		}
+		else
+			exit_code = ms_execve_builder_path_build(builder);
 		ms_exit_code_print(exit_code, \
 			builder->command_name->buffer);
 		exit_code = ms_exit_code_output(exit_code);
