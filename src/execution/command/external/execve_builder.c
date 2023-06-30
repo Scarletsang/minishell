@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 12:06:40 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 22:18:22 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ struct s_ms *ms, t_sb_vector *command)
 		builder->command_name = NULL;
 	else
 		builder->command_name = ft_vector_get(command, 0);
-	return (ft_sb_init(&builder->command_path, 20));
+	if (ft_sb_init(&builder->command_path, 20))
+		return (PROGRAM_ERROR);
+	return (PROGRAM_SUCCESS);
 }
 
 void	ms_execve_builder_free(struct s_ms_execve_builder *builder)
 {
 	if (builder->argv)
 		free(builder->argv);
-	if (builder->command_path.buffer == builder->command_name->buffer)
-		ft_sb_reset(&builder->command_path);
-	else
+	if (builder->command_path.buffer != builder->command_name->buffer)
 		ft_sb_free(&builder->command_path);
 }
 

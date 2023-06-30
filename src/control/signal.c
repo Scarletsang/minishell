@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/29 15:21:32 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:09:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 22:04:47 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	ms_signal_handlers_set(void)
 {
 	struct sigaction	sigact;
 
+	sigemptyset(&sigact.sa_mask);
 	sigact.sa_flags = SA_RESTART;
 	sigact.sa_handler = &ms_sigint_handler;
 	sigaction(SIGINT, &sigact, NULL);

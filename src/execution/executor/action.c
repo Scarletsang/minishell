@@ -6,11 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:51:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 21:47:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
+#include <sys/wait.h>
 #include "MINISHELL/execution/executor.h"
 
 t_ms_status	ms_executor_redirect_from_file(struct s_ms_executor *executor, \
