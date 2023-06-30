@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:10:15 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 12:02:47 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 12:32:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ struct s_ms_executor *executor, struct s_ms_vars *vars)
 
 static bool	ms_strcmp_till(const char *s1, const char *s2, char c)
 {
+	if (!s1 || !s2)
+		return (false);
 	while (*s1 && *s2 && (*s1 == *s2))
 	{
 		if (*s1 == c)
@@ -68,7 +70,8 @@ char *pair)
 		}
 		ft_vector_iterator_next(&iterator);
 	}
-	if (!ft_vector_append(&executor->envp, &pair))
+	ft_vector_set(&executor->envp, executor->envp.size - 1, &pair);
+	if (!ft_vector_append(&executor->envp, NULL))
 		return (PROGRAM_ERROR);
 	return (PROGRAM_SUCCESS);
 }
