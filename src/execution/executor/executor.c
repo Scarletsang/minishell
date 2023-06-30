@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 03:19:57 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 21:48:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ms_status	ms_executor_init(struct s_ms_executor *executor)
 {
 	if (ft_vector_init(&executor->envp, sizeof(char *), 20, \
 		ft_vector_copy_string) || \
-		ft_iostream_init(&executor->iostream))
+		ft_iostream_init(&executor->heredoc))
 		return (PROGRAM_ERROR);
 	executor->stdin_fd = dup(STDIN_FILENO);
 	executor->stdout_fd = dup(STDOUT_FILENO);
@@ -34,7 +34,7 @@ t_ms_status	ms_executor_init(struct s_ms_executor *executor)
 void	ms_executor_reset(struct s_ms_executor *executor)
 {
 	ms_piper_init(&executor->piper);
-	ft_iostream_reset(&executor->iostream);
+	ft_iostream_reset(&executor->heredoc);
 	executor->last_child_pid = -1;
 }
 
@@ -44,13 +44,13 @@ t_ms_status	ms_executor_free(struct s_ms_executor *executor)
 
 	executor->last_child_pid = -1;
 	ft_vector_free(&executor->envp);
-	ft_iostream_free(&executor->iostream);
+	ft_iostream_free(&executor->heredoc);
 	exit_code = PROGRAM_SUCCESS;
 	if (close(executor->stdin_fd) == -1)
 		exit_code = PROGRAM_ERROR;
 	if (close(executor->stdout_fd) == -1)
 		exit_code = PROGRAM_ERROR;
-	if (ms_piper_destroy(&executor->piper))
+	if (ms_piper_reset(&executor->piper))
 		exit_code = PROGRAM_ERROR;
 	return (exit_code);
 }

@@ -6,13 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:28:06 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:42:05 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 10:28:42 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution.h"
 #include "MINISHELL/execution/expander.h"
-#include "MINISHELL/error_printer.h"
 
 static t_ms_status	ms_executor_expand_ast_redirection_vector(\
 t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
@@ -69,7 +68,6 @@ struct s_ast_node_content *content, struct s_ms *ms)
 		(ms_executor_expand_sb_vector(\
 			&content->command, ms) == PROGRAM_ERROR))
 	{
-		ms_error_printer_internal_error();
 		return (PROGRAM_ERROR);
 	}
 	return (PROGRAM_SUCCESS);

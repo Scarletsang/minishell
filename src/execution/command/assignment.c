@@ -6,12 +6,12 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 13:22:17 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 12:23:12 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "LIBFT/stringbuilder/clipper.h"
-#include "MINISHELL/execution.h"
+#include "MINISHELL/execution/command.h"
 
 t_ms_status	ms_execute_assignments(struct s_ms *ms, \
 t_sb_vector *assignments)
@@ -25,7 +25,8 @@ t_sb_vector *assignments)
 	while (!ft_vector_iterator_is_end(&iterator))
 	{
 		if (ms_executor_envp_set(&ms->executor, \
-			((t_ft_sb *) ft_vector_iterator_current(&iterator))->buffer))
+			((t_ft_sb *) ft_vector_iterator_current(&iterator))->buffer) \
+				== PROGRAM_ERROR)
 			return (PROGRAM_ERROR);
 		ft_vector_iterator_next(&iterator);
 	}
@@ -47,7 +48,7 @@ t_sb_vector *assignments)
 		ft_sb_clipper_init(&clipper, value_sb);
 		ft_sb_clipper_area(&clipper, NULL, "=");
 		key = ft_sb_clipper_run(&clipper);
-		if (ms_vars_declare(&ms->vars, key, value_sb->buffer))
+		if (ms_vars_declare(&ms->vars, key, value_sb->buffer) == PROGRAM_ERROR)
 		{
 			free(key);
 			return (PROGRAM_ERROR);

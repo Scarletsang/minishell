@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 02:36:47 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:34:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include "MINISHELL/parser/ast.h"
 # include "MINISHELL/execution/vars.h"
 # include "MINISHELL/execution/executor.h"
+
+extern volatile t_ms_exit_code	g_exit_code;
 
 struct s_ms
 {
@@ -38,8 +40,12 @@ bool			ms_line_is_empty(char *line);
 
 int				ms_exit_code_save(struct s_ms *ms, t_ms_exit_code exit_code);
 
+int				ms_exit_code_save_from_signal(struct s_ms *ms);
+
 int				ms_terminal_settings_change(void);
 
 int				ms_terminal_settings_restore(void);
+
+int				ms_signal_handlers_set(void);
 
 #endif

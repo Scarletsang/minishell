@@ -8,6 +8,7 @@ CC:=cc
 CFLAGS:= -Wall -Wextra -Werror
 ifdef FSANITIZE
 	CFLAGS+= -g3 -fsanitize=address
+	CFLAGS+= -DDEBUG=yes
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
@@ -21,6 +22,7 @@ INCLUDE_DIR= \
 # To add souce files, create a varaible for each folder, and then
 # contatenate them in the SRC variable like this:
 COMMON_SRC:=\
+	exit_code.c \
 	status_code.c
 LEXER_SRC:=\
 	lexer/lexer.c \
@@ -58,39 +60,44 @@ EXPANDER_SRC:=\
 PIPER_SRC:=\
 	execution/piper/internal.c \
 	execution/piper/piper.c \
-	execution/piper/transmission.c
+	execution/piper/receiver.c \
+	execution/piper/sender.c
 EXECUTOR_SRC:=\
 	execution/executor/executor.c \
 	execution/executor/action.c \
 	execution/executor/heredoc.c \
-	execution/executor/envp.c
-BUILTINS_SRC:=\
-	execution/builtins/echo.c \
-	execution/builtins/cd.c \
-	execution/builtins/export.c \
-	execution/builtins/pwd.c \
-	execution/builtins/unset.c \
-	execution/builtins/env.c \
-	execution/builtins/exit.c
-EXECUTION_SRC:=\
-	execution/execution.c \
-	execution/pipe.c \
-	execution/expansion.c \
-	execution/builtin.c \
-	execution/command.c \
+	execution/executor/envp_query.c \
+ 	execution/executor/envp.c
+COMMAND_SRC:=\
+	execution/command/command.c \
 	execution/command/assignment.c \
 	execution/command/redirection.c \
-	execution/command/executable.c
+	execution/command/external/executable.c \
+	execution/command/external/execve_builder.c \
+	execution/command/builtins/echo.c \
+	execution/command/builtins/cd.c \
+	execution/command/builtins/export.c \
+	execution/command/builtins/pwd.c \
+	execution/command/builtins/unset.c \
+	execution/command/builtins/env.c \
+	execution/command/builtins/exit.c
+EXECUTION_SRC:=\
+	execution/execution.c \
+	execution/mode.c \
+	execution/pipe.c \
+	execution/node.c \
+	execution/expansion.c
 DEBUGGER_SRC:= \
 	../spec/parser/parser_tester.c \
 	../spec/parser/parser_tester_printer.c
 MAIN_SRC:= \
 	control/control.c \
 	control/action.c \
+	control/signal.c \
 	control/terminal.c \
 	main.c
 
-SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(BUILTINS_SRC) $(EXECUTION_SRC) $(DEBUGGER_SRC) $(MAIN_SRC)
+SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(COMMAND_SRC) $(EXECUTION_SRC) $(DEBUGGER_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######

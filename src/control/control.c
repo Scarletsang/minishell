@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 00:17:27 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/26 04:50:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/29 17:10:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	ms_init(struct s_ms *ms)
 		ms_vars_free(&ms->vars);
 		return (EXIT_FAILURE);
 	}
+	g_exit_code = EC_SUCCESS;
 	ms->ast_root = NULL;
 	ms->line = NULL;
 	return (EXIT_SUCCESS);
