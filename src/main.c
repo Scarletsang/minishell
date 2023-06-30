@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:38:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 11:17:29 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ static int	ms_interactive_mode(char *prompt)
 				ms_exit_code_save(&ms, exit_code);
 			}
 		}
+		ms_exit_code_save_from_signal(&ms);
 		ms_reset(&ms);
 		ms.line = readline(prompt);
 	}
