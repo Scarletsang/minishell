@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_code.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 17:05:48 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:55:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 18:29:39 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,21 @@
 #include "MINISHELL/status_code.h"
 #include "MINISHELL/error_printer.h"
 
-t_ms_exit_code	ms_exit_code_determine(const char *command_name, \
+t_ms_exit_code	ms_exit_code_determine(const char *path_name, \
 bool is_path)
 {
 	struct stat		path_stat;
 	t_ms_exit_code	exit_code;
 
 	exit_code = EC_SUCCESS;
-	if (access(command_name, F_OK) == -1)
+	if (access(path_name, F_OK) == -1)
 	{
 		if (is_path)
 			exit_code = __EC_NO_SUCH_FILE;
 		else
 			exit_code = EC_COMMAND_NOT_FOUND;
 	}
-	else if (stat(command_name, &path_stat) == -1)
+	else if (stat(path_name, &path_stat) == -1)
 	{
 		exit_code = __EC_INTERNAL_ERROR;
 	}
@@ -39,7 +39,7 @@ bool is_path)
 	{
 		exit_code = __EC_IS_A_DIR;
 	}
-	else if (access(command_name, X_OK) == -1)
+	else if (access(path_name, X_OK) == -1)
 	{
 		exit_code = EC_COMMAND_NO_PERMISSION;
 	}
