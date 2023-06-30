@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 20:19:26 by sawang           ###   ########.fr       */
+/*   Updated: 2023/06/30 20:41:02 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,5 @@ t_ms_exit_code	ms_execute_builtin_env(struct s_ms *ms, t_sb_vector *command)
 			printf("%s\n", (char *) entry->value);
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (EC_SUCCESS);
 }
