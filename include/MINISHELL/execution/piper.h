@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:42:09 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 21:48:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 09:30:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,15 @@ int		ms_piper_reset(struct s_ms_piper *piper);
 
 int		ms_piper_create_sender(struct s_ms_piper *piper);
 
-void	ms_piper_create_receiver(struct s_ms_piper *piper);
-
 int		ms_piper_use_sender(struct s_ms_piper *piper);
 
-int		ms_piper_close_receiver(struct s_ms_piper *piper);
+int		ms_piper_close_sender(struct s_ms_piper *piper);
+
+void	ms_piper_create_receiver(struct s_ms_piper *piper);
 
 int		ms_piper_use_receiver(struct s_ms_piper *piper);
+
+int		ms_piper_close_receiver(struct s_ms_piper *piper);
 
 /**
  * @brief private interface

@@ -60,7 +60,8 @@ EXPANDER_SRC:=\
 PIPER_SRC:=\
 	execution/piper/internal.c \
 	execution/piper/piper.c \
-	execution/piper/transmission.c
+	execution/piper/receiver.c \
+	execution/piper/sender.c
 EXECUTOR_SRC:=\
 	execution/executor/executor.c \
 	execution/executor/action.c \
