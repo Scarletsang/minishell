@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 22:29:09 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/01 13:41:13 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "LIBFT/ctype.h"
 #include "MINISHELL/error_printer.h"
 
-bool	name_is_valid_indentifier(char *name)
+static bool	unset_name_is_valid_indentifier(char *name)
 {
 	if (!ft_isalpha(*name) && *name != '_')
 		return (false);
@@ -42,7 +42,7 @@ t_ms_exit_code	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command)
 	while (!ft_vector_iterator_is_end(&vec_iter))
 	{
 		entry_key = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
-		if (!name_is_valid_indentifier(entry_key))
+		if (!unset_name_is_valid_indentifier(entry_key))
 		{
 			ms_error_printer_builtin("unset", entry_key,
 				"not a valid identifier");
