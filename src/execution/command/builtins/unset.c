@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/03 14:00:24 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/03 15:36:30 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ t_ms_exit_code	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command)
 			ms_error_printer_builtin("unset", key,
 				"not a valid identifier");
 			exit_code = EC_FAILURE;
-			ft_vector_iterator_next(&vec_iter);
-			continue ;
 		}
-		ms_vars_unset(&ms->vars, key);
+		else
+			ms_vars_unset(&ms->vars, key);
 		ft_vector_iterator_next(&vec_iter);
 	}
 	return (exit_code);
