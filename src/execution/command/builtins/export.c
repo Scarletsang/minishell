@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/03 14:31:30 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/03 15:31:59 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,8 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 			ms_error_printer_builtin("export", key, "not a valid identifier");
 			exit_code = EC_FAILURE;
 			free(key);
-			ft_vector_iterator_next(&vec_iter);
-			continue ;
 		}
-		if (ms_vars_declare_export(&ms->vars, value, key) == EXIT_FAILURE)
+		else if (ms_vars_declare_export(&ms->vars, value, key) == EXIT_FAILURE)
 			return (ms_error_printer_internal_error(), free(key), EC_FAILURE);
 		ft_vector_iterator_next(&vec_iter);
 	}
