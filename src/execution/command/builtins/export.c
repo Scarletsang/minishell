@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/01 17:00:02 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/03 14:28:38 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,9 @@ void	ms_exported_vars_print(const struct s_ms_vars *vars, \
 			printf("%s %s\n", declare_prefix, (char *) entry->value);
 		i++;
 	}
-	printf("\n");
-	// i = 0;
-	// while (i < vars->shell.capacity)
-	// {
-	// 	entry = ft_vector_get(&vars->shell, i);
-	// 	if (entry->key)
-	// 		printf("%s %s\n", declare_prefix, (char *) entry->value);
-	// 	i++;
-	// }
 }
 
-static int	ms_vars_declare_and_export(struct s_ms_vars *vars, \
+static int	ms_vars_declare_export(struct s_ms_vars *vars, \
 	const char *entry, const char *entry_key)
 {
 	char	*equal_sign;
@@ -68,35 +59,41 @@ static int	ms_vars_declare_and_export(struct s_ms_vars *vars, \
 			if (ms_vars_declare(vars, entry_key, entry) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
-				return (EXIT_FAILURE); //bug: env prints it.
+				return (EXIT_FAILURE);
 			return (EXIT_SUCCESS);
 		}
-		if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
-			return (EXIT_FAILURE); //bug
+		return (EXIT_SUCCESS);
 	}
 	else
 	{
-		printf("test: %s\n", entry_key);
 		if (ms_vars_declare(vars, entry_key, entry) == EXIT_FAILURE)
-		{
-			printf("add to shell database failure\n");
 			return (EXIT_FAILURE);
-		}
 		if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
-		{
 			return (EXIT_FAILURE);
-		}
+		return (EXIT_SUCCESS);
 	}
-	return (EXIT_SUCCESS);
+}
+
+char	*get_entry_key_from_str(char *value)
+{
+	t_ft_slice	entry_slice;
+	char		*entry_key;
+
+	entry_slice.content = value;
+	if (ft_strchr(value, '=') == NULL)
+		entry_slice.size = ft_strlen(value);
+	else
+		entry_slice.size = ft_strchr(value, '=') - value;
+	entry_key = ft_string_slice_to_cstring(entry_slice);
+	return (entry_key);
 }
 
 t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 {
 	t_ms_exit_code				exit_code;
 	struct s_ft_vector_iterator	vec_iter;
-	char						*entry;
-	t_ft_slice					entry_slice;
-	char						*entry_key;
+	char						*value;
+	char						*key;
 
 	if (command->size == 1)
 		return (ms_exported_vars_print(&ms->vars, "declare -x"), EC_SUCCESS);
@@ -105,24 +102,19 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 	ft_vector_iterator_next(&vec_iter);
 	while (!ft_vector_iterator_is_end(&vec_iter))
 	{
-		entry = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
-		entry_slice.content = entry;
-		if (ft_strchr(entry, '=') == NULL)
-			entry_slice.size = ft_strlen(entry);
-		else
-			entry_slice.size = ft_strchr(entry, '=') - entry;
-		entry_key = ft_string_slice_to_cstring(entry_slice);
-		if (!export_name_is_valid_indentifier(entry_key))
+		value = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
+		key = get_entry_key_from_str(value);
+		if (!export_name_is_valid_indentifier(key))
 		{
-			ms_error_printer_builtin("export", entry_key, \
-				"not a valid identifier");
+			ms_error_printer_builtin("export", key, "not a valid identifier");
 			exit_code = EC_FAILURE;
+			free(key);
 			ft_vector_iterator_next(&vec_iter);
 			continue ;
 		}
-		if (ms_vars_declare_and_export(&ms->vars, entry, entry_key) == EC_FAILURE)
-			return (EC_FAILURE);
+		if (ms_vars_declare_export(&ms->vars, value, key) == EXIT_FAILURE)
+			return (ms_error_printer_internal_error(), free(key), EC_FAILURE);
 		ft_vector_iterator_next(&vec_iter);
 	}
-	return (exit_code);
+	return (free(key), exit_code);
 }
