@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 13:37:07 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/03 16:05:19 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ struct s_ms_executor
 	t_ft_vector				envp;
 	int						stdin_fd;
 	int						stdout_fd;
+	t_ms_exit_code			last_exit_code;
 	pid_t					last_child_pid;
 };
 
