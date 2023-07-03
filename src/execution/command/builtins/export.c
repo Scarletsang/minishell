@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/03 14:28:38 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/03 14:31:30 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static bool	export_name_is_valid_indentifier(char *name)
 	return (true);
 }
 
-void	ms_exported_vars_print(const struct s_ms_vars *vars, \
+static void	ms_exported_vars_print(const struct s_ms_vars *vars, \
 	char *declare_prefix)
 {
 	size_t					i;
@@ -74,7 +74,7 @@ static int	ms_vars_declare_export(struct s_ms_vars *vars, \
 	}
 }
 
-char	*get_entry_key_from_str(char *value)
+static char	*get_entry_key_from_str(char *value)
 {
 	t_ft_slice	entry_slice;
 	char		*entry_key;
