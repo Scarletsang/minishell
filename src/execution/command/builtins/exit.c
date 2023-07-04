@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/04 11:23:03 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/04 13:26:00 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,21 @@
 #include "LIBFT/general.h"
 #include "MINISHELL/error_printer.h"
 
-	// 9223372036854775807
+static bool	num_is_in_ll_range(long long value, int sign)
+{
+	if (value < 0)
+	{
+		if (sign == 1)
+			return (false);
+		if (sign == -1 && value != LLONG_MIN)
+			return (false);
+	}
+	return (true);
+}
 
 static bool	is_valid_ll(char *str, long long *n)
 {
 	int			sign;
-	long long	value;
 
 	sign = 1;
 	if (!str || !*str)
@@ -32,25 +41,23 @@ static bool	is_valid_ll(char *str, long long *n)
 		str++;
 	if (!*str)
 		return (false);
-	value = 0;
 	while (ft_isdigit(*str))
 	{
-		value = value * 10 + (*str - '0');
+		*n = *n * 10 + (*str - '0');
 		str++;
 	}
 	if (*str)
 		return (false);
-	if (value < 0)
-	{
-		if (sign == 1)
-			return (false);
-		if (sign == -1 && value == LLONG_MIN)
-			return (true);
-		else
-			return (false);
-	}
-	*n = (long long)value * sign;
+	if (!num_is_in_ll_range(*n, sign))
+		return (false);
+	*n = (long long)*n * sign;
 	return (true);
+}
+
+static void	builtin_exit_with_no_arg(struct s_ms *ms)
+{
+	ms_free(ms);
+	exit (ms->executor.last_exit_code);
 }
 
 t_ms_exit_code	ms_execute_builtin_exit(struct s_ms *ms, t_sb_vector *command)
@@ -58,30 +65,24 @@ t_ms_exit_code	ms_execute_builtin_exit(struct s_ms *ms, t_sb_vector *command)
 	long long					n;
 	struct s_ft_vector_iterator	vec_iter;
 
+	printf("exit\n");
 	if (command->size == 1)
-	{
-		ms_free(ms);
-		exit (ms->executor.last_exit_code);
-	}
+		builtin_exit_with_no_arg(ms);
 	n = 0;
 	ft_vector_iterator_init(&vec_iter, command);
 	ft_vector_iterator_next(&vec_iter);
-	if (is_valid_ll(((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer, &n) \
-		== false)
+	if (is_valid_ll(((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer, \
+		&n) == false)
 	{
-		printf("exit\n");
-		ms_error_printer_builtin("exit", NULL, "numeric argument required");
 		ms_free(ms);
-		exit (255);
+		ms_error_printer_builtin("exit", NULL, "numeric argument required");
+		exit (-1);
 	}
 	if (command->size > 2)
 	{
-		printf("exit\n");
 		ms_error_printer_builtin("exit", NULL, "too many arguments");
-		// ms_free(ms); // should we free ms here? different in child process or parent process?
 		return (EC_FAILURE);
 	}
-	printf("exit\n");
 	ms_free(ms);
 	exit (n);
 }
