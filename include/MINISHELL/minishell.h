@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:34:01 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:20:36 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int				ms_terminal_settings_change(void);
 
 int				ms_terminal_settings_restore(void);
 
-int				ms_signal_handlers_set(void);
+int				ms_signal_handlers_interactive_set(void);
+
+int				ms_signal_handlers_foreground_command_set(void);
 
 #endif
