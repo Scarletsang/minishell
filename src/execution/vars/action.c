@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/05 12:16:35 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/05 13:06:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,15 @@ int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 
 	value = ms_vars_database_get(&vars->shell, key);
 	if (!value)
-		value = key;
-	if (!ft_ht_update(&vars->environment, key, value, NULL))
-		return (EXIT_FAILURE);
+	{
+		if (!ft_ht_update(&vars->environment, key, key, free))
+			return (EXIT_FAILURE);
+	}
+	else
+	{
+		if (!ft_ht_update(&vars->environment, key, value, NULL))
+			return (EXIT_FAILURE);
+	}
 	vars->environnement_changed = true;
 	return (EXIT_SUCCESS);
 }
