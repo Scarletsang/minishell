@@ -6,12 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 10:43:16 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 19:36:12 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include "MINISHELL/execution/command.h"
+#include "MINISHELL/error_printer.h"
 #include "LIBFT/string.h"
 #include "LIBFT/io.h"
 #include "LIBFT/iostream.h"
@@ -57,15 +58,18 @@ struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 		redirection = ft_vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_HEREDOC)
 		{
-			if (ms_execute_heredoc(executor, redirection) \
-				== PROGRAM_ERROR)
+			if (ms_execute_heredoc(executor, redirection) == PROGRAM_ERROR)
 				return (PROGRAM_ERROR);
 		}
 		if (redirection->type == REDIRCT_STDIN)
 		{
 			if (ms_executor_redirect_from_file(executor, \
 				redirection->content.buffer, O_RDONLY) == PROGRAM_ERROR)
+			{
+				ms_error_printer_command(redirection->content.buffer, \
+					strerror(errno));
 				return (PROGRAM_ERROR);
+			}
 		}
 		ft_vector_iterator_next(&iterator);
 	}
@@ -77,25 +81,25 @@ t_ast_redirection_vector *redirection_out)
 {
 	t_ft_vector_iterator		iterator;
 	struct s_ast_redirection	*redirection;
+	int							flags;
 
 	ft_vector_iterator_init(&iterator, redirection_out);
 	while (!ft_vector_iterator_is_end(&iterator))
 	{
 		redirection = ft_vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_STDOUT)
-		{
-			if (ms_executor_redirect_to_file(executor, \
-				redirection->content.buffer, O_WRONLY | O_CREAT | O_TRUNC) \
-					== PROGRAM_ERROR)
-				return (PROGRAM_ERROR);
-		}
+			flags = O_WRONLY | O_CREAT | O_TRUNC;
 		else if (redirection->type == REDIRECT_STDOUT_APPEND)
+			flags = O_WRONLY | O_CREAT | O_APPEND;
+		else
 		{
-			if (ms_executor_redirect_to_file(executor, \
-				redirection->content.buffer, O_WRONLY | O_CREAT | O_APPEND) \
-					== PROGRAM_ERROR)
-				return (PROGRAM_ERROR);
+			ft_vector_iterator_next(&iterator);
+			continue ;
 		}
+		if (ms_executor_redirect_to_file(executor, \
+			redirection->content.buffer, flags) == PROGRAM_ERROR)
+			return (ms_error_printer_command(redirection->content.buffer, \
+				strerror(errno)), PROGRAM_ERROR);
 		ft_vector_iterator_next(&iterator);
 	}
 	return (PROGRAM_SUCCESS);
