@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assignment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 12:23:12 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 13:08:51 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_sb_vector *assignments)
 			free(key);
 			return (PROGRAM_ERROR);
 		}
+		free(key);
 		ft_vector_iterator_next(&iterator);
 	}
 	return (PROGRAM_SUCCESS);
