@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/03 16:05:19 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/05 23:18:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 struct s_ms_executor
 {
 	struct s_ms_piper		piper;
-	struct s_ft_iostream	heredoc;
+	struct s_ft_iostream	stdin_stream;
 	t_ft_vector				envp;
-	int						stdin_fd;
-	int						stdout_fd;
+	int						redirection_in_fd;
+	int						redirection_out_fd;
 	t_ms_exit_code			last_exit_code;
 	pid_t					last_child_pid;
 };
@@ -52,18 +52,20 @@ pid_t			ms_executor_fork(struct s_ms_executor *executor);
 
 t_ms_exit_code	ms_executor_wait(struct s_ms_executor *executor);
 
-t_ms_status		ms_executor_redirect_from_file(struct s_ms_executor *executor, \
-const char *filename, int flags);
+t_ms_status		ms_executor_redirection_in_file_open(\
+struct s_ms_executor *executor, const char *filename, int flags);
 
-t_ms_status		ms_executor_redirect_to_file(struct s_ms_executor *executor, \
-const char *filename, int flags);
+t_ms_status		ms_executor_redirection_out_file_open(\
+struct s_ms_executor *executor, const char *filename, int flags);
 
-t_ms_status		ms_executor_reset_stdin_stdout(struct s_ms_executor *executor);
+t_ms_status		ms_executor_redirect_in_and_out(\
+struct s_ms_executor *executor);
 
 t_ms_status		ms_executor_open_heredoc(\
 struct s_ms_executor *executor, int *fd);
 
-t_ms_status		ms_executor_redirect_from_heredoc(int opened_heredoc_fd);
+t_ms_status		ms_executor_redirect_from_heredoc(\
+struct s_ms_executor *executor);
 
 ////////////////////////////////////////////
 ////////////   envp interface   ////////////

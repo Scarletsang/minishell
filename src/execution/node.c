@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:19:54 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 10:35:37 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 23:25:27 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,19 @@ struct s_ast_node *node)
 
 t_ms_status	ms_execute_ast_node(struct s_ms *ms, struct s_ast_node *node)
 {
+	t_ms_status	status;
+
 	if (node->type == AST_NODE_PIPE)
 		return (ms_execute_pipe(ms, node));
 	else if (node->type == AST_NODE_CMD)
 	{
+		ms->executor.redirection_in_fd = STDIN_FILENO;
+		ms->executor.redirection_out_fd = STDOUT_FILENO;
 		if (ms_ast_node_content_expand(node->content, ms) == PROGRAM_ERROR)
 			return (PROGRAM_ERROR);
+		status = ms_all_redirection_in_out_open(&ms->executor, node->content);
+		if (status != PROGRAM_SUCCESS)
+			return (status);
 		return (ms_execute_ast_node_cmd(ms, node));
 	}
 	return (PROGRAM_FAILURE);
@@ -85,10 +92,17 @@ t_ms_status	ms_execute_ast_node(struct s_ms *ms, struct s_ast_node *node)
 
 t_ms_status	ms_execute_ast_node_last(struct s_ms *ms, struct s_ast_node *node)
 {
+	t_ms_status	status;
+
 	if (node->type == AST_NODE_CMD)
 	{
+		ms->executor.redirection_in_fd = STDIN_FILENO;
+		ms->executor.redirection_out_fd = STDOUT_FILENO;
 		if (ms_ast_node_content_expand(node->content, ms) == PROGRAM_ERROR)
 			return (PROGRAM_ERROR);
+		status = ms_all_redirection_in_out_open(&ms->executor, node->content);
+		if (status != PROGRAM_SUCCESS)
+			return (status);
 		return (ms_execute_ast_node_cmd_last(ms, node));
 	}
 	return (PROGRAM_FAILURE);
