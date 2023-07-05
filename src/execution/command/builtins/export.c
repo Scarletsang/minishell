@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 15:13:40 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 16:47:50 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,7 @@
 #include "LIBFT/string.h"
 #include "MINISHELL/error_printer.h"
 
-static bool	export_name_is_valid_indentifier(char *name)
-{
-	if (!ft_isalpha(*name) && *name != '_')
-		return (false);
-	while (*name && *name != '=')
-	{
-		if (!ft_isalnum(*name) && *name != '_')
-			return (false);
-		name++;
-	}
-	return (true);
-}
-
-static void	ms_exported_vars_print(const struct s_ms_vars *vars, \
+static void	export_vars_print(const struct s_ms_vars *vars, \
 	char *declare_prefix)
 {
 	size_t					i;
@@ -44,6 +31,13 @@ static void	ms_exported_vars_print(const struct s_ms_vars *vars, \
 			printf("%s %s\n", declare_prefix, (char *) entry->value);
 		i++;
 	}
+}
+
+static void	export_error_print_when_invalid_identifier(\
+	char *key, t_ms_exit_code *exit_code)
+{
+	ms_error_printer_builtin("export", key, "not a valid identifier");
+	*exit_code = EC_FAILURE;
 }
 
 static int	ms_vars_declare_export(struct s_ms_vars *vars, \
@@ -96,7 +90,7 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 	char						*key;
 
 	if (command->size == 1)
-		return (ms_exported_vars_print(&ms->vars, "declare -x"), EC_SUCCESS);
+		return (export_vars_print(&ms->vars, "declare -x"), EC_SUCCESS);
 	exit_code = EC_SUCCESS;
 	ft_vector_iterator_init(&vec_iter, command);
 	ft_vector_iterator_next(&vec_iter);
@@ -104,11 +98,8 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 	{
 		value = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
 		key = get_entry_key_from_str(value);
-		if (!key || !export_name_is_valid_indentifier(key))
-		{
-			ms_error_printer_builtin("export", key, "not a valid identifier");
-			exit_code = EC_FAILURE;
-		}
+		if (!name_is_valid_indentifier(key, '='))
+			export_error_print_when_invalid_identifier(key, &exit_code);
 		else if (ms_vars_declare_export(&ms->vars, value, key) == EXIT_FAILURE)
 			return (ms_error_printer_internal_error(), free(key), EC_FAILURE);
 		if (key)
