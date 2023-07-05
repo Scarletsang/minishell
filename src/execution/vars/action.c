@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/01 16:46:11 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/05 12:16:35 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,15 @@ int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 
 void	ms_vars_unset(struct s_ms_vars *vars, const char *key)
 {
-	ft_ht_delete(&vars->shell, key);
-	ft_ht_delete(&vars->environment, key);
-	vars->environnement_changed = true;
+	bool	is_deleted;
+
+	is_deleted = false;
+	if (ft_ht_delete(&vars->shell, key))
+		is_deleted = true;
+	if (ft_ht_delete(&vars->environment, key))
+		is_deleted = true;
+	if (is_deleted)
+		vars->environnement_changed = true;
 }
 
 const char	*ms_vars_echo(const struct s_ms_vars *vars, \

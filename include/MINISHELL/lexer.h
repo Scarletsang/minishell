@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/22 13:15:29 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:25:42 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 21:48:16 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ struct s_scanner
 {
 	char	*start;
 	char	*current;
-}		t_scanner;
+};
 
 struct s_token
 {
