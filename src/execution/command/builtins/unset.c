@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/03 15:36:30 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/05 16:47:24 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 #include "LIBFT/ctype.h"
 #include "MINISHELL/error_printer.h"
 
-static bool	unset_name_is_valid_indentifier(char *name)
+bool	name_is_valid_indentifier(char *name, char delimeter)
 {
+	if (!name)
+		return (false);
 	if (!ft_isalpha(*name) && *name != '_')
 		return (false);
-	while (*name)
+	while (*name && *name != delimeter)
 	{
 		if (!ft_isalnum(*name) && *name != '_')
 			return (false);
@@ -42,7 +44,7 @@ t_ms_exit_code	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command)
 	while (!ft_vector_iterator_is_end(&vec_iter))
 	{
 		key = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
-		if (!unset_name_is_valid_indentifier(key))
+		if (!name_is_valid_indentifier(key, '\0'))
 		{
 			ms_error_printer_builtin("unset", key,
 				"not a valid identifier");

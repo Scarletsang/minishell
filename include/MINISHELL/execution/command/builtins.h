@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:55:14 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/24 11:00:32 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 16:44:24 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ t_ms_exit_code	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command);
 t_ms_exit_code	ms_execute_builtin_env(struct s_ms *ms, t_sb_vector *command);
 
 t_ms_exit_code	ms_execute_builtin_exit(struct s_ms *ms, t_sb_vector *command);
+
+//builin utils for unset and export
+bool			name_is_valid_indentifier(char *name, char delimeter);
 
 #endif
