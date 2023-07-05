@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 13:00:18 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/05 15:13:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,14 +104,15 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 	{
 		value = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
 		key = get_entry_key_from_str(value);
-		if (!export_name_is_valid_indentifier(key))
+		if (!key || !export_name_is_valid_indentifier(key))
 		{
 			ms_error_printer_builtin("export", key, "not a valid identifier");
 			exit_code = EC_FAILURE;
 		}
 		else if (ms_vars_declare_export(&ms->vars, value, key) == EXIT_FAILURE)
 			return (ms_error_printer_internal_error(), free(key), EC_FAILURE);
-		free(key);
+		if (key)
+			free(key);
 		ft_vector_iterator_next(&vec_iter);
 	}
 	return (exit_code);
