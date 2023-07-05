@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   error_printer.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/22 19:54:18 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:57:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/06/30 17:51:26 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_PRINTER_H
 # define ERROR_PRINTER_H
 
+# include <errno.h>
+# include <strings.h>
 # include "LIBFT/stringbuilder.h"
 # include "MINISHELL/lexer.h"
 

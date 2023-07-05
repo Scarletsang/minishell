@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 21:48:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/03 16:06:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_ms_status	ms_executor_init(struct s_ms_executor *executor)
 	}
 	ft_vector_append(&executor->envp, NULL);
 	ms_piper_init(&executor->piper);
+	executor->last_exit_code = EC_SUCCESS;
 	executor->last_child_pid = -1;
 	return (PROGRAM_SUCCESS);
 }
