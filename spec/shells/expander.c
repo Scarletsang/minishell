@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:10:43 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/24 02:20:33 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:09:33 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ struct s_tparser *tparser)
 
 	if (ft_sb_init(&sb, TSHELL_MAX_INPUT_SIZE / 16))
 		return (TSHELL_FAILURE);
-	if (ft_sb_perform(&sb, ft_sb_action_append(tparser->line)) || \
+	if (ft_sb_perform(&sb, ft_sb_action_append(ft_str_from_cstring(tparser->line))) || \
 		ms_expander(&sb, vars))
 	{
 		ft_sb_free(&sb);
