@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 22:35:24 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/06 11:56:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,16 @@ struct s_ms_executor *executor, const char *filename, int flags)
 
 t_ms_status	ms_executor_redirect_in_and_out(struct s_ms_executor *executor)
 {
-	if (executor->redirection_in_fd == -1 || \
-		executor->redirection_out_fd == -1)
-		return (PROGRAM_ERROR);
-	if (executor->redirection_in_fd != STDIN_FILENO)
+	if ((executor->redirection_in_fd != STDIN_FILENO) && \
+		(executor->redirection_in_fd != -1))
 	{
 		if (dup2(executor->redirection_in_fd, STDIN_FILENO) == -1)
 			return (PROGRAM_ERROR);
 		if (close(executor->redirection_in_fd) == -1)
 			return (PROGRAM_ERROR);
 	}
-	if (executor->redirection_out_fd != STDOUT_FILENO)
+	if ((executor->redirection_out_fd != STDOUT_FILENO) && \
+		(executor->redirection_out_fd != -1))
 	{
 		if (dup2(executor->redirection_out_fd, STDOUT_FILENO) == -1)
 			return (PROGRAM_ERROR);
