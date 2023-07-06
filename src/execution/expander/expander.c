@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:46:53 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/26 03:15:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 00:51:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ms_expander_remove_quote(t_ft_sb_iterator *it, char quote)
 {
-	if (ft_sb_iterator_mut_delete(it, 1))
-		return (EXIT_FAILURE);
+	ft_sb_iterator_mut_delete(it, 1);
 	while (!ft_sb_iterator_is_end(it))
 	{
 		if (ft_sb_iterator_current(it) == quote)
 		{
-			return (ft_sb_iterator_mut_delete(it, 1));
+			ft_sb_iterator_mut_delete(it, 1);
+			return (EXIT_SUCCESS);
 		}
 		ft_sb_iterator_next(it);
 	}
@@ -30,13 +30,13 @@ int	ms_expander_remove_quote(t_ft_sb_iterator *it, char quote)
 int	ms_expander_dquote(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
-	if (ft_sb_iterator_mut_delete(it, 1))
-		return (EXIT_FAILURE);
+	ft_sb_iterator_mut_delete(it, 1);
 	while (!ft_sb_iterator_is_end(it))
 	{
 		if (ft_sb_iterator_current(it) == '\"')
 		{
-			return (ft_sb_iterator_mut_delete(it, 1));
+			ft_sb_iterator_mut_delete(it, 1);
+			return (EXIT_SUCCESS);
 		}
 		if (ft_sb_iterator_current(it) == '$')
 		{

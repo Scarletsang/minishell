@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/26 04:49:00 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 00:55:29 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ const struct s_ms_vars *vars)
 	it->index = from;
 	if (!key_value)
 		return (ft_sb_iterator_mut_delete(it, clipper.rbound - from));
-	while (*key_value && *key_value++ != '=')
-		;
+	if (key_value[0] == '\0')
+		return (ft_sb_iterator_mut_replace(it, "", clipper.rbound - from));
+	key_value = ft_strchr(key_value, '=');
+	if (key_value)
+		key_value++;
 	return (ft_sb_iterator_mut_replace(it, key_value, \
 		clipper.rbound - from));
 }
