@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assignment.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 13:08:51 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:01:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_sb_vector *assignments)
 		== PROGRAM_ERROR)
 		return (PROGRAM_ERROR);
 	ft_vector_iterator_init(&iterator, assignments);
-	while (!ft_vector_iterator_is_end(&iterator))
+	while (!iterator.is_end)
 	{
 		if (ms_executor_envp_set(&ms->executor, \
 			((t_ft_sb *) ft_vector_iterator_current(&iterator))->buffer) \
@@ -42,7 +42,7 @@ t_sb_vector *assignments)
 	t_ft_sb					*value_sb;
 
 	ft_vector_iterator_init(&iterator, assignments);
-	while (!ft_vector_iterator_is_end(&iterator))
+	while (!iterator.is_end)
 	{
 		value_sb = ft_vector_iterator_current(&iterator);
 		ft_sb_clipper_init(&clipper, value_sb);

@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/07 00:55:29 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:07:30 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ const struct s_ms_vars *vars)
 		return (EXIT_SUCCESS);
 	if (!ms_expander_is_variable_char(it))
 		return (EXIT_SUCCESS);
-	while (!ft_sb_iterator_is_end(it))
+	while (it->is_end != SB_RIGHT_END)
 	{
 		if (!ms_expander_is_variable_char(it))
 		{

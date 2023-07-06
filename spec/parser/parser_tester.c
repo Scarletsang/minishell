@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 13:16:51 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/24 01:18:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:01:27 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print_content_redirection(t_ast_redirection_vector *redirection)
 	struct s_ft_vector_iterator	vec_itr;
 
 	ft_vector_iterator_init(&vec_itr, (t_ft_vector *)redirection);
-	while (!ft_vector_iterator_is_end(&vec_itr))
+	while (!vec_itr.is_end)
 	{
 		printf("[type:%d ", \
 		((struct s_ast_redirection *)ft_vector_iterator_current(&vec_itr))->type);
@@ -32,7 +32,7 @@ void	print_content_sb_vector(t_sb_vector *sb_vector)
 	t_ft_vector_iterator	vec_itr;
 
 	ft_vector_iterator_init(&vec_itr, sb_vector);
-	while (!ft_vector_iterator_is_end(&vec_itr))
+	while (!vec_itr.is_end)
 	{
 		printf("[%s] ", (char *) ((t_ft_sb *)ft_vector_iterator_current(&vec_itr))->buffer);
 		ft_vector_iterator_next(&vec_itr);

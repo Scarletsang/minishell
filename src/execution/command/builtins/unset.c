@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 16:47:24 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:02:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_ms_exit_code	ms_execute_builtin_unset(struct s_ms *ms, t_sb_vector *command)
 	exit_code = EC_SUCCESS;
 	ft_vector_iterator_init(&vec_iter, command);
 	ft_vector_iterator_next(&vec_iter);
-	while (!ft_vector_iterator_is_end(&vec_iter))
+	while (!vec_iter.is_end)
 	{
 		key = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
 		if (!name_is_valid_indentifier(key, '\0'))

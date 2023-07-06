@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 13:10:15 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 12:32:30 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:03:21 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char *pair)
 	if (!pair)
 		return (PROGRAM_FAILURE);
 	ft_vector_iterator_init(&iterator, &executor->envp);
-	while (!ft_vector_iterator_is_end(&iterator))
+	while (!iterator.is_end)
 	{
 		if (ms_strcmp_till(pair, \
 			*((char **) ft_vector_iterator_current(&iterator)), '='))
@@ -85,7 +85,7 @@ const char *key)
 	if (!key)
 		return (NULL);
 	ft_vector_iterator_init(&iterator, &executor->envp);
-	while (!ft_vector_iterator_is_end(&iterator))
+	while (!iterator.is_end)
 	{
 		key_value = *((char **) ft_vector_iterator_current(&iterator));
 		if (key_value && ms_strcmp_till(key, key_value, '='))
