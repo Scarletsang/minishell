@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 17:48:45 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/06 12:41:15 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 #include "MINISHELL/execution/command/builtins.h"
 #include <stdio.h>
 #include <limits.h>
+#include "LIBFT/printf.h"
 #include "LIBFT/string.h"
+#include "LIBFT/io.h"
 #include "MINISHELL/error_printer.h"
 
 //should builtin pwd use getcwd() or environment variable PWD?
@@ -30,7 +32,7 @@ t_ms_exit_code	ms_execute_builtin_pwd(struct s_ms *ms, t_sb_vector *command)
 		ms_error_printer_builtin("pwd", NULL, strerror(errno));
 		return (EXIT_FAILURE);
 	}
-	printf("%s\n", buf);
+	ft_putendl_fd(buf, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 

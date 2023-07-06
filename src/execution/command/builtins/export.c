@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 16:47:50 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/06 13:05:05 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "MINISHELL/execution/command/builtins.h"
 #include "LIBFT/ctype.h"
 #include "LIBFT/string.h"
+#include "LIBFT/io.h"
 #include "MINISHELL/error_printer.h"
 
 static void	export_vars_print(const struct s_ms_vars *vars, \
@@ -28,7 +29,10 @@ static void	export_vars_print(const struct s_ms_vars *vars, \
 	{
 		entry = ft_vector_get(&vars->environment, i);
 		if (entry->key)
-			printf("%s %s\n", declare_prefix, (char *) entry->value);
+		{
+			ft_putstr_fd(declare_prefix, STDOUT_FILENO);
+			ft_putendl_fd((char *) entry->value, STDOUT_FILENO);
+		}
 		i++;
 	}
 }
@@ -46,26 +50,13 @@ static int	ms_vars_declare_export(struct s_ms_vars *vars, \
 	char	*equal_sign;
 
 	equal_sign = ft_strchr(entry, '=');
-	if (equal_sign == NULL)
-	{
-		if (ft_ht_get(&vars->shell, entry_key) == NULL)
-		{
-			if (ms_vars_declare(vars, entry_key, entry) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			return (EXIT_SUCCESS);
-		}
+	if (equal_sign == NULL && (ft_ht_get(&vars->shell, entry_key) != NULL))
 		return (ms_vars_export(vars, entry_key));
-	}
-	else
-	{
-		if (ms_vars_declare(vars, entry_key, entry) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-	}
+	if (ms_vars_declare(vars, entry_key, entry) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (ms_vars_export(vars, entry_key) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static char	*get_entry_key_from_str(char *value)
@@ -90,13 +81,15 @@ t_ms_exit_code	ms_execute_builtin_export(struct s_ms *ms, t_sb_vector *command)
 	char						*key;
 
 	if (command->size == 1)
-		return (export_vars_print(&ms->vars, "declare -x"), EC_SUCCESS);
+		return (export_vars_print(&ms->vars, "declare -x "), EC_SUCCESS);
 	exit_code = EC_SUCCESS;
 	ft_vector_iterator_init(&vec_iter, command);
 	ft_vector_iterator_next(&vec_iter);
 	while (!ft_vector_iterator_is_end(&vec_iter))
 	{
 		value = ((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer;
+		if (value[0] == '\0')
+			value = NULL;
 		key = get_entry_key_from_str(value);
 		if (!name_is_valid_indentifier(key, '='))
 			export_error_print_when_invalid_identifier(key, &exit_code);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/04 13:26:00 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/06 12:42:52 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include "MINISHELL/execution/command/builtins.h"
 #include "LIBFT/general.h"
+#include "LIBFT/io.h"
 #include "MINISHELL/error_printer.h"
 
 static bool	num_is_in_ll_range(long long value, int sign)
@@ -65,7 +66,6 @@ t_ms_exit_code	ms_execute_builtin_exit(struct s_ms *ms, t_sb_vector *command)
 	long long					n;
 	struct s_ft_vector_iterator	vec_iter;
 
-	printf("exit\n");
 	if (command->size == 1)
 		builtin_exit_with_no_arg(ms);
 	n = 0;
