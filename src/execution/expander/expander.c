@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:46:53 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/07 01:06:16 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:23:10 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ms_expander(t_ft_sb *sb, const struct s_ms_vars *vars)
 {
 	t_ft_sb_iterator	it;
 
-	ft_sb_iterator_init(&it, sb);
+	ft_sb_iterator_begin(&it, sb);
 	while (it.is_end != SB_RIGHT_END)
 	{
 		if (ft_sb_iterator_current(&it) == '\'')
@@ -82,7 +82,7 @@ int	ms_expander_remove_quotes(t_ft_sb *sb)
 	t_ft_sb_iterator	it;
 	char				current;
 
-	ft_sb_iterator_init(&it, sb);
+	ft_sb_iterator_begin(&it, sb);
 	while (it.is_end != SB_RIGHT_END)
 	{
 		current = ft_sb_iterator_current(&it);

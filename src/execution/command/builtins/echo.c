@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:02:19 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ms_exit_code	ms_execute_builtin_echo(struct s_ms *ms, t_sb_vector *command)
 	t_ft_vector_iterator	iterator;
 
 	(void) ms;
-	ft_vector_iterator_init(&iterator, command);
+	ft_vector_iterator_begin(&iterator, command);
 	ft_vector_iterator_next(&iterator);
 	while (!iterator.is_end)
 	{

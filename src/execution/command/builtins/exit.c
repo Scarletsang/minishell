@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/06 12:42:52 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_ms_exit_code	ms_execute_builtin_exit(struct s_ms *ms, t_sb_vector *command)
 	if (command->size == 1)
 		builtin_exit_with_no_arg(ms);
 	n = 0;
-	ft_vector_iterator_init(&vec_iter, command);
+	ft_vector_iterator_begin(&vec_iter, command);
 	ft_vector_iterator_next(&vec_iter);
 	if (is_valid_ll(((t_ft_sb *)ft_vector_iterator_current(&vec_iter))->buffer, \
 		&n) == false)

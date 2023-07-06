@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:02:06 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:23:58 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in)
 	struct s_ast_redirection	*redirection;
 	t_ms_status					status;
 
-	ft_vector_iterator_init(&iterator, redirection_in);
+	ft_vector_iterator_begin(&iterator, redirection_in);
 	while (!iterator.is_end)
 	{
 		redirection = ft_vector_iterator_current(&iterator);
@@ -82,7 +82,7 @@ t_ast_redirection_vector *redirection_out)
 	int							flags;
 	t_ms_status					status;
 
-	ft_vector_iterator_init(&iterator, redirection_out);
+	ft_vector_iterator_begin(&iterator, redirection_out);
 	while (!iterator.is_end)
 	{
 		redirection = ft_vector_iterator_current(&iterator);

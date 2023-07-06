@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:01:56 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_sb_vector *assignments)
 	if (ms_executor_envp_import_from_environment(&ms->executor, &ms->vars) \
 		== PROGRAM_ERROR)
 		return (PROGRAM_ERROR);
-	ft_vector_iterator_init(&iterator, assignments);
+	ft_vector_iterator_begin(&iterator, assignments);
 	while (!iterator.is_end)
 	{
 		if (ms_executor_envp_set(&ms->executor, \
@@ -41,7 +41,7 @@ t_sb_vector *assignments)
 	char					*key;
 	t_ft_sb					*value_sb;
 
-	ft_vector_iterator_init(&iterator, assignments);
+	ft_vector_iterator_begin(&iterator, assignments);
 	while (!iterator.is_end)
 	{
 		value_sb = ft_vector_iterator_current(&iterator);

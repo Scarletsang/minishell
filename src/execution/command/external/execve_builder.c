@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:20:21 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ struct s_ms_execve_builder *builder, t_sb_vector *command)
 		return (PROGRAM_ERROR);
 	(builder->argv)[command->size] = NULL;
 	i = 0;
-	ft_vector_iterator_init(&iterator, command);
+	ft_vector_iterator_begin(&iterator, command);
 	while (!iterator.is_end)
 	{
 		builder->argv[i] = (char *) \
