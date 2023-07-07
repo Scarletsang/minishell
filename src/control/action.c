@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 02:33:24 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:52:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 11:33:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "MINISHELL/minishell.h"
 #include "MINISHELL/parser.h"
 #include "MINISHELL/execution.h"
-#include "parser_tester.h"
 
 #ifdef DEBUG
 
@@ -25,12 +24,13 @@ t_ms_exit_code	ms_interpret(struct s_ms *ms, char *line)
 	if (parser_run(&ms->ast_root, line) == PROGRAM_SUCCESS)
 	{
 		exit_code = ms_execute_ast(ms, ms->ast_root);
-		print_ast(ms->ast_root);
+		ast_print(ms->ast_root);
 		return (exit_code);
 	}
 	else
 		return (EC_SYNTAX_ERROR);
 }
+
 #else
 
 t_ms_exit_code	ms_interpret(struct s_ms *ms, char *line)
@@ -55,7 +55,8 @@ int	ms_exit_code_save(struct s_ms *ms, t_ms_exit_code exit_code)
 	num = ft_itoa(exit_code);
 	if (!num)
 		return (EXIT_FAILURE);
-	if (!ms_vars_database_set(&ms->vars.special, "?", num))
+	if (!ms_vars_database_set(&ms->vars.special, \
+		ft_str_from_cstring("?"), ft_str_nt_from_cstring(num)))
 	{
 		free(num);
 		return (EXIT_FAILURE);
@@ -74,7 +75,8 @@ int	ms_exit_code_save_from_signal(struct s_ms *ms)
 	g_exit_code = EC_SUCCESS;
 	if (!num)
 		return (EXIT_FAILURE);
-	if (!ms_vars_database_set(&ms->vars.special, "?", num))
+	if (!ms_vars_database_set(&ms->vars.special, \
+		ft_str_from_cstring("?"), ft_str_nt_from_cstring(num)))
 	{
 		free(num);
 		return (EXIT_FAILURE);

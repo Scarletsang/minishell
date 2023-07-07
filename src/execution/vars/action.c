@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42heilbronn.de>     +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/26 13:04:50 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/05 13:30:46 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:49:40 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MINISHELL/execution/vars.h"
 
-int	ms_vars_declare(struct s_ms_vars *vars, const char *key, \
-const char *value)
+int	ms_vars_declare(struct s_ms_vars *vars, t_ft_str key, \
+t_ft_str_nt value)
 {
-	const char					*entry_in_environment;
+	t_ft_str_nt					environment_str;
 	const struct s_ft_ht_entry	*entry;
 
 	entry = ms_vars_database_set(&vars->shell, key, value);
 	if (!entry)
 		return (EXIT_FAILURE);
-	entry_in_environment = ms_vars_database_get(&vars->environment, key);
-	if (entry_in_environment)
+	environment_str = ms_vars_database_get(&vars->environment, key);
+	if (environment_str.content)
 	{
 		if (!ft_ht_update(&vars->environment, key, entry->value, NULL))
 			return (EXIT_FAILURE);
@@ -31,12 +31,12 @@ const char *value)
 	return (EXIT_SUCCESS);
 }
 
-int	ms_vars_export(struct s_ms_vars *vars, const char *key)
+int	ms_vars_export(struct s_ms_vars *vars, t_ft_str key)
 {
-	const char	*value;
+	t_ft_str_nt	value;
 
 	value = ms_vars_database_get(&vars->shell, key);
-	if (!value)
+	if (!value.content)
 		value = key;
 	if (!ft_ht_update(&vars->environment, key, value, free))
 		return (EXIT_FAILURE);
@@ -44,7 +44,7 @@ int	ms_vars_export(struct s_ms_vars *vars, const char *key)
 	return (EXIT_SUCCESS);
 }
 
-void	ms_vars_unset(struct s_ms_vars *vars, const char *key)
+void	ms_vars_unset(struct s_ms_vars *vars, t_ft_str key)
 {
 	bool	is_deleted;
 
@@ -57,13 +57,13 @@ void	ms_vars_unset(struct s_ms_vars *vars, const char *key)
 		vars->environnement_changed = true;
 }
 
-const char	*ms_vars_echo(const struct s_ms_vars *vars, \
-const char *key)
+t_ft_str_nt	ms_vars_echo(const struct s_ms_vars *vars, \
+t_ft_str key)
 {
-	const char	*result;
+	t_ft_str_nt	result;
 
 	result = ms_vars_database_get(&vars->environment, key);
-	if (!result)
+	if (!result.content)
 		result = ms_vars_database_get(&vars->shell, key);
 	return (result);
 }

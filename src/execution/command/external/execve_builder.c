@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:19:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 22:18:22 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,20 @@ void	ms_execve_builder_free(struct s_ms_execve_builder *builder)
 		ft_sb_free(&builder->command_path);
 }
 
+static t_ms_status	ms_execve_builder_path_try_build(\
+struct s_ms_execve_builder *builder, const char *path, size_t path_len)
+{
+	if (ft_sb_perform(&builder->command_path, ft_sb_action_append(\
+			ft_str_slice(path, 0, path_len))) || \
+		ft_sb_perform(&builder->command_path, ft_sb_action_append(\
+			ft_str_from_cstring("/"))) || \
+		ft_sb_perform(&builder->command_path, ft_sb_action_append(\
+			ft_str_slice(builder->command_name->buffer, 0, \
+				builder->command_name->size))))
+		return (PROGRAM_ERROR);
+	return (PROGRAM_SUCCESS);
+}
+
 t_ms_exit_code	ms_execve_builder_path_build(\
 struct s_ms_execve_builder *builder)
 {
@@ -56,11 +70,7 @@ struct s_ms_execve_builder *builder)
 		path_len = 0;
 		while (path[path_len] && (path[path_len] != ':'))
 			path_len++;
-		if (ft_sb_perform(&builder->command_path, ft_sb_action_append_len(\
-				path, path_len)) || \
-			ft_sb_perform(&builder->command_path, ft_sb_action_append("/")) || \
-			ft_sb_perform(&builder->command_path, ft_sb_action_append_len(\
-				builder->command_name->buffer, builder->command_name->size)))
+		if (ms_execve_builder_path_try_build(builder, path, path_len))
 			return (__EC_INTERNAL_ERROR);
 		exit_code = ms_exit_code_evaluate(\
 			builder->command_path.buffer, false, false);
@@ -82,8 +92,8 @@ struct s_ms_execve_builder *builder, t_sb_vector *command)
 		return (PROGRAM_ERROR);
 	(builder->argv)[command->size] = NULL;
 	i = 0;
-	ft_vector_iterator_init(&iterator, command);
-	while (!ft_vector_iterator_is_end(&iterator))
+	ft_vector_iterator_begin(&iterator, command);
+	while (!iterator.is_end)
 	{
 		builder->argv[i] = (char *) \
 			((t_ft_sb *) ft_vector_iterator_current(&iterator))->buffer;

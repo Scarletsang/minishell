@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 19:28:06 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 10:28:42 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ t_ast_redirection_vector *redirection_vector, struct s_ms *ms)
 	t_ft_vector_iterator			iterator;
 	struct s_ast_redirection		*redirection;
 
-	ft_vector_iterator_init(&iterator, redirection_vector);
-	while (!ft_vector_iterator_is_end(&iterator))
+	ft_vector_iterator_begin(&iterator, redirection_vector);
+	while (!iterator.is_end)
 	{
 		redirection = ft_vector_iterator_current(&iterator);
 		if (redirection->type == REDIRECT_HEREDOC)
@@ -45,8 +45,8 @@ t_sb_vector *sb_vector, struct s_ms *ms)
 	t_ft_vector_iterator	iterator;
 	t_ft_sb					*sb;
 
-	ft_vector_iterator_init(&iterator, sb_vector);
-	while (!ft_vector_iterator_is_end(&iterator))
+	ft_vector_iterator_begin(&iterator, sb_vector);
+	while (!iterator.is_end)
 	{
 		sb = ft_vector_iterator_current(&iterator);
 		if (ms_expander(sb, (const struct s_ms_vars *) &ms->vars))

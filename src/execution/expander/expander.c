@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:46:53 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/26 03:15:18 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 06:33:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 int	ms_expander_remove_quote(t_ft_sb_iterator *it, char quote)
 {
-	if (ft_sb_iterator_mut_delete(it, 1))
-		return (EXIT_FAILURE);
-	while (!ft_sb_iterator_is_end(it))
+	ft_sb_iterator_mut_delete(it, 1);
+	while (it->is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		if (ft_sb_iterator_current(it) == quote)
 		{
-			return (ft_sb_iterator_mut_delete(it, 1));
+			ft_sb_iterator_mut_delete(it, 1);
+			return (EXIT_SUCCESS);
 		}
 		ft_sb_iterator_next(it);
 	}
@@ -30,13 +30,13 @@ int	ms_expander_remove_quote(t_ft_sb_iterator *it, char quote)
 int	ms_expander_dquote(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars)
 {
-	if (ft_sb_iterator_mut_delete(it, 1))
-		return (EXIT_FAILURE);
-	while (!ft_sb_iterator_is_end(it))
+	ft_sb_iterator_mut_delete(it, 1);
+	while (it->is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		if (ft_sb_iterator_current(it) == '\"')
 		{
-			return (ft_sb_iterator_mut_delete(it, 1));
+			ft_sb_iterator_mut_delete(it, 1);
+			return (EXIT_SUCCESS);
 		}
 		if (ft_sb_iterator_current(it) == '$')
 		{
@@ -53,8 +53,8 @@ int	ms_expander(t_ft_sb *sb, const struct s_ms_vars *vars)
 {
 	t_ft_sb_iterator	it;
 
-	ft_sb_iterator_init(&it, sb);
-	while (!ft_sb_iterator_is_end(&it))
+	ft_sb_iterator_begin(&it, sb);
+	while (it.is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		if (ft_sb_iterator_current(&it) == '\'')
 		{
@@ -68,7 +68,7 @@ int	ms_expander(t_ft_sb *sb, const struct s_ms_vars *vars)
 		}
 		else if (ft_sb_iterator_current(&it) == '$')
 		{
-			if (ms_expander_dollar(&it, vars))
+			if (ms_expander_dollar_no_quote(&it, vars))
 				return (EXIT_FAILURE);
 		}
 		else
@@ -82,8 +82,8 @@ int	ms_expander_remove_quotes(t_ft_sb *sb)
 	t_ft_sb_iterator	it;
 	char				current;
 
-	ft_sb_iterator_init(&it, sb);
-	while (!ft_sb_iterator_is_end(&it))
+	ft_sb_iterator_begin(&it, sb);
+	while (it.is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		current = ft_sb_iterator_current(&it);
 		if (current == '\'' || current == '\"')

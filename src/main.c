@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 13:48:47 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 05:06:22 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,31 @@
 #include "MINISHELL/status_code.h"
 #include "MINISHELL/error_printer.h"
 
-static int	ms_non_interactive_mode(int fd)
+static int	ms_non_interactive_mode(void)
 {
 	struct s_ms				ms;
-	struct s_ft_iostream	iostream;
 	t_ms_exit_code			exit_code;
 	int						iostream_read_status;
 
-	if (ms_init(&ms) || ft_iostream_init(&iostream))
+	if (ms_init(&ms))
 		return (ms_free(&ms), EXIT_FAILURE);
 	exit_code = EC_SUCCESS;
 	iostream_read_status = EXIT_SUCCESS;
 	while (iostream_read_status == EXIT_SUCCESS)
 	{
-		iostream_read_status = ft_iostream_read_until_delimiter(&iostream, fd, \
-			(t_ft_string_slice){"\n", 1});
-		ms.line = ft_string_slice_to_cstring(ft_iostream_to_slice(&iostream));
+		iostream_read_status = ft_iostream_read_until_delimiter(\
+			&ms.executor.stdin_stream, STDIN_FILENO, \
+			(t_ft_str){"\n", 1});
+		ms.line = ft_str_to_cstring(ft_iostream_to_slice(\
+			&ms.executor.stdin_stream));
 		if ((ms.line != NULL) && !ms_line_is_empty(ms.line))
 		{
 			exit_code = ms_interpret(&ms, ms.line);
 			ms_exit_code_save(&ms, exit_code);
 		}
-		ft_iostream_reset(&iostream);
 		ms_reset(&ms);
 	}
 	ms_free(&ms);
-	ft_iostream_free(&iostream);
 	return (exit_code);
 }
 
@@ -59,8 +58,9 @@ static int	ms_non_interactive_mode_from_path(const char *path)
 		return (ms_exit_code_evaluate(path, true, true));
 	else
 	{
-		exit_code = ms_non_interactive_mode(fd);
+		dup2(fd, STDIN_FILENO);
 		close(fd);
+		exit_code = ms_non_interactive_mode();
 	}
 	return (exit_code);
 }
@@ -110,6 +110,6 @@ int	main(int argc, char **argv)
 		ms_terminal_settings_restore();
 	}
 	else
-		exit_code = ms_non_interactive_mode(STDIN_FILENO);
+		exit_code = ms_non_interactive_mode();
 	return (exit_code);
 }

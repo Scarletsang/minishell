@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/20 13:27:10 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/29 00:09:19 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 01:49:55 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ struct s_ms_vars *vars);
  * database, meaning that it will be freed when the database is freed.
 */
 const struct s_ft_ht_entry	*ms_vars_database_set(t_ft_ht *database, \
-const char *key, const char *value);
+t_ft_str key, t_ft_str_nt value);
 
-const char					*ms_vars_database_get(const t_ft_ht *database, \
-const char *key);
+t_ft_str_nt					ms_vars_database_get(const t_ft_ht *database, \
+t_ft_str key);
 
 /////////////////////////////////////////////////////////////////////////
 ////////////     interface used by minishell builtins     ///////////////
@@ -83,7 +83,7 @@ const char *key);
  * be freed when the database is freed.
 */
 int							ms_vars_declare(struct s_ms_vars *vars, \
-const char *key, const char *value);
+t_ft_str key, t_ft_str_nt value);
 
 /**
  * @brief Copy an entry from the shell database to the environment database.
@@ -91,19 +91,19 @@ const char *key, const char *value);
  * database.
 */
 int							ms_vars_export(struct s_ms_vars *vars, \
-const char *key);
+t_ft_str key);
 
 /**
  * @brief Remove an entry from both the shell and environment databases.
 */
 void						ms_vars_unset(struct s_ms_vars *vars, \
-const char *key);
+t_ft_str key);
 
 /**
  * @brief Query the shell database for the given key. If the key is not found,
  * the environment database is also queried.
 */
-const char					*ms_vars_echo(const struct s_ms_vars *vars, \
-const char *key);
+t_ft_str_nt					ms_vars_echo(const struct s_ms_vars *vars, \
+t_ft_str key);
 
 #endif

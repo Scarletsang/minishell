@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/28 10:26:46 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/28 11:45:53 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/05 22:42:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,14 @@ t_sb_vector *assignment);
  * @brief Step 3 of a command execution: redirections.
 */
 
-t_ms_status		ms_execute_redirection_in(\
+t_ms_status		ms_all_redirection_in_open(\
 struct s_ms_executor *executor, t_ast_redirection_vector *redirection_in);
 
-t_ms_status		ms_execute_redirection_out(\
+t_ms_status		ms_all_redirection_out_open(\
 struct s_ms_executor *executor, t_ast_redirection_vector *redirection_out);
+
+t_ms_status		ms_all_redirection_in_out_open(struct s_ms_executor *executor, \
+struct s_ast_node_content *content);
 
 /**
  * @brief Step 2 and 3 of a command execution when no command is present:
