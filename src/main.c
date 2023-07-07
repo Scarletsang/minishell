@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:20:29 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 21:05:23 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 05:06:22 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static int	ms_non_interactive_mode(void)
 	{
 		iostream_read_status = ft_iostream_read_until_delimiter(\
 			&ms.executor.stdin_stream, STDIN_FILENO, \
-			(t_ft_string_slice){"\n", 1});
-		ms.line = ft_string_slice_to_cstring(ft_iostream_to_slice(\
+			(t_ft_str){"\n", 1});
+		ms.line = ft_str_to_cstring(ft_iostream_to_slice(\
 			&ms.executor.stdin_stream));
 		if ((ms.line != NULL) && !ms_line_is_empty(ms.line))
 		{

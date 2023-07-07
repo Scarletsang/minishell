@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 17:49:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:23:58 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 02:18:46 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 static t_ms_status	ms_execute_heredoc(\
 struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 {
-	int					read_status;
-	t_ft_string_slice	slice;
+	int			read_status;
+	t_ft_str	slice;
 
 	if ((ms_executor_redirection_in_file_open(executor, \
 		HEREDOC_FILENAME, O_WRONLY | O_CREAT | O_TRUNC) == PROGRAM_ERROR))
@@ -32,14 +32,14 @@ struct s_ms_executor *executor, struct s_ast_redirection *redirection)
 		if (isatty(STDIN_FILENO))
 			ft_putstr_fd("> ", STDOUT_FILENO);
 		read_status = ft_iostream_read_until(&executor->stdin_stream, \
-			STDIN_FILENO, (t_ft_string_slice){"\n", 1});
+			STDIN_FILENO, (t_ft_str){"\n", 1});
 		slice = ft_iostream_to_slice(&executor->stdin_stream);
 		if (slice.content == NULL)
 			continue ;
-		if (ft_strncmp(ft_string_slice_content(&slice), \
+		if (ft_strncmp((const char *) slice.content, \
 			redirection->content.buffer, slice.size - 1) == 0)
 			return (ms_executor_redirect_from_heredoc(executor));
-		ft_string_slice_print(slice, executor->redirection_in_fd);
+		ft_str_print(slice, executor->redirection_in_fd);
 	}
 	if (ms_executor_redirect_from_heredoc(executor) == PROGRAM_ERROR)
 		return (PROGRAM_ERROR);
