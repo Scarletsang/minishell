@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:46:53 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/07 01:23:10 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:04:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	ms_expander(t_ft_sb *sb, const struct s_ms_vars *vars)
 		}
 		else if (ft_sb_iterator_current(&it) == '$')
 		{
-			if (ms_expander_dollar(&it, vars))
+			if (ms_expander_dollar_no_quote(&it, vars))
 				return (EXIT_FAILURE);
 		}
 		else

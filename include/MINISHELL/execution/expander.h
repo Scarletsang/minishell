@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 02:47:08 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/06/26 04:44:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 03:20:56 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ int	ms_expander_remove_quotes(t_ft_sb *sb);
 ////////////////////////////////////////////////
 
 int	ms_expander_dollar(t_ft_sb_iterator *it, \
+const struct s_ms_vars *vars);
+
+int	ms_expander_dollar_no_quote(t_ft_sb_iterator *it, \
 const struct s_ms_vars *vars);
 
 #endif
