@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 16:48:21 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 11:09:25 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 11:29:35 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ void				ast_node_free(struct s_ast_node *node);
 /**
  * @brief Printers
 */
+
+void				ast_print(struct s_ast_node *node);
 
 void				ast_redirection_vector_print(\
 t_ast_redirection_vector *redirection);

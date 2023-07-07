@@ -12,8 +12,7 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
-	include \
-	spec/parser
+	include
 
 ###################################
 ######     Source files     #######
