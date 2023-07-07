@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_lst_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:07:45 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/21 14:34:45 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:08:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "MINISHELL/lexer.h"
 
 struct s_token_list	*token_new(struct s_token token)

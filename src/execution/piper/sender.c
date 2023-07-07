@@ -6,12 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:34:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 09:32:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:07:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include <unistd.h>
 #include "MINISHELL/execution/piper.h"
 

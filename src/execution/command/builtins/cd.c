@@ -16,8 +16,6 @@
 #include "MINISHELL/error_printer.h"
 #include "LIBFT/string.h"
 
-#include <stdio.h>
-
 //if no arguments after cd, use $HOME, which is in vars.environment,
 // if no $HOME, use getcwd()
 //if directory starts with '/', set curdir = directory. ||

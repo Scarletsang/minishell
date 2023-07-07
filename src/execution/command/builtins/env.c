@@ -14,7 +14,6 @@
 #include "MINISHELL/execution/command/builtins.h"
 #include "LIBFT/string.h"
 #include "LIBFT/io.h"
-#include <stdio.h>
 
 t_ms_exit_code	ms_execute_builtin_env(struct s_ms *ms, t_sb_vector *command)
 {

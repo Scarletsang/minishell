@@ -6,12 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:06:49 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "MINISHELL/execution/command/builtins.h"
 #include "LIBFT/general.h"
 #include "LIBFT/io.h"

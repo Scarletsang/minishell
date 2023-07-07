@@ -6,12 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 12:44:59 by sawang            #+#    #+#             */
-/*   Updated: 2023/06/25 04:42:05 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:08:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 #include "LIBFT/string.h"
 #include "MINISHELL/parser.h"
 #include "MINISHELL/error_printer.h"
