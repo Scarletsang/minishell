@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 19:18:03 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 23:18:15 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 05:32:53 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ struct s_ms_executor *executor, const char *filename, int flags);
 
 t_ms_status		ms_executor_redirect_in_and_out(\
 struct s_ms_executor *executor);
-
-t_ms_status		ms_executor_open_heredoc(\
-struct s_ms_executor *executor, int *fd);
 
 t_ms_status		ms_executor_redirect_from_heredoc(\
 struct s_ms_executor *executor);
