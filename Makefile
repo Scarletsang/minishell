@@ -12,8 +12,7 @@ ifdef FSANITIZE
 	LDFLAGS+= -g3 -fsanitize=address
 endif
 INCLUDE_DIR= \
-	include \
-	spec/parser
+	include
 
 ###################################
 ######     Source files     #######
@@ -87,9 +86,6 @@ EXECUTION_SRC:=\
 	execution/pipe.c \
 	execution/node.c \
 	execution/expansion.c
-DEBUGGER_SRC:= \
-	../spec/parser/parser_tester.c \
-	../spec/parser/parser_tester_printer.c
 MAIN_SRC:= \
 	control/control.c \
 	control/action.c \
@@ -97,7 +93,7 @@ MAIN_SRC:= \
 	control/terminal.c \
 	main.c
 
-SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(COMMAND_SRC) $(EXECUTION_SRC) $(DEBUGGER_SRC) $(MAIN_SRC)
+SRC:= $(COMMON_SRC) $(LEXER_SRC) $(PARSER_SRC) $(ERROR_PERINTER_SRC) $(VARS_SRC) $(EXPANDER_SRC) $(PIPER_SRC) $(EXECUTOR_SRC) $(COMMAND_SRC) $(EXECUTION_SRC) $(MAIN_SRC)
 
 ####################################
 ######     Library files     #######

@@ -1,7 +1,0 @@
-add 1 3
-add 2 4
-add sdfs sdfskdhfg
-add 7 j
-add wtf wtf
-del sdfs
-update 7 lol
