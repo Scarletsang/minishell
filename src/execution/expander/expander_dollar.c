@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 16:26:37 by anthonytsan       #+#    #+#             */
-/*   Updated: 2023/07/07 04:36:52 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 06:33:08 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,15 @@ const struct s_ms_vars *vars)
 	size_t	dollar;
 
 	dollar = it->index;
-	if (ft_sb_iterator_next(it))
-		return (EXIT_FAILURE);
-	if ((it->is_end == SB_RIGHT_END) || !ms_expander_substite_special(it, vars))
+	if (ft_sb_iterator_next(it) == VECTOR_ITERATOR_RIGHT_END || \
+		(!ms_expander_substite_special(it, vars)))
 		return (EXIT_SUCCESS);
 	if (!ms_expander_is_variable_char(it))
 	{
 		ft_sb_iterator_prev(it);
 		return (ft_sb_iterator_mut_delete(it, 1), EXIT_SUCCESS);
 	}
-	while (it->is_end != SB_RIGHT_END)
+	while (it->is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		if (!ms_expander_is_variable_char(it))
 		{
@@ -107,7 +106,7 @@ const struct s_ms_vars *vars)
 		return (EXIT_SUCCESS);
 	if (!ms_expander_is_variable_char(it))
 		return (EXIT_SUCCESS);
-	while (it->is_end != SB_RIGHT_END)
+	while (it->is_end != VECTOR_ITERATOR_RIGHT_END)
 	{
 		if (!ms_expander_is_variable_char(it))
 		{
