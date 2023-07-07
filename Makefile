@@ -36,6 +36,8 @@ PARSER_SRC:=\
 	parser/node_content/content_vector_utils.c \
 	parser/node_content/redirection.c \
 	parser/ast/ast_node.c \
+	parser/ast/ast_node_printer.c \
+	parser/ast/ast_printer.c \
 	parser/parser.c \
 	parser/parser_cmd.c \
 	parser/parser_cmd_prefix.c \

@@ -6,12 +6,13 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/06 11:56:05 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 10:52:29 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <fcntl.h>
 #include <sys/wait.h>
+#include <string.h>
 #include "MINISHELL/error_printer.h"
 #include "MINISHELL/execution/executor.h"
 

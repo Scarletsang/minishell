@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 16:34:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 04:07:44 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 12:29:36 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ int	ms_piper_use_receiver(struct s_ms_piper *piper)
 
 	receiver_pipe = ms_piper_get_receiver_pipe(piper);
 	exit_code = EXIT_SUCCESS;
-	if (dup2(receiver_pipe[0], STDIN_FILENO) == -1)
-		exit_code = EXIT_FAILURE;
+	if (ms_piper_pipe_is_open(piper, receiver_pipe))
+	{
+		if (dup2(receiver_pipe[0], STDIN_FILENO) == -1)
+			exit_code = EXIT_FAILURE;
+	}
 	exit_code = ms_piper_close_receiver(piper);
 	return (exit_code);
 }

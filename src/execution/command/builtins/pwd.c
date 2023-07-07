@@ -6,13 +6,14 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 04:37:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 10:52:38 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include "MINISHELL/execution/command/builtins.h"
 #include <limits.h>
+#include <string.h>
 #include "LIBFT/string.h"
 #include "LIBFT/io.h"
 #include "MINISHELL/error_printer.h"
