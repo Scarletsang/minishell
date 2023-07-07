@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
+/*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/30 17:57:58 by sawang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:22:01 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,23 @@ t_ms_exit_code	update_pwd(struct s_ms *ms)
 	if (!getcwd(buf + 4, PATH_MAX))
 		return (EC_FAILURE);
 	ft_memcpy(buf, "PWD=", 4);
-	if (ms_vars_declare(&ms->vars, "PWD", buf))
+	if (ms_vars_declare(&ms->vars, \
+		ft_str_from_cstring("PWD"), ft_str_nt_from_cstring(buf)))
 		return (EC_FAILURE);
 	return (EC_SUCCESS);
 }
 
 t_ms_exit_code	buildin_cd_no_arg(struct s_ms *ms)
 {
-	char	*home;
+	t_ft_str_nt	home;
 
-	home = (char *)ms_vars_database_get(&ms->vars.environment, "HOME");
-	if (!home)
+	home = ms_vars_database_get(&ms->vars.environment, \
+		ft_str_from_cstring("HOME"));
+	if (!home.content)
 		return (EC_SUCCESS);
-	if (chdir(home + 5) == -1)
+	if (chdir(home.content + 5) == -1)
 	{
-		ms_error_printer_builtin("cd", home, strerror(errno));
+		ms_error_printer_builtin("cd", home.content, strerror(errno));
 		return (EC_FAILURE);
 	}
 	return (update_pwd(ms));

@@ -6,10 +6,11 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 23:36:33 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 01:22:41 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:19:03 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/string.h"
 #include "LIBFT/stringbuilder/clipper.h"
 #include "MINISHELL/execution/command.h"
 
@@ -37,23 +38,19 @@ t_ms_status	ms_execute_declares(struct s_ms *ms, \
 t_sb_vector *assignments)
 {
 	t_ft_vector_iterator	iterator;
-	struct s_ft_sb_clipper	clipper;
-	char					*key;
 	t_ft_sb					*value_sb;
+	char					*value;
 
 	ft_vector_iterator_begin(&iterator, assignments);
 	while (!iterator.is_end)
 	{
 		value_sb = ft_vector_iterator_current(&iterator);
-		ft_sb_clipper_init(&clipper, value_sb);
-		ft_sb_clipper_area(&clipper, NULL, "=");
-		key = ft_sb_clipper_run(&clipper);
-		if (ms_vars_declare(&ms->vars, key, value_sb->buffer) == PROGRAM_ERROR)
-		{
-			free(key);
+		value = ft_strchr(value_sb->buffer, '=');
+		if (ms_vars_declare(&ms->vars, \
+			ft_str_slice(value_sb->buffer, 0, \
+				value - (char *) value_sb->buffer), \
+			(t_ft_str_nt){value_sb->buffer, value_sb->size}) == PROGRAM_ERROR)
 			return (PROGRAM_ERROR);
-		}
-		free(key);
 		ft_vector_iterator_next(&iterator);
 	}
 	return (PROGRAM_SUCCESS);

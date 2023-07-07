@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 02:33:24 by htsang            #+#    #+#             */
-/*   Updated: 2023/06/29 17:52:14 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 03:46:10 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int	ms_exit_code_save(struct s_ms *ms, t_ms_exit_code exit_code)
 	num = ft_itoa(exit_code);
 	if (!num)
 		return (EXIT_FAILURE);
-	if (!ms_vars_database_set(&ms->vars.special, "?", num))
+	if (!ms_vars_database_set(&ms->vars.special, \
+		ft_str_from_cstring("?"), ft_str_nt_from_cstring(num)))
 	{
 		free(num);
 		return (EXIT_FAILURE);
@@ -74,7 +75,8 @@ int	ms_exit_code_save_from_signal(struct s_ms *ms)
 	g_exit_code = EC_SUCCESS;
 	if (!num)
 		return (EXIT_FAILURE);
-	if (!ms_vars_database_set(&ms->vars.special, "?", num))
+	if (!ms_vars_database_set(&ms->vars.special, \
+		ft_str_from_cstring("?"), ft_str_nt_from_cstring(num)))
 	{
 		free(num);
 		return (EXIT_FAILURE);

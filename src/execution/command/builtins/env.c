@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 19:21:02 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 23:43:17 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/07 04:06:39 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_ms_exit_code	ms_execute_builtin_env(struct s_ms *ms, t_sb_vector *command)
 	while (i < ms->vars.environment.capacity)
 	{
 		entry = ft_vector_get(&ms->vars.environment, i);
-		if (entry->key && ft_strchr(entry->value, '='))
-			ft_putendl_fd((char *) entry->value, STDOUT_FILENO);
+		if (entry->key && ft_strchr(entry->value.content, '='))
+			ft_putendl_fd((char *) entry->value.content, STDOUT_FILENO);
 		i++;
 	}
 	return (EC_SUCCESS);
