@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 21:59:17 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/17 11:47:35 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ t_ms_status	ms_executor_free(struct s_ms_executor *executor)
 	executor->last_child_pid = -1;
 	ft_vector_free(&executor->envp);
 	ft_iostream_free(&executor->stdin_stream);
-	if (executor->redirection_in_fd != -1 || \
+	if (executor->redirection_in_fd != -1 && \
 		executor->redirection_in_fd != STDIN_FILENO)
 		close(executor->redirection_in_fd);
-	if (executor->redirection_out_fd != -1 || \
+	if (executor->redirection_out_fd != -1 && \
 		executor->redirection_out_fd != STDOUT_FILENO)
 		close(executor->redirection_out_fd);
 	executor->redirection_in_fd = STDIN_FILENO;
