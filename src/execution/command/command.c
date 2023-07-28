@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:28:52 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 00:51:59 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/28 18:08:27 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 t_ms_exit_code	ms_execute_external(struct s_ms *ms, \
 struct s_ast_node_content *content)
 {
+	ms_terminal_settings_restore();
 	if ((ms_execute_assignments_and_redirections(ms, content) \
 		!= PROGRAM_SUCCESS))
 		return (EC_FAILURE);

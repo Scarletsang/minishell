@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/23 17:19:54 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 23:25:27 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/28 17:27:54 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ struct s_ast_node *node)
 		(ms_executor_fork(&ms->executor) < 0))
 		return (PROGRAM_ERROR);
 	if (ms->executor.last_child_pid != 0)
+	{
+		ms_terminal_settings_change();
 		return (PROGRAM_SUCCESS);
+	}
 	if (ms_piper_use_receiver(&ms->executor.piper) || \
 		ms_piper_use_sender(&ms->executor.piper))
 	{
@@ -58,6 +61,7 @@ struct s_ast_node *node)
 		return (PROGRAM_ERROR);
 	if (ms->executor.last_child_pid != 0)
 	{
+		ms_terminal_settings_change();
 		if (ms_piper_close_receiver(&ms->executor.piper))
 			return (PROGRAM_ERROR);
 		return (PROGRAM_SUCCESS);
@@ -100,6 +104,7 @@ t_ms_status	ms_execute_ast_node_last(struct s_ms *ms, struct s_ast_node *node)
 		ms->executor.redirection_out_fd = STDOUT_FILENO;
 		if (ms_ast_node_content_expand(node->content, ms) == PROGRAM_ERROR)
 			return (PROGRAM_ERROR);
+		ms_terminal_settings_restore();
 		status = ms_all_redirection_in_out_open(&ms->executor, node->content);
 		if (status != PROGRAM_SUCCESS)
 			return (status);

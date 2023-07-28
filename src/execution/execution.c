@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/11 17:20:23 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 23:32:35 by htsang           ###   ########.fr       */
+/*   Updated: 2023/07/28 18:01:17 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,12 @@ t_ms_exit_code	ms_execute_ast(struct s_ms *ms, struct s_ast_node *root)
 	{
 		if (ms_ast_node_content_expand(root->content, ms) == PROGRAM_ERROR)
 			return (ms_error_printer_internal_error(), EC_FAILURE);
+		ms_terminal_settings_restore();
 		if (ms_all_redirection_in_out_open(&ms->executor, root->content) \
 			!= PROGRAM_SUCCESS)
 			return (EC_FAILURE);
 		exit_code = ms_execute_ast_node_cmd_single(ms, root);
+		ms_terminal_settings_change();
 	}
 	else
 		return (EC_FAILURE);
