@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/01 22:24:47 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/05 12:20:36 by htsang           ###   ########.fr       */
+/*   Updated: 2023/12/12 22:48:25 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,10 @@
 
 extern volatile t_ms_exit_code	g_exit_code;
 
+/**
+ * @brief Stores data that need to persist over the lifetime
+ * of the shell.
+*/
 struct s_ms
 {
 	struct s_ms_vars		vars;
