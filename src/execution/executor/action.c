@@ -6,7 +6,7 @@
 /*   By: htsang <htsang@student.42heilbronn.de>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 20:00:51 by htsang            #+#    #+#             */
-/*   Updated: 2023/07/07 10:52:29 by htsang           ###   ########.fr       */
+/*   Updated: 2023/12/28 04:17:57 by htsang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ t_ms_exit_code	ms_executor_wait(struct s_ms_executor *executor)
 	t_ms_exit_code	exit_code;
 	pid_t			pid;
 
+	exit_code = 0;
 	pid = 1;
 	while (pid != -1)
 	{
