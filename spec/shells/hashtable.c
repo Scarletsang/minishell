@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "LIBFT/hashtable.h"
 #include "hashtable_test.h"
 
 t_ft_ht	*hashtable_shell_init(void)
@@ -28,7 +29,7 @@ t_ft_ht	*hashtable_shell_init(void)
 }
 
 t_tshell_status	hashtable_shell_execute_func2(t_ft_ht *ht, struct s_tparser *tparser, \
-const struct s_ft_ht_entry	*(*func2)(t_ft_ht *ht, const char *key, const void *value, t_ft_ht_entry_cleaner func))
+const struct s_ft_ht_entry	*(*func2)(t_ft_ht *ht, t_ft_str key, t_ft_object v, t_ft_ht_entry_cleaner cleaner))
 {
 	char	*param[2];
 
@@ -36,7 +37,7 @@ const struct s_ft_ht_entry	*(*func2)(t_ft_ht *ht, const char *key, const void *v
 		return (TSHELL_FAILURE);
 	param[0] = tparser_read(tparser);
 	param[1] = tparser_read(tparser);
-	if (!func2(ht, param[0], param[1], free))
+	if (!func2(ht, (t_ft_str) {.content = param[0], .size = strlen(param[0])}, (t_ft_str) {.content = param[1], .size = strlen(param[1])}, free))
 	{
 		return (TSHELL_FAILURE);
 	}
@@ -48,7 +49,11 @@ t_tshell_status	hashtable_shell_execute_get(t_ft_ht *ht, struct s_tparser *tpars
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 		return (TSHELL_FAILURE);
-	printf("got: %s\n", (char *) ft_ht_get(ht, tparser_read(tparser)));
+	t_ft_str str;
+	str.content = tparser_read(tparser);
+	str.size = strlen(str.content);
+	t_ft_str result = ft_ht_get(ht, str);
+	printf("got: %.*s\n", (int) result.size, (char*) result.content);
 	return (TSHELL_SUCCESS);
 }
 
@@ -56,7 +61,10 @@ t_tshell_status	hashtable_shell_execute_del(t_ft_ht *ht, struct s_tparser *tpars
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 		return (TSHELL_FAILURE);
-	ft_ht_delete(ht, tparser_read(tparser));
+	t_ft_str str;
+	str.content = tparser_read(tparser);
+	str.size = strlen(str.content);
+	ft_ht_delete(ht, str);
 	ft_ht_print(ht);
 	return (TSHELL_SUCCESS);
 }
