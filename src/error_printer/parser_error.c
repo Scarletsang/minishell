@@ -24,7 +24,7 @@ void	ms_error_printer_parser(struct s_token *token)
 	}
 	ft_putstr_fd(\
 		"minishell: syntax error near unexpected token `", STDERR_FILENO);
-	write(STDERR_FILENO, token->start, token->length);
+	(void) !write(STDERR_FILENO, token->start, token->length);
 	ft_putstr_fd("'\n", STDERR_FILENO);
 }
 

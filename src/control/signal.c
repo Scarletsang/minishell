@@ -24,7 +24,7 @@ void	ms_signal_handler_interative(int signum)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	write(STDOUT_FILENO, "\nminishell$ ", 12);
+	(void) !write(STDOUT_FILENO, "\nminishell$ ", 12);
 	g_exit_code = EC_FAILURE;
 }
 
