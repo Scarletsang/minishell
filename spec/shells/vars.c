@@ -55,7 +55,7 @@ struct s_tparser *tparser)
 		return (TSHELL_FAILURE);
 	param[0] = tparser_read(tparser);
 	param[1] = tparser_read(tparser);
-	if (ms_vars_database_set(&vars->shell, param[0], param[1]))
+	if (!ms_vars_database_set(&vars->shell, ft_str_from_cstring(param[0]), ft_str_from_cstring(param[1])))
 		return (TSHELL_FAILURE);
 	return (TSHELL_SUCCESS);
 }
@@ -68,7 +68,7 @@ struct s_tparser *tparser)
 		ft_ht_print(&vars->environment);
 		return (TSHELL_SUCCESS);
 	}
-	if (ms_vars_export(vars, tparser_read(tparser)))
+	if (ms_vars_export(vars, ft_str_from_cstring(tparser_read(tparser))))
 		return (TSHELL_FAILURE);
 	return (TSHELL_SUCCESS);
 }
@@ -78,7 +78,7 @@ struct s_tparser *tparser)
 {
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_STRING))
 		return (TSHELL_FAILURE);
-	ms_vars_unset(vars, tparser_read(tparser));
+	ms_vars_unset(vars, ft_str_from_cstring(tparser_read(tparser)));
 	return (TSHELL_SUCCESS);
 }
 
