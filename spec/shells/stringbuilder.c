@@ -42,16 +42,14 @@ struct s_tparser *tparser)
 	param[0] = tparser_read(tparser);
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_INT))
 	{
-		if (ft_sb_perform(sb, ft_sb_action_append(param[0])))
+		if (ft_sb_perform(sb, ft_sb_action_append(ft_str_from_cstring(param[0]))))
 			return (TSHELL_FAILURE);
 	}
 	else
 	{
 		param[1] = tparser_read(tparser);
 		if (ft_sb_perform(sb, \
-			ft_sb_action_append_len(\
-				param[0], \
-				*(unsigned int *) param[1])))
+			ft_sb_action_append(ft_str_slice(param[0], 0, *(unsigned int *) param[1]))))
 			return (TSHELL_FAILURE);
 	}
 	ft_sb_print(sb);
@@ -70,19 +68,14 @@ struct s_tparser *tparser)
 	if (tparser_consume_exactly_one_parameter(tparser, TSHELL_INT))
 	{
 		if (ft_sb_perform(sb, \
-			ft_sb_action_insert(\
-				param[0], \
-				*(unsigned int *) param[1])))
+			ft_sb_action_insert(ft_str_from_cstring(param[0]), *(unsigned int *) param[1])))
 			return (TSHELL_FAILURE);
 		ft_sb_print(sb);
 		return (TSHELL_SUCCESS);
 	}
 	param[2] = tparser_read(tparser);
 	if (ft_sb_perform(sb, \
-		ft_sb_action_insert_len(\
-			param[0], \
-			*(unsigned int *) param[1], \
-			*(unsigned int *) param[2])))
+		ft_sb_action_insert(ft_str_slice(param[0], 0, *(unsigned int *) param[1]), *(unsigned int *) param[2])))
 		return (TSHELL_FAILURE);
 	ft_sb_print(sb);
 	return (TSHELL_SUCCESS);
@@ -121,7 +114,7 @@ struct s_tparser *tparser)
 	{
 		if (ft_sb_perform(sb, \
 			ft_sb_action_replace(\
-				param[0], \
+				ft_str_from_cstring(param[0]), \
 				*(unsigned int *) param[1], \
 				*(unsigned int *) param[2])))
 			return (TSHELL_FAILURE);
@@ -130,9 +123,8 @@ struct s_tparser *tparser)
 	{
 		param[3] = tparser_read(tparser);
 		if (ft_sb_perform(sb, \
-			ft_sb_action_replace_len(\
-				param[0], \
-				*(unsigned int *) param[1], \
+			ft_sb_action_replace(\
+				ft_str_slice(param[0], 0, *(unsigned int *) param[1]), \
 				*(unsigned int *) param[2], \
 				*(unsigned int *) param[3])))
 			return (TSHELL_FAILURE);
